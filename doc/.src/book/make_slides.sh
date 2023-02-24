@@ -104,3 +104,15 @@ doconce replace 'section{' 'section*{' ${filename}.tex
 system pdflatex $filename
 system pdflatex $filename
 mv -f $filename.pdf ${filename}-plain.pdf
+
+
+# Publish (added by MB)
+repo=../../../..
+dest=${repo}/doc/pub/slides
+if [ ! -d $dest ]; then mkdir $dest; fi
+if [ ! -d $dest/pdf ]; then mkdir $dest/pdf; fi
+cp ${filename}-beamer.pdf $dest/pdf
+cd $dest; git add .; cd -
+
+
+

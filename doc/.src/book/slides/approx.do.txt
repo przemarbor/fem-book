@@ -1,1856 +1,1855 @@
 # 2DO:
 # Less 7= headings (or: ok when approx and varform are split?)
 
-## !split
-## ======= Hans Petter Langtangen =======
+!split
+======= Hans Petter Langtangen =======
+(1962-2016)
 
-## !split
-## ======= Metoda elementów skończonych - wstęp =======
+"Strona domowa":"https://hplgit.github.io/homepage/index.html"
 
-## Finite Element Method, FEM MES
-
-## !bslidecell 00
-## FIGURE: [../fig/dolfin_mesh, width=200 frac=1]
-## !eslidecell
-
-
-## ## FIGURE: [../fig/dolfin_mesh, width=400 frac=0.6]
-
-## !bslidecell 01
-## !bpop
-##  * pozwala rozwiązywać \PDE{} dla obszarów o ''złożonej geometrii''
-##  * pozwala ''regulować'' dokładność siatki tam gdzie to potrzebne
-##  * możliwość użycia aproksymacji wyższego rzędu
-##  * dobre, matematyczne podstawy - co pozwala na dokładną analizę metody
-## !epop
-
-## !eslidecell
-
-## # The theoretical framework is not powerful enough to uncover the
-## # serious limitations of the method in time-dependent problems
-## # and the necessary adjustments)
+"Github":"https://github.com/hplgit"
 
 
 
+!split
+======= Metoda elementów skończonych - wstęp =======
 
-## !split
-## ===== A dolphin and its flow =====
+Finite Element Method, FEM, MES
 
-## !bslidecell 00
-## FIGURE: [../fig/dolfin_mesh, width=400 frac=1]
-## !eslidecell
-
-## !bslidecell 01
-## FIGURE: [../fig/dolfin_flow.gif, width=400 frac=1]
-## !eslidecell
-
-## !split
-## ===== Rozwiązywania \PDE{} przy pomocy FEM =====
-
-## !bblock Zagadnienia stacjonarne:
-##  o Przekształcenie zagadnienia brzegowego do *postaci wariacyjnej*
-##  o Zdefiniowanie funkcji aproksymujących dla *elementów skończonych*
-##  o Przkształcenie zagadnienia ciągłego w dyskretne wyrażone
-##    *układem równań liniowych* (URL)
-##  o Rozwiązanie URL
-## !eblock
+!bslidecell 00
+FIGURE: [../fig/dolfin_mesh, width=200 frac=1]
+!eslidecell
 
 
-## !bblock Zagadnienia niestacjonarne (zależne od czasu):
-##  * MES - aproksymacja przestrzeni 
-##  * FDM/(metoda rozw. ODE) - aproksymacja w czasie
-## !eblock
+## ## # FIGURE: [../fig/dolfin_mesh, width=400 frac=0.6]
 
-## # Give a brief example here, 1D or 2D
+!bslidecell 01
+!bpop
+ * pozwala rozwiązywać \PDE{} dla obszarów o ''złożonej geometrii''
+ * pozwala ''regulować'' dokładność siatki tam gdzie to potrzebne
+ * możliwość użycia aproksymacji wyższego rzędu
+ * dobre, matematyczne podstawy - co pozwala na dokładną analizę metody
+!epop
 
-## !split
-## ===== Etapy nauki FEM =====
+!eslidecell
 
-## !bblock Jak? 
-##  o Elementy teoria aproksymacji, a nie rozw. \PDE
-##  o Wstęp do aproksymacji elementami skończonymi
-##  o W końcu zastosowanie powyższego do rozw. \PDE
-## !eblock
+## ## # The theoretical framework is not powerful enough to uncover the
+## ## # serious limitations of the method in time-dependent problems
+## ## # and the necessary adjustments)
 
-## !bblock Dlaczego tak?
-## Istnieje wiele wariantów i odmian \FEM.
-## Dzięki proponowanemu podejściu łatwiej się ''połapać''. Unikamy zamieszania
-## wielością podejść do tematu, koncepcji i technicznych/implementacyjnych
-## szczegółów.
-## !eblock
 
-## !split
-## ======= Aproksymacja w przestrzeniach wektorowych =======
+!split
+===== A dolphin and its flow =====
 
-## Jak znaleźć wektor pewnej przestrzeni, który aproksymuje wektor przestrzeni
-## o większym wymiarze?
+!bslidecell 00
+FIGURE: [../fig/dolfin_mesh, width=400 frac=1]
+!eslidecell
 
-## FIGURE: [../fig/vecapprox_plane, width=300 frac=0.5]
+!bslidecell 01
+FIGURE: [../fig/dolfin_flow.gif, width=400 frac=1]
+!eslidecell
 
-## !split
-## ===== Aproksymacja jako kombinacja liniowa założonych funkcji bazowych =====
+!split
+===== Rozwiązywania \PDE{} przy pomocy FEM =====
 
-## Ogólna idea poszukiwania elementu (wektora/funkcji) $u(x)$ pewnej przestrzeni przybliżającego zadany element $f(x)$:
+!bblock Zagadnienia stacjonarne:
+ o Przekształcenie zagadnienia brzegowego do *postaci wariacyjnej*
+ o Zdefiniowanie funkcji aproksymujących dla *elementów skończonych*
+ o Przkształcenie zagadnienia ciągłego w dyskretne wyrażone
+   *układem równań liniowych* (URL)
+ o Rozwiązanie URL
+!eblock
 
-## !bt
-## \[  u(x) = \sum_{i=0}^N c_I \baspsi_i(x) \]
-## !et
 
-## gdzie
+!bblock Zagadnienia niestacjonarne (zależne od czasu):
+ * MES - aproksymacja przestrzeni 
+ * FDM/(metoda rozw. ODE) - aproksymacja w czasie
+!eblock
 
-##  * $\baspsi_i(x)$ założone funkcje
-##  * $c_i$, $i=0,\ldots,N$ nieznane współczynniki (do wyznaczenia)
+# Give a brief example here, 1D or 2D
 
-## !split
-## ===== Trzy główne sposoby wyznaczania niewiadomych współczynników =====
+!split
+===== Etapy nauki FEM =====
 
-## # We shall address three approaches:
+!bblock Jak? 
+ o Elementy teoria aproksymacji, a nie rozw. \PDE
+ o Wstęp do aproksymacji elementami skończonymi
+ o W końcu zastosowanie powyższego do rozw. \PDE
+!eblock
 
-##  * Metoda najmniejszych kwadratów (\LSM{} Least Squares Method)
-##  * metoda Galerkina
-## # The projection (or Galerkin) method
-##  * Metoda kolokacji
-## # The interpolation (or collocation) method
+!bblock Dlaczego tak?
+Istnieje wiele wariantów i odmian \FEM.
+Dzięki proponowanemu podejściu łatwiej się ''połapać''. Unikamy zamieszania
+wielością podejść do tematu, koncepcji i technicznych/implementacyjnych
+szczegółów.
+!eblock
 
-## ## !bblock  Underlying motivation for our notation
-## !bblock
-## Sposób opisu i notacja zaproponowane w materiałach wybrane w sposób ułatwiający
-## zrozumienie open-source'owego pakietu "FEniCS": "http://fenicsproject.org"
-## do obliczeń metodą elementów skończonych.
-## !eblock
+!split
+======= Aproksymacja w przestrzeniach wektorowych =======
 
-## !split
-## ===== Aproksymacja wektorów: przykład -- aproksymacja na płaszczyznie =====
-## label{fem:approx:vec:plane}
+Jak znaleźć wektor pewnej przestrzeni, który aproksymuje wektor przestrzeni
+o większym wymiarze?
 
-## Zadanie:
+FIGURE: [../fig/vecapprox_plane, width=300 frac=0.5]
 
-## Znajdź przybliżenie wektora $\f = (3,5)$ wzdłuż zadanego kierunku.
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.5cm}
-## #endif
-## FIGURE: [../fig/vecapprox_plane, width=300 frac=0.55]
+!split
+===== Aproksymacja jako kombinacja liniowa założonych funkcji bazowych =====
 
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-1cm}
-## #endif
-## analogie: element - punkt - wektor - funkcja
+Ogólna idea poszukiwania elementu (wektora/funkcji) $u(x)$ pewnej przestrzeni przybliżającego zadany element $f(x)$:
 
-## !split
-## ===== Aproksymacja wektorów: przestrzenie wektorowe -- terminologia =====
+!bt
+\[
+u(x) = \sum_{i=0}^N c_I \baspsi_i(x)
+\]
+!et
 
 ## !bt
-## \[ V = \mbox{span}\,\{ \psib_0\} \]
+## \begin{align}
+## aaa
+## \end{align}
 ## !et
 
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.4cm}
-## #endif
+gdzie
 
-##  * $\psib_0$ wektor bazowy przestrzeni $V$
-##  * Znajdź $\u = c_0\psib_0\in V$
-##  * Jak wyznaczyć $c_0$ tak, aby $\u$ "najlepiej" przybliżało $\f$?
-##  * Wizualnie rozwiązanie narzuca się samo
-##  * Jak sformułować to ogólnie, w języku matematyki?
+* $\baspsi_i(x)$ założone funkcje
+* $c_i$, $i=0,\ldots,N$ nieznane współczynniki (do wyznaczenia)
+
+!split
+===== Trzy główne sposoby wyznaczania niewiadomych współczynników =====
+
+ * Metoda najmniejszych kwadratów (\LSM{} Least Squares Method)
+ * metoda Galerkina
+ * Metoda kolokacji
+
+
+
+!bblock
+Sposób opisu i notacja zaproponowane w materiałach wybrane w sposób ułatwiający
+zrozumienie open-source'owego pakietu "FEniCS": "http://fenicsproject.org"
+do obliczeń metodą elementów skończonych.
+!eblock
+
+!split
+===== Aproksymacja wektorów: przykład -- aproksymacja na płaszczyznie =====
+label{fem:approx:vec:plane}
+
+Zadanie:
+
+Znajdź przybliżenie wektora $\f = (3,5)$ wzdłuż zadanego kierunku.
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.5cm}
+#endif
+FIGURE: [../fig/vecapprox_plane, width=300 frac=0.55]
+
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-1cm}
+#endif
+analogie: element - punkt - wektor - funkcja
+
+!split
+===== Aproksymacja wektorów: przestrzenie wektorowe -- terminologia =====
+
+!bt
+\[ V = \mbox{span}\,\{ \psib_0\} \]
+!et
+
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.4cm}
+#endif
+
+ * $\psib_0$ wektor bazowy przestrzeni $V$
+ * Znajdź $\u = c_0\psib_0\in V$
+ * Jak wyznaczyć $c_0$ tak, aby $\u$ "najlepiej" przybliżało $\f$?
+ * Wizualnie rozwiązanie narzuca się samo
+ * Jak sformułować to ogólnie, w języku matematyki?
  
-## Niech
+Niech
 
-##  * $\e = \f - \u$ to błąd
-##  * $(\u,\v)$ -- iloczyn skalarny wektorów
-##  * $||\e|| = \sqrt{(\e, \e)}$ -- norma błędu (jaka? (normy $p$-te))
+ * $\e = \f - \u$ to błąd
+ * $(\u,\v)$ -- iloczyn skalarny wektorów
+ * $||\e|| = \sqrt{(\e, \e)}$ -- norma błędu (jaka? (normy $p$-te))
 
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.4cm}
-## #endif
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.4cm}
+#endif
 
-## !bnotice Uwaga:
-## $(a,b)$ -- punkt/wektor przestrzeni (dwuwymiarowej)
+!bnotice Uwaga:
+$(a,b)$ -- punkt/wektor przestrzeni (dwuwymiarowej)
 
-## $(\u,\v)$ -- iloczyn skalarny dwóch wektorów przestrzeni (dowolnie-wymiarowej)
-## !enotice
+$(\u,\v)$ -- iloczyn skalarny dwóch wektorów przestrzeni (dowolnie-wymiarowej)
+!enotice
 
-## !split
-## ===== Metoda najmniejszych kwadratów - idea =====
+!split
+===== Metoda najmniejszych kwadratów - idea =====
 
-##  * Idea: znaleźć $c_0$ takie, aby $||\e||$ był minimalizowany
-##    (jak najmniejszy/najkrótszy)
-##  * Dla wygody (matematycznej): minimalizujemy $E=||\e||^2$
+ * Idea: znaleźć $c_0$ takie, aby $||\e||$ był minimalizowany
+   (jak najmniejszy/najkrótszy)
+ * Dla wygody (matematycznej): minimalizujemy $E=||\e||^2$
 
-## !bt
-## \begin{equation*}
-## \frac{\partial E}{\partial c_0} = 0
-## \end{equation*}
-## !et
+!bt
+\begin{equation*}
+\frac{\partial E}{\partial c_0} = 0
+\end{equation*}
+!et
 
-## !split
-## ===== Metoda najmniejszych kwadratów - obliczenia =====
+!split
+===== Metoda najmniejszych kwadratów - obliczenia =====
 
-## !bt
-## \begin{align*}
-## E(c_0) &= (\e,\e) = (\f - \u, \f - \u) = (\f - c_0\psib_0, \f - c_0\psib_0)\\
-##        &= (\f,\f) - 2c_0(\f,\psib_0) + c_0^2(\psib_0,\psib_0)
-## \end{align*}
-## !et
+!bt
+\begin{align*}
+E(c_0) &= (\e,\e) = (\f - \u, \f - \u) = (\f - c_0\psib_0, \f - c_0\psib_0)\\
+       &= (\f,\f) - 2c_0(\f,\psib_0) + c_0^2(\psib_0,\psib_0)
+\end{align*}
+!et
 
-## !bt
-## \begin{equation}
-## \frac{\partial E}{\partial c_0} = -2(\f,\psib_0) + 2c_0 (\psib_0,\psib_0) = 0
-## label{fem:vec:dEdc0:v1}
-## \end{equation}
-## !et
+!bt
+\begin{equation}
+\frac{\partial E}{\partial c_0} = -2(\f,\psib_0) + 2c_0 (\psib_0,\psib_0) = 0
+label{fem:vec:dEdc0:v1}
+\end{equation}
+!et
 
-## !bt
-## \[
-## c_0 = \frac{(\f,\psib_0)}{(\psib_0,\psib_0)} = \frac{3a + 5b}{a^2 + b^2}
-## \]
-## !et
+!bt
+\[
+c_0 = \frac{(\f,\psib_0)}{(\psib_0,\psib_0)} = \frac{3a + 5b}{a^2 + b^2}
+\]
+!et
 
-## Spostrzeżenie (na później): warunek znikania pochodnej (ref{fem:vec:dEdc0:v1})
-## można równoważnie zapisać jako:
-## !bt
-## \[ (\e, \psib_0) = 0 \]
-## !et
+Spostrzeżenie (na później): warunek znikania pochodnej (ref{fem:vec:dEdc0:v1})
+można równoważnie zapisać jako:
+!bt
+\[ (\e, \psib_0) = 0 \]
+!et
 
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.8cm}
-## \tiny
-## #endif
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.8cm}
+\tiny
+#endif
 
-## !bt
-## \[
-## (\e, \psib_0) = (\f - \u, \psib_0) = (\f, \psib_0) - (\u, \psib_0) ....
-## \quad\quad (*-2 ...)
-## \]
-## !et
-## !bt
-## \[
-## [\f-\u] \cdot
-## \left[
-## \begin{array}{c}
-##  \\
-## \psib_0 \\
-##  \\
-## \end{array}
-## \right]
-## =
-## [\quad\quad \f \quad\quad] \cdot
-## \left[
-## \begin{array}{c}
-##  \\
-## \psib_0 \\
-##  \\
-## \end{array}
-## \right]
-## -
-## [\quad\quad \u \quad\quad] \cdot
-## \left[
-## \begin{array}{c}
-##  \\
-## \psib_0 \\
-##  \\
-## \end{array}
-## \right]
-## \]
-## !et
-
-
-## ## !split
-## ## ## ===== The projection (or Galerkin) method =====
-## ===== Metoda Galerkina =====
+!bt
+\[
+(\e, \psib_0) = (\f - \u, \psib_0) = (\f, \psib_0) - (\u, \psib_0) ....
+\quad\quad (*-2 ...)
+\]
+!et
+!bt
+\[
+[\f-\u] \cdot
+\left[
+\begin{array}{c}
+ \\
+\psib_0 \\
+ \\
+\end{array}
+\right]
+=
+[\quad\quad \f \quad\quad] \cdot
+\left[
+\begin{array}{c}
+ \\
+\psib_0 \\
+ \\
+\end{array}
+\right]
+-
+[\quad\quad \u \quad\quad] \cdot
+\left[
+\begin{array}{c}
+ \\
+\psib_0 \\
+ \\
+\end{array}
+\right]
+\]
+!et
 
 
-## !bslidecell 00 0.2
-
-## FIGURE: [../figMB/orthopro.pdf, width=300 frac=1.7]
-
-## !eslidecell
-
-## !bslidecell 01 0.75
-## !bpop
-##  * $\min E$ $\rightarrow$ to samo co:  $(\e, \psib_0)=0$ (rysunek)
-##  * $(\e, \psib_0)=0$ $\Rightarrow$ $(\e, \v)=0$ dla *dowolnego* $\v\in V$ (rysunek)
-##  * Czyli: zamiast korzystać z aproksymacji średniokwadratowej, można
-##    wymusić, aby $\e$ było ortogonalne (prostopadłe) dla dowolnego
-##    $\v\in V$ -- oczywiste na rysunku a...
-##  * W języku matematyki: znajdź takie $c_0$ aby $(\e, \v) = 0,\quad\forall\v\in V$
-##  * Równoważnie: znajdź takie $c_0$ aby $(\e, \psib_0)=0$
-##  * Podstawmy: $\e = \f - c_0\psib_0$ i rozwiążmy ze względu na $c_0$
-##  * Ostatecznie: to samo równanie (a więc i to samo rozwiązanie) co w metodzie
-##    najmniejszych kwadratów
-## !epop
-
-## !eslidecell
-
-
-
-## !split
-## ## ===== Approximation of general vectors =====
-## ===== Aproksymacja wektora przestrzeni dowolniewymiarowej =====
-## label{fem:approx:vec:Np1dim}
-## idx{approximation!of general vectors}
-
-## Dla danego wektora $\f$, znajdź przybliżenie $\u\in V$:
-
-## !bt
-## \begin{equation*}
-## V = \hbox{span}\,\{\psib_0,\ldots,\psib_N\}
-## \end{equation*}
-## !et
-
-## ($\hbox{span}$ czyt. przestrzeń rozpięta na wektorach...)
-
-## Mając dany zbiór wektorów niezależnych liniowo 
-## $\psib_0,\ldots,\psib_N$,
-## dowolny wektor $\u\in V$ można zapisać jako:
-
-## !bt
-## \[ \u = \sum_{j=0}^Nc_j\psib_j\]
-## !et
-
-## !bnotice Przykład 
-## TODO
-## !enotice
-
-## !split
-## ## ===== Metoda najmniejszych kwadratów =====
-## ===== Metoda najmniejszych kwadratów =====
-
-## Idea: znaleźć takie $c_0,\ldots,c_N$, aby $E= ||\e||^2$ był minimalizowany, $\e=\f-\u$.
-## !bt
-## \begin{align*}
-## E(c_0,\ldots,c_N) &= (\e,\e) = (\f -\sum_jc_j\psib_j,\f -\sum_jc_j\psib_j)
-## \nonumber\\
-## &= (\f,\f) - 2\sum_{j=0}^Nc_j(\f,\psib_j) +
-## \sum_{p=0}^N\sum_{q=0}^N c_pc_q(\psib_p,\psib_q)
-## \end{align*}
-## !et
-
-## !bt
-## \begin{equation*}
-## \frac{\partial E}{\partial c_i} = 0,\quad i=0,\ldots,N
-## \end{equation*}
-## !et
-## Po odrobinie obliczeń otrzymuje się *układ równań liniowych*:
-## !bt
-## \begin{align}
-## \sum_{j=0}^N A_{i,j}c_j &= b_i,\quad i=0,\ldots,N\\
-## A_{i,j} &= (\psib_i,\psib_j)\\
-## b_i &= (\psib_i, \f)
-## \end{align}
-## !et
-
-## !split
+!split
 ## ## ===== The projection (or Galerkin) method =====
-## ===== Metoda Galerkina =====
-
-## Można pokazać, że poszukiwanie minimalnego $||\e||$
-## jest równoważne poszukiwaniu $\e$ ortogonalnego do wszystkich $\v\in V$:
-
-## idx{Galerkin method} idx{projection}
-
-## !bt
-## \[
-## (\e,\v)=0,\quad \forall\v\in V
-## \]
-## !et
-## co jest równoważne temu aby $\e$ był ortogonalny do każdego wektora bazowego:
-
-## !bt
-## \[ (\e,\psib_i)=0,\quad i=0,\ldots,N \]
-## !et
-
-## Warunek ortogonalności -- podstawa metody Galerkina.
-## Generuje ten sam układ równań liniowych co \LSM.
-
-## !split
-## ======= Aproksymacja funkcji w przestrzeni funkcyjnej =======
-## label{fem:approx:global}
-## idx{approximation!of functions}
-
-## Niech $V$ będzie *przestrzenią funkcyjną* rozpiętą na zbiorze *funkcji bazowych*
-## $\baspsi_0,\ldots,\baspsi_N$,
-
-## !bt
-## \begin{equation*}
-## V = \hbox{span}\,\{\baspsi_0,\ldots,\baspsi_N\}
-## \end{equation*}
-## !et
-
-## Dowolną funkcję tej przestrzeni $u\in V$ można przedstawić jako kombinację
-## liniową funkcji bazowych:
-
-## !bt
-## \[ u = \sum_{j\in\If} c_j\baspsi_j,\quad\If = \{0,1,\ldots,N\} \]
-## !et
-
-## !split
-## ===== Uogólnienie \LSM{} na przestrzenie funkcyjne =====
-## label{fem:approx:LS}
-
-## Tak jak dla przestrzeni wektorowych, minimalizujemy normę błędu $E$,
-## ze względu na współczynniki $c_j$, $j\in\If$:
-
-## !bt
-## \[
-## E = (e,e) = (f-u,f-u) = \left(f(x)-\sum_{j\in\If} c_j\baspsi_j(x), f(x)-\sum_{j\in\If} c_j\baspsi_j(x)\right)
-## \]
-## !et
-
-## !bt
-## \[ \frac{\partial E}{\partial c_i} = 0,\quad i=\in\If \]
-## !et
-
-## Czym jest iloczyn skalarny jeśli $\baspsi_i$ jest funkcją?
-
-## !bt
-## \[(f,g) = \int_\Omega f(x)g(x)\, dx\]
-## !et
-## (iloczyn skalarny funkcji cg jako uogólnienie il. skalarnego funkcji dyskretnych $(\u, \v) = \sum_j u_jv_j$)
-
-## !split
-## ===== Szczegóły \LSM{} =====
-
-## !bt
-## \begin{align*}
-## E(c_0,\ldots,c_N) &= (e,e) = (f-u,f-u) \\
-##  &= (f,f) -2\sum_{j\in\If} c_j(f,\baspsi_i)
-## + \sum_{p\in\If}\sum_{q\in\If} c_pc_q(\baspsi_p,\baspsi_q)
-## \end{align*}
-## !et
-
-## !bt
-## \[ \frac{\partial E}{\partial c_i} = 0,\quad i=\in\If \]
-## !et
-
-## Obliczenia identyczne jak dla przypadku wektorowego
-## ->
-## w rezultacie otrzymujemy układ równań liniowych
-
-## !bt
-## \[
-## \sum_{j\in\If}^N A_{i,j}c_j = b_i,\ i\in\If,\quad
-## A_{i,j} = (\baspsi_i,\baspsi_j),\
-## b_i = (f,\baspsi_i)
-## \]
-## !et
-
-## !split
-## ===== Metoda Galerkina =====
-
-## Jak poprzednio minimalizacja $(e,e)$ jest równoważna
-
-## !bt
-## \[
-## (e,\baspsi_i)=0,\quad i\in\If
-## label{fem:approx:Galerkin0}
-## \]
-## !et
-
-## co z kolei jest równoważne
-
-## !bt
-## \[
-## (e,v)=0,\quad\forall v\in V
-## label{fem:approx:Galerkin}
-## \]
-## !et
-## ## which is the projection (or Galerkin) method.
-
-## Równoważność wzorów jak dla przestrzeni wektorowych.
-
-## Równoważność wzorów jak dla wyprowadzenia przy pomocy \LSM.
-
-
-## !split
-## ===== Przykład: aproksymacja paraboli funkcją liniową =====
-## label{fem:approx:global:linear}
-
-## !bblock Problem
-## ## Approximate a parabola $f(x) = 10(x-1)^2 - 1$ by a straight line.
-## Dla zadanej funkcji $f(x) = 10(x-1)^2 - 1$ znaleźć jej przybliżenie
-## funkcją liniową.
-## !eblock
-
-## !bt
-## \begin{equation*} V = \hbox{span}\,\{1, x\}  \end{equation*}
-## !et
-## czyli $\baspsi_0(x)=1$, $\baspsi_1(x)=x$ oraz $N=1$.
-## Szukane
-
-## !bt
-## \begin{equation*}
-## u=c_0\baspsi_0(x) + c_1\baspsi_1(x) = c_0 + c_1x
-## \end{equation*}
-## !et
-
-## !split
-## ===== Przykład: aproksymacja paraboli funkcją liniową =====
-
-## !bt
-## \begin{align*}
-## A_{0,0} &= (\baspsi_0,\baspsi_0) = \int_1^21\cdot 1\, dx = 1\\
-## A_{0,1} &= (\baspsi_0,\baspsi_1) = \int_1^2 1\cdot x\, dx = 3/2\\
-## A_{1,0} &= A_{0,1} = 3/2\\
-## A_{1,1} &= (\baspsi_1,\baspsi_1) = \int_1^2 x\cdot x\,dx = 7/3\\
-## b_1 &= (f,\baspsi_0) = \int_1^2 (10(x-1)^2 - 1)\cdot 1 \, dx = 7/3\\
-## b_2 &= (f,\baspsi_1) = \int_1^2 (10(x-1)^2 - 1)\cdot x\, dx = 13/3
-## \end{align*}
-## !et
-## Rozwiązanie układu równań 2x2:
-
-## !bt
-## \[ c_0 = -38/3,\quad c_1 = 10,\quad u(x) = 10x - \frac{38}{3} \]
-## !et
-
-## !split
-## ===== Przykład: aproksymacja paraboli funkcją liniową =====
-
-## !bt
-## \begin{align*}
-## \left[
-## \begin{array}{cc}
-##      1      & \frac{3}{2} \\
-## \frac{3}{2} & \frac{7}{3} \\
-## \end{array}
-## \right]
-## \left[
-## \begin{array}{c}
-## c_0 \\
-## c_1 \\
-## \end{array}
-## \right]
-## =
-## \left[
-## \begin{array}{c}
-## \frac{7}{3} \\
-## \frac{13}{3} \\
-## \end{array}
-## \right]
-## \quad
-## \rightarrow
-## \quad
-## \left[
-## \begin{array}{c}
-## c_0 \\
-## c_1 \\
-## \end{array}
-## \right]
-## =
-## \left[
-## \begin{array}{c}
-## -38/3 \\
-## 10 \\
-## \end{array}
-## \right]
-## \end{align*}
-## !et
-## !bt
-## \[ u(x) = 10x - 12 \frac{2}{3} \]
-## !et
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-1.0cm}
-## #endif
-
-## FIGURE: [../fig/parabola_ls_linear, width=550 frac=0.8]
-
-## !split
-## ===== Symboliczna realizacja algorytmu \LSM{} =====
-## label{fem:approx:global:LS:code}
-
-## Problem: napisać program/funkcję, który przeprowadzi obliczenia (obliczenie całek
-## i rozwiązanie układu równań liniowych) i zwróci
-## rozwiązanie postaci n $u(x)=\sum_jc_j\baspsi_j(x)$.
-
-## ## Consider *symbolic computation* of the linear system,
-## ## where
-## Niech 
-##  * $f(x)$ będzie dane przez funkcję `sympy` oznaczoną symbolem `f`
-##    (funkcję zmiennej (symbolu) `x`)
-##  * `psi` będzie listą funkcji $\sequencei{\baspsi}$,
-##  * `Omega` będzie dwuelementową krotką/listą zawierającą początek i koniec
-##    przedziału $\Omega$
-
-
-
-## !split
-## ===== \LSM{} symbolicznie:  podejście nr 1 =====
-
-## !bc pycod
-## import sympy as sym
-
-## def least_squares(f, psi, Omega):
-##     N = len(psi) - 1
-##     A = sym.zeros((N+1, N+1))
-##     b = sym.zeros((N+1, 1))
-##     x = sym.Symbol('x')
-##     for i in range(N+1):
-##         for j in range(i, N+1):
-##             A[i,j] = sym.integrate(psi[i]*psi[j],
-##                                   (x, Omega[0], Omega[1]))
-##             A[j,i] = A[i,j]
-##         b[i,0] = sym.integrate(psi[i]*f, (x, Omega[0], Omega[1]))
-##     c = A.LUsolve(b)
-##     u = 0
-##     for i in range(len(psi)):
-##         u += c[i,0]*psi[i]
-##     return u, c
-## !ec
-
-## #if FORMAT in ('latex', 'pdflatex')
-## \tiny
-## #endif
-
-## Spostrzeżenie: macierz układu jest symetryczna, dzięki czemu można zoptymalizować proces wyznaczania jej elementów
-
-##  * Może się zdażyć, że obliczanie całki się nie powiedzie
-##    (skomplikowana funkcja `f`)
-##    , `sym.integrate` zwróci wtedy obiekt typu `sym.Integral`.
-##    Ulepszenie kodu: sprawdzenie czy takie zdarzenie wystąpiło i ew.
-##    obliczenia numeryczne.
-##  * Ulepszenie 2: Dodatkowa flaga przy pomocy, której użytkownik może zdecydować
-##    bezpośrednio jaki rodzaj całkowania (symboliczny czy numeryczny) ma zostać
-##    wykorzystany.
-
-## !split
-## ## ===== Improved code if symbolic integration fails =====
-## ===== \LSM{} symbolicznie:  podejście nr 2 =====
-
-## !bc pycod
-## def least_squares(f, psi, Omega, symbolic=True):
-##     ...
-##     for i in range(N+1):
-##         for j in range(i, N+1):
-##             integrand = psi[i]*psi[j]
-##             if symbolic:
-##                 I = sym.integrate(integrand, (x, Omega[0], Omega[1]))
-##             if not symbolic or isinstance(I, sym.Integral):
-##                 # Could not integrate symbolically,
-##                 # fall back on numerical integration
-##                 integrand = sym.lambdify([x], integrand)
-##                 I = sym.mpmath.quad(integrand, [Omega[0], Omega[1]])
-##             A[i,j] = A[j,i] = I
-
-##         integrand = psi[i]*f
-##         if symbolic:
-##             I = sym.integrate(integrand, (x, Omega[0], Omega[1]))
-##         if not symbolic or isinstance(I, sym.Integral):
-##             integrand = sym.lambdify([x], integrand)
-##             I = sym.mpmath.quad(integrand, [Omega[0], Omega[1]])
-##         b[i,0] = I
-##     ...
-## !ec
-
-
-## !split
-## ===== Prezentacja rozwiązania =====
-
-## Graficzne porównanie $f$ i $u$:
-
-## !bc pycod
-## def comparison_plot(f, u, Omega, filename='tmp.pdf'):
-##     x = sym.Symbol('x')
-##     # Turn f and u to ordinary Python functions
-##     f = sym.lambdify([x], f, modules="numpy")
-##     u = sym.lambdify([x], u, modules="numpy")
-##     resolution = 401  # no of points in plot
-##     xcoor  = linspace(Omega[0], Omega[1], resolution)
-##     exact  = f(xcoor)
-##     approx = u(xcoor)
-##     plot(xcoor, approx)
-##     hold('on')
-##     plot(xcoor, exact)
-##     legend(['approximation', 'exact'])
-##     savefig(filename)
-## !ec
-
-## ## All code in module `approx1D.py`.
-
-## !split
-## ===== Zastosowanie kodu =====
-## # ===== Application of the software: fit a parabola by a straight line =====
-
-## !bc pycod
-## >>> from approx1D import *
-## >>> x = sym.Symbol('x')
-## >>> f = 10*(x-1)**2-1
-## >>> u, c = least_squares(f=f, psi=[1, x], Omega=[1, 2])
-## >>> comparison_plot(f, u, Omega=[1, 2])
-## !ec
-
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.7cm}
-## #endif
-
-## FIGURE: [../fig/parabola_ls_linear, width=600 frac=0.8]
-
-## !split
-## ===== Przypadek aproksymacji funkcji $f\in V$ =====
-## label{fem:approx:global:exact}
-
-##  * Rozszerzmy zbiór funkcji bazowych przestrezni $V$ o funkcję $\baspsi_2=x^2$,
-##    wciąż poszukując przybliżenia dla funkcji $f=10(x-1)^2-1$ w przestrzeni $V$
-##  * -> przybliżenie paraboli pewną parabolą \ldots
-##  * Rozwiązanie odwzoruje $f$ ściśle! 
-
-## !bc pycod
-## >>> from approx1D import *
-## >>> x = sym.Symbol('x')
-## >>> f = 10*(x-1)**2-1
-## >>> u, c = least_squares(f=f, psi=[1, x, x**2], Omega=[1, 2])
-## >>> print u
-## 10*x**2 - 20*x + 9
-## >>> print sym.expand(f)
-## 10*x**2 - 20*x + 9
-## !ec
-
-
-## Rozwiązanie przybliżone $\equiv$ rozwiązanie dokładne, jeśli $f \in V$!
-
-## !split
-## ===== Uogólnienie: Przypadek aproksymacji funkcji $f\in V$ =====
-
-##  * A co jeśli baza to $\psi_i(x)=x^i$ dla $i=0,\ldots,N=40$?
-##  * Wynik funkcji `least_squares`: dla $i>2$, $c_i=0$
-
-## !bblock Wniosek ogólny:
-## Jeśli $f\in V$, \LSM{} oraz metoda Galerkina zwrócą $u=f$.
-## !eblock
-
-## !split
-## ===== Dlaczego dla $f\in V$ aproksymacja jest bezbłędna? Dowód: =====
-
-## Jeśli $f\in V$,
-## wtedy $f=\sum_{j\in\If}d_j\baspsi_j$, dla pewnego $\sequencei{d}$.
-## Wtedy
-
-## !bt
-## \begin{equation*}
-## b_i = (f,\baspsi_i) = \sum_{j\in\If}d_j(\baspsi_j, \baspsi_i)
-## = \sum_{j\in\If} d_jA_{i,j}
-## \end{equation*}
-## !et
-## a URL $\sum_j A_{i,j}c_j = b_i$, $i\in\If$, przedstawia sie:
-
-## !bt
-## \begin{equation*}
-## \sum_{j\in\If}c_jA_{i,j} = \sum_{j\in\If}d_jA_{i,j},\quad i\in\If
-## \end{equation*}
-## !et
-## co oznacza, że $c_i=d_i$ dla $i\in\If$, czyli $u$ jest tożsame z $f$.
-
-## !split
-## ===== Skończona prezycja obliczeń numerycznych =====
-## label{fem:approx:global:illconditioning}
-
-## Poprzednie wnioski -> teoria i obliczenia symboliczne \ldots
-
-## Co w przypadku obliczeń numerycznych? -> (rozwiązanie URL macierzami
-## liczb zmiennoprzecinkowych)
-
-## $f$ to wciąż funkcja kwadratowa przybliżana przez
-
-## !bt
-## \[ u(x) = c_0 + c_1x + c_2x^2 + c_3x^3 +\cdots + c_Nx^N \]
-## !et
-
-## Oczekiwane: $c_2=c_3=\cdots=c_N=0$, skoro $f\in V$ oznacza $u=f$.
-
-## A naprawdę?
-
-## ## Will we get this result with finite precision computer arithmetic?
-
-## !split
-## ===== Skończona prezycja obliczeń numerycznych -- wyniki =====
-
-## |-----------------------------------------|
-## | teoria | `sympy` | `numpy32` | `numpy64` |
-## |---r--------r---------r-----------r------|
-## |9      | 9.62    | 5.57      |  8.98     |
-## |-20    | -23.39  | -7.65     | -19.93    |
-## |10     | 17.74   | -4.50     |  9.96     |
-## |0      | -9.19   | 4.13      | -0.26     |
-## |0      | 5.25    | 2.99      |  0.72     |
-## |0      | 0.18    | -1.21     | -0.93     |
-## |0      | -2.48   | -0.41     |  0.73     |
-## |0      | 1.81    | -0.013    | -0.36     |
-## |0      | -0.66   | 0.08      |  0.11     |
-## |0      | 0.12    | 0.04      | -0.02     |
-## |0      | -0.001  | -0.02     |  0.002    |
-## |-----------------------------------------|
-
-##   * Kolumna 2: `matrix` oraz `lu_solve` z biblioteki `sympy.mpmath.fp`
-##   * Kolumna 3: `numpy` 4B liczby zmiennoprzecinkowe
-##   * Kolumna 4: `numpy` 8B liczby zmiennoprzecinkowe
-
-## !split
-## ===== Złe uwarunkowanie URL - ''liniowa zależność'' w bazie =====
-
-##  * Znaczne błędy zaokrągleń rozwiązania numerycznego (!)
-##  * Jednocześnie ''na oko'' (graficzne) rozwiązanie wygląda w porządku (!)
-
-## Źródło kłopotów: funkcje $x^i$ dla bardzo dużych $i$ stają się praktycznie
-## liniowo zależne 
-
-## #if FORMAT in ('latex', 'pdflatex')
-## \tiny
-## #endif
-
-## !bslidecell 00
-## 4 rozwiązania zadania przybliżenia paraboli
-
-## FIGURE: [../figMB/comparison_parabola_err, width=500 frac=1.0] 
-## !eslidecell
-
-## !bslidecell 01
-## Wykresy funkcji $x^i$ dla $i=0 \ldots 14$
-
-## FIGURE: [../fig/ill_conditioning, width=500 frac=1.0] 
-## !eslidecell
-
-## !split
-## ===== Złe uwarunkowanie URL: wnioski =====
-
-##  * Prawie liniowa zależność funkcji bazowych skutkuje bliskoosobliwymi macierzami
-##  * macierz prawie osobliwa $\equiv$ *macierz źle uwarunkowana* ->
-##    problemy w trakcie m.elim. Gaussa
-##  * Baza wielomianów $1, x, x^2, x^3, x^4, \ldots$ to ''nienajszczęśliwszy'' wybór
-##  * Istnieją lepsze bazy (nawet wielomianowe), ale im bardziej ortogonalne
-##    te bazy są, tym lepiej ($(\baspsi_i,\baspsi_j)\approx 0$)
-
-## !split
-## ===== Aproksymacja szeregami Fouriera; problem and code =====
-## label{fem:approx:global:Fourier}
-## idx{approximation!by sines}
-
-## Aproksymacja funkcji $f$ szeregiem Fouriera
-
-## !bt
-## \[ u(x) = \sum_i a_i\sin i\pi x = \sum_{j=0}^Nc_j\sin((j+1)\pi x) \]
-## !et
-
-## to tylko ''zmiana bazy'':
-
-## !bt
-## \begin{equation*}
-## V = \hbox{span}\,\{ \sin \pi x, \sin 2\pi x,\ldots,\sin (N+1)\pi x\}
-## \end{equation*}
-## !et
-
-## Obliczenia z wykorzystaniem funkcji `least_squares`:
-
-## !bc pycod
-## N = 3
-## from sympy import sin, pi
-## psi = [sin(pi*(i+1)*x) for i in range(N+1)]
-## f = 10*(x-1)**2 - 1
-## Omega = [0, 1]
-## u, c = least_squares(f, psi, Omega)
-## comparison_plot(f, u, Omega)
-## !ec
-
-## !split
-## ===== Aproksymacja szeregami Fouriera; wykres =====
-
-## L: $N=3$, P: $N=11$:
-## <linebreak>
-
-## FIGURE: [../fig/parabola_ls_sines4_12, width=900 frac=1]
-
-## !bblock Problem:
-## Dla każdej f.bazowej jest $\baspsi_i(0)=0$ przez co $u(0)=0 \neq f(0)=9$.
-## Podobna sytuacja dla $x=1$.
-## Wartości $u$ na brzegach będą zawsze niepoprawne!
-## !eblock
-
-## !split
-## ===== Aproksymacja szeregami Fouriera; ulepszenie =====
-
-##  * Znaczna poprawa aproksymacja dla $N=11$ wyrazów,
-##    pomimo niepożądanych rozbieżności w $x=0$ i $x=1$
-##  * Możliwe rozwiązanie: dodać składową, która pozwoli na odwzorowanie
-##    właściwych wartości na brzegu
-
-## !bt
-## \[ u(x) = {\color{red}f(0)(1-x) + xf(1)} + \sum_{j\in\If} c_j\baspsi_j(x) \]
-## !et
-## Dodatkowy wyraz nie tylko zapewnia $u(0)=f(0)$ oraz $u(1)=f(1)$,
-## ale także zaskakująco dobrze poprawia jakość aproksymacji!
-## approximation!
-
-## !split
-## ## ===== Fourier series approximation; final results =====
-## ===== Aproksymacja szeregami Fouriera; wyniki  =====
-
-## $N=3$ vs $N=11$:
-
-## FIGURE: [../fig/parabola_ls_sines4_12_wfterm, width=900 frac=1.2]
-
-
-## !split
-## ===== Bazy funkcji ortogonalnych =====
-
-## Zalety wyboru funkcji sinus jako funkcji bazowych:
-
-##  * funkcje bazowe są parami ortogonalne:
-##    $(\baspsi_i,\baspsi_j)=0$ (jedynie  $(\baspsi_i,\baspsi_j) \neq 0$))
-##    dzięki czemu
-##  * macierz $A_{i,j}$ jest diagonalna, dzięki czemu
-##  * nie ma potrzeby rozwiązywać URL! Rozwiązanie sprowadza się do
-##    obliczenia:
-##    $c_i = 2\int_0^1 f(x)\sin ((i+1)\pi x) dx$ 
-##  * wynik: rozwinięcie funkcji $f$ w szereg Fouriera
-
-## *W ogólnym przypadku*, dla baz ortogonalnych,
-## $A_{i,j}$ jest macierzą diagonalną, a nieznane współczynniki $c_i$
-## można łatwo obliczyć:
-
-## !bt
-## \[
-## c_i = \frac{b_i}{A_{i,i}} = \frac{(f,\baspsi_i)}{(\baspsi_i,\baspsi_i)}
-## \]
-## !et
-
-## !split
-## ===== Implementacja \LSM{} dla ortogonalnych funkcji bazowych =====
-
-## !bc pycod
-## def least_squares_orth(f, psi, Omega):
-##     N = len(psi) - 1
-##     A = [0]*(N+1)
-##     b = [0]*(N+1)
-##     x = sym.Symbol('x')
-##     for i in range(N+1):
-##         A[i] = sym.integrate(psi[i]**2, (x, Omega[0], Omega[1]))
-##         b[i] = sym.integrate(psi[i]*f,  (x, Omega[0], Omega[1]))
-##     c = [b[i]/A[i] for i in range(len(b))]
-##     u = 0
-##     for i in range(len(psi)):
-##         u += c[i]*psi[i]
-##     return u, c
-## !ec
-
-## !split
-## ===== Implementacja \LSM{} dla ortogonalnych funkcji bazowych: całkowanie symboliczne i numeryczne =====
-
-## #if FORMAT in ('latex', 'pdflatex')
-## \footnotesize
-## #endif
-
-##  * Uwzględnienie parametru sterującego wyborem rodzaju całkowania
-##    (argument `symbolic`).
-##  * W przypadku gdy całkowanie symboliczne zawiedzie
-##    (`sym.integrate` zwraca `sym.Integral`), obliczenia wykonywane
-##    numerycznie
-##    (w przypadku funkcji sinus nie powinno być problemów z symbolicznym
-##    obliczeniem $\int_\Omega\basphi_i^2dx$)
-
-## !bc pycod
-## def least_squares_orth(f, psi, Omega, symbolic=True):
-##     ...
-##     for i in range(N+1):
-##         # Diagonal matrix term
-##         A[i] = sym.integrate(psi[i]**2, (x, Omega[0], Omega[1]))
-
-##         # Right-hand side term
-##         integrand = psi[i]*f
-##         if symbolic:
-##             I = sym.integrate(integrand,  (x, Omega[0], Omega[1]))
-##         if not symbolic or isinstance(I, sym.Integral):
-##             print 'numerical integration of', integrand
-##             integrand = sym.lambdify([x], integrand)
-##             I = sym.mpmath.quad(integrand, [Omega[0], Omega[1]])
-##         b[i] = I
-##     ...
-## !ec
-
-## ## Assumption above: $\int_\Omega\basphi_i^2dx$ works symbolically (but there
-## ## is no guarantee!)
-
-
-
-## !split
-## ===== Metoda kolokacji (interpolacji); idea i teoria =====
-## label{fem:approx:global:interp}
-
-## idx{collocation method (approximation)}
-## idx{approximation!collocation}
-
-## Inny sposób znalezienia przybliżenia $f(x)$ przez $u(x)=\sum_jc_j\baspsi_j$:
-
-##  * Wymuszamy $u(\xno{i}) = f(\xno{i})$ w pewnych wybranych punktach 
-##    $\sequencei{x}$ (punktach *kolokacji*)
-##  * $u$ *interpoluje* $f$
-##  * metoda znana jako metoda *kolokacji* (*interpolacji*)
-
-## !bt
-## \[ u(\xno{i}) = \sum_{j\in\If} c_j \baspsi_j(\xno{i}) = f(\xno{i})
-## \quad i\in\If,N
-## \]
-## !et
-
-## Współczynniki wygenerowanego układu równań to po prostu wartości funkcji,
-## nie ma potrzeby całkowania!
-
-## !bt
-## \begin{align}
-## \sum_{j\in\If} A_{i,j}c_j &= b_i,\quad i\in\If\\
-## A_{i,j} &= \baspsi_j(\xno{i})\\
-## b_i &= f(\xno{i})
-## \end{align}
-## !et
-
-## W ogólnym przypadku macierz wynikowa niesymetryczna: $\baspsi_j(\xno{i})\neq \baspsi_i(\xno{j})$ 
-
-## !split
-## =====  Metoda kolokacji -- implementacja =====
-
-## Zmienna `points` przechowuje punkty kolokacji
-
-## !bc pycod
-## def interpolation(f, psi, points):
-##     N = len(psi) - 1
-##     A = sym.zeros((N+1, N+1))
-##     b = sym.zeros((N+1, 1))
-##     x = sym.Symbol('x')
-##     # Turn psi and f into Python functions
-##     psi = [sym.lambdify([x], psi[i]) for i in range(N+1)]
-##     f = sym.lambdify([x], f)
-##     for i in range(N+1):
-##         for j in range(N+1):
-##             A[i,j] = psi[j](points[i])
-##         b[i,0] = f(points[i])
-##     c = A.LUsolve(b)
-##     u = 0
-##     for i in range(len(psi)):
-##         u += c[i,0]*psi[i](x)
-##     return u
-## !ec
-
-
-## !split
-## ===== Metoda kolokacji: przybliżenie paraboli funkcją liniową =====
-
-##  * Problem: jak wybrać $\xno{i}$?
-##  * Wynik zależy od położenia punktów kolokacji!
-
-## $(4/3,5/3)$ vs $(1,2)$:
-
-## FIGURE: [../fig/parabola_inter, width=700 frac=1.2]
-
-## !split
-## ===== Regresja =====
-## label{fem:approx:global:regression}
-
-##  * Idea: metoda kolokacji dla $m \gg N+1$ punktów
-##  * Problem: Więcej równań niż niewiadomych
-##  * Znana np. ze statystyki *regresja*
-
-## FIGURE: [../fig/parabola_by_regression, width=800]
-
-## !split
-## ===== Regresji -- nadokreślone URL =====
-
-## ## Overdetermined linear system:
-
-## !bt
-## \[
-## u(\xno{i}) = \sum_{j\in\If} c_j \baspsi_j(\xno{i}) = f(\xno{i}),
-## \quad i=0,1,\ldots,m
-## \]
-## !et
-
-## !bt
-## \[ \sum_{j\in\If} A_{i,j}c_j = b_i,\quad i=0,1,\ldots,m \]
-## !et
-
-## !bt
-## \[ A_{i,j} = \baspsi_j(\xno{i}),\quad
-## b_i = f(\xno{i})\]
-## !et
-
-## !split
-## ===== Rozwiązywanie nadokreślonych URL przy pomocy \LSM =====
-
-##  * Jak rozwiązać $Ac=b$ jeśli jest więcej równań niż niewiadomych?
-##  * Idea: Poszukiwanie rozwiązania minimalizującego $r=b-Ac$
-##  * Rezultat: układ równań normalnych $A^TAc=A^Tb$
-##  * Zapiszmy układ w postaci $Bc=d$
-##  * $B = A^TA$ już kwadratowe: układ równań o rozmiarach $(N+1)\times(N+1)$ 
-
-## !bt
-## \begin{align*}
-## B_{i,j} &= \sum_k A^T{i,k}A_{k,j} = \sum_k A{k,i}A_{k,j}
-## =\sum_{k=0}^m\baspsi_i(\xno{k}) \baspsi_j(\xno{k})
-## \\
-## d_i &=\sum_k A^T_{i,k}b_k = \sum_k A_{k,i}b_k =\sum_{k=0}^m
-## \baspsi_i(\xno{k})f(\xno{k})
-## \end{align*}
-## !et
-
-## !split
-## ===== Implementacja =====
-
-## !bc pycod
-## def regression(f, psi, points):
-##     N = len(psi) - 1
-##     m = len(points)
-##     # Use numpy arrays and numerical computing
-##     B = np.zeros((N+1, N+1))
-##     d = np.zeros(N+1)
-##     # Wrap psi and f in Python functions rather than expressions
-##     # so that we can evaluate psi at points[i]
-##     x = sym.Symbol('x')
-##     psi_sym = psi  # save symbolic expression
-##     psi = [sym.lambdify([x], psi[i]) for i in range(N+1)]
-##     f = sym.lambdify([x], f)
-##     for i in range(N+1):
-##         for j in range(N+1):
-##             B[i,j] = 0
-##             for k in range(m+1):
-##                 B[i,j] += psi[i](points[k])*psi[j](points[k])
-##         d[i] = 0
-##         for k in range(m+1):
-##             d[i] += psi[i](points[k])*f(points[k])
-##     c = np.linalg.solve(B, d)
-##     u = sum(c[i]*psi_sym[i] for i in range(N+1))
-##     return u, c
-## !ec
-
-## !split
-## ===== Przykład zastosowania -- kod =====
-
-##  * Zadanie: Dokonać aproksymacji funkcji $f(x)=10(x-1)^2-1$
-##    na przedziale $\Omega=[1,2]$
-##    przy pomocy funkcji liniowej. 
-
-## !bc pycod
-## import sympy as sym
-## x = sym.Symbol('x')
-## f = 10*(x-1)**2 - 1
-## psi = [1, x]
-## Omega = [1, 2]
-## m_values = [2-1, 8-1, 64-1]
-## # Create m+3 points and use the inner m+1 points
-## for m in m_values:
-##     points = np.linspace(Omega[0], Omega[1], m+3)[1:-1]
-##     u, c = regression(f, psi, points)
-##     comparison_plot(f, u, Omega, points=points,
-##         points_legend='%d interpolation points' % (m+1))
-## !ec
-
-## !split
-## ===== Przykład zastosowania -- wyniki =====
-
-## !bt
-## \begin{align*}
-## u(x) &= 10x - 13.2,\quad 2\hbox{ punkty}\\
-## u(x) &= 10x - 12.7,\quad 8\hbox{ punktów}\\
-## u(x) &= 10x - 12.7,\quad 64\hbox{ punkty}
-## \end{align*}
-## !et
-
-## FIGURE: [../fig/parabola_by_regression, width=800]
-
-## !split
-## ===== What is the regression method used for? =====
-
-##  * It is one of the most dominating methods for approximating data
-##    in statistics
-##  * Not so common for approximating functions
-##  * Not much used for solving differential equations
-##  * Recently very popular for statistical uncertainty quantification:
-##    approximating the mapping from input parameters to the solution
-##    via polynomials and the regression method (called polynomial chaos
-##    expansions)
-
-## !split
-## ===== Wielomiany Lagrange'a =====
-## label{fem:approx:global:Lagrange}
-## idx{Lagrange (interpolating) polynomial}
-
-## Motywacja::
-
-##  * Metoda kolokacji pozwala uniknąć całkowania
-##  * Dla macierzy diagonalnej $A_{i,j} = \baspsi_j(\xno{i})$
-##    rozwiązanie URL jest banalnie proste
-
-## Własność *wielomianów Lagrange'a* $\baspsi_j$:
-
-## !bt
-## \[ \baspsi_i(\xno{j}) =\delta_{ij},\quad \delta_{ij} =
-## \left\lbrace\begin{array}{ll}
-## 1, & i=j\\
-## 0, & i\neq j
-## \end{array}\right.
-## \]
-## !et
-
-## Zatem, $c_i = f(x_i)$ and
-
-## !bt
-## \[
-## u(x) = \sum_{j\in\If} f(\xno{i})\baspsi_i(x)
-## \]
-## !et
-
-##  * Wielomiany Lagrange'a w połączeniu z metodą kolokacji są niezwykle wygodne
-##  * Często stosowane w \FEM
-
-## !split
-## ===== Wielomiany Lagrange'a -- wzór i implementacja =====
-
-## !bt
-## \[
-## \baspsi_i(x) =
-## \prod_{j=0,j\neq i}^N
-## \frac{x-\xno{j}}{\xno{i}-\xno{j}}
-## = \frac{x-x_0}{\xno{i}-x_0}\cdots\frac{x-\xno{i-1}}{\xno{i}-\xno{i-1}}\frac{x-\xno{i+1}}{\xno{i}-\xno{i+1}}
-## \cdots\frac{x-x_N}{\xno{i}-x_N}
-## \]
-## !et
-
-## !bc pycod
-## def Lagrange_polynomial(x, i, points):
-##     p = 1
-##     for k in range(len(points)):
-##         if k != i:
-##             p *= (x - points[k])/(points[i] - points[k])
-##     return p
-## !ec
-
-## !split
-## ===== Wielomiany Lagrange'a -- zachęcający przykład zastosowania =====
-
-## FIGURE: [../fig/Lagrange_ls_interp_sin_4, width=800 frac=1.2]
-
-## !split
-## ===== Wielomiany Lagrange'a -- mniej zachęcający przykład zastosowania =====
-
-## FIGURE: [../fig/Lagrange_interp_abs_8_15, width=800 frac=1.2]
-
-## !split
-## ===== Wielomiany Lagrange'a -- efekt Runge'go =====
-
-## 12 punktów, dwa wielomiany stopnia 11
-## (Uwaga!: $\psi_2(x_2) \neq 0$ i  $\psi_7(x_7) \neq 0$
-
-## FIGURE: [../fig/Lagrange_basis_12, width=500]
-
-## Problem: strong oscillations near the boundaries for larger $N$ values.
-
-## !split
-## ===== Wielomiany Lagrange'a: jak zapobiec oscylacjom? =====
-
-## Odpowiedni dobór węzłów interpolacji -- *węzły Czebyszewa*:
-
-## !bt
-## \[
-## \xno{i} = \half (a+b) + \half(b-a)\cos\left( \frac{2i+1}{2(N+1)}\pi\right),\quad i=0\ldots,N
-## \]
-## !et
-## na przedziale $[a,b]$.
-
-## !split
-## ===== Wielomiany Lagrange'a + węzły Czebyszewa =====
-
-## FIGURE: [../fig/Lagrange_interp_abs_Cheb_8_15, width=800 frac=1.2]
-
-## !split
-## ===== Wielomiany Lagrange'a + węzły Czebyszewa =====
-
-## 12 punktów, dwa wielomiany stopnia 11.
-
-## Uwaga!: Tym razem węzły są inaczej rozmieszczone!
-
-## Mniej oscylacyjny charakter wielomianów w porównaniu do węzłów
-## równomiernie rozmieszczonych.
-
-## FIGURE: [../fig/Lagrange_basis_Cheb_12, width=500]
-
-## !split
-## ======= Funkcje bazowe elementów skończonychs =======
-## label{fem:approx:fe}
-
-## FIGURE: [../fig/fe_mesh1D_phi_2_3, width=500 frac=0.7]
-
-## !split
-## ===== Funkcje bazowe o nośniku nieograniczonym: $\baspsi_i(x) \neq 0$ prawie w całym przedziale określoności =====
-
-## Nośnik funkcji: domknięcie zbioru argumentów funkcji, dla których ma ona wartość różną od zera (takie iksy dla których $f(x) \neq 0$)
-
-## FIGURE: [../fig/u_example_sin, width=800]
-
-## !split
-## ===== Funkcje bazowe o nośniku ograniczonym -- \FEM{} =====
-
-##  * *Nośnik zwarty* (*Local support*): domknięcie zbioru tych $x$-ów, dla których
-##    $\baspsi_i(x) \neq 0$
-##  * Typowe dla 1D - funkcje trójkątne (hat-shaped)
-##  * $u(x)$ zbudowana przy pomocy takich funkcji $\baspsi_i$
-##    będzie funkcją przedziałami liniową 
-##  * Niech symbol $\basphi_i$ oznacza odtąd tego typu funkcję trójkątną
-##    (przyjmijmy również $\baspsi_i=\basphi_i$)
-
-## FIGURE: [../fig/fe_mesh1D_phi_2_3, width=500 frac=0.6]
-
-## !split
-## ===== Kombinacja liniowa funkcji trójkątnych =====
-
-## FIGURE: [../fig/u_example_fe2, width=500]
-
-## !split
-## ===== Elementy i węzły =====
-## label{fem:approx:fe:def:elements:nodes}
-
-## Podzielmy $\Omega$ na $N_e$ rozdzielnych podobszarów podobszarów -- *elementów*:
-
-## !bt
-## \[
-## \Omega = \Omega^{(0)}\cup \cdots \cup \Omega^{(N_e)}
-## \]
-## !et
-
-## Na każdym elemencie wprowadzamy $N_n$ *wezłów*
-## (punktów): $\xno{0},\ldots,\xno{N_n-1}$
-
-##  * $\basphi_i(x)$ -- $i$-ta funkcja bazowa 
-##  * $\basphi_i=1$ w węźle $i$ i $\basphi_i=0$ w pozostałych węzłach
-##  * $\basphi_i$ to wielomian Lagrange'a na każdym elemencie
-##  * Dla węzłów granicznych, leżących w punktach łączących dwa elementy
-##    funkcja $\basphi_i$
-##    jest zbudowane z wielomianów Lagrange'a na obu elementach
-
-## !split
-## ===== Przykład: obszar podzielony na elementy dwuwęzłowe (elementy typu P1) =====
-
-## FIGURE: [../fig/fe_mesh1D_P1, width=500 frac=0.8]
-
-## Struktura `nodes` -- współrzędne węzłów.
-
-## Struktura `elements` --  numery (globalne) węzłów tworzących
-## odpowiedni element.
-
-## !bc pycod
-## nodes = [0, 1.2, 2.4, 3.6, 4.8, 5]
-## elements = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]]
-## !ec
-
-## !split
-## ===== Przykład: dwie funkcje bazowe na siatce =====
-
-## FIGURE: [../fig/fe_mesh1D_phi_2_3, width=600 frac=0.8]
-
-
-## !split
-## ===== Przykład: elementy niejednorodne o trzech węzłach (elementy typu P2) =====
-
-## FIGURE: [../fig/fe_mesh1D_P2, width=500 frac=0.8]
-
-## !bc pycod
-## nodes = [0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0]
-## elements = [[0, 1, 2], [2, 3, 4], [4, 5, 6], [6, 7, 8]]
-## !ec
-
-## !split
-## ===== Przykład: funkcje bazowe na siatce (elementy typu P2) =====
-
-## FIGURE: [../fig/phi/mpl_fe_basis_p2_4e, width=800]
-
-## !split
-## ===== Przykład: elementy typu P3 (o czterech węzłach interpolacji) =====
-
-## FIGURE: [../fig/fe_mesh1D_d4_stretched, width=500 frac=0.8]
-
-## !bc pycod
-## d = 3  # d+1 nodes per element
-## num_elements = 4
-## num_nodes = num_elements*d + 1
-## nodes = [i*0.5 for i in range(num_nodes)]
-## elements = [[i*d+j for j in range(d+1)] for i in range(num_elements)]
-## !ec
-
-## !split
-## ===== Przykład: funkcje bazowe na siatce (elementy typu P3) =====
-
-## FIGURE: [../fig/phi/mpl_fe_basis_p3_4e, width=800]
-
-## !split
-## ===== Indeksacja nieregularna =====
-
-## FIGURE: [../fig/fe_mesh1D_random_numbering, width=500 frac=0.8]
-
-## !bc pycod
-## nodes = [1.5, 5.5, 4.2, 0.3, 2.2, 3.1]
-## elements = [[2, 1], [4, 5], [0, 4], [3, 0], [5, 2]]
-## !ec
-
-
-## !split
-## ===== Współczynniki $c_i$ -- interpretacja =====
-
-## Ważna własność: $c_i$
-## to wartość funkcji $u$ w węźle $i$, $\xno{i}$:
-
-## !bt
-## \[
-## u(\xno{i}) = \sum_{j\in\If} c_j\basphi_j(\xno{i}) =
-## c_i\basphi_i(\xno{i}) = c_i
-## \]
-## !et
-
-## Powód: $\basphi_j(\xno{i}) =0$ jeśli $i\neq j$ i $\basphi_i(\xno{i}) =1$
-
-## !split
-## ===== Własności funkcji bazowych =====
-
-##  * $\basphi_i(x) \neq 0$ jedynie na tych elementach, które zawierają węzeł
-##    o globalnym indeksie $i$
-##  * $\basphi_i(x)\basphi_j(x) \neq 0$ wtedy i tylko wtedy gdy
-##    węzly $i$ oraz $j$ leżą na tym samym elemencie
-
-## Ponieważ $A_{i,j}=\int\basphi_i\basphi_j\dx$,
-## *większość współczynników macierzy będzie równa zero*
-## -> macierze rzadkie
-
-## FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=500 frac=0.5]
-
-## !split
-## ===== Konstrukcja kwadratowych $\basphi_i$ (elementy typu P2) =====
-
-## FIGURE: [../fig/phi/mpl_fe_basis_p2_4e, width=500 frac=0.6]
-
-##  o każdy węzeł elementu ma przypisany wielomian Lagrange'a
-##  o Wielomian o wartości 1 na brzegu elementu należy ''połączyć'' z wielomianem
-##    z sąsiedniego elementu, który ma wartość 1 w tym samym punkcie
-
-## !split
-## ===== Liniowe $\basphi_i$ (elementy typu P1) =====
-
-## FIGURE: [../fig/phi/mpl_fe_basis_p1_4e, width=500 frac=0.6]
-
-## !bt
-## \[
-## \basphi_i(x) = \left\lbrace\begin{array}{ll}
-## 0, & x < \xno{i-1}\\
-## (x - \xno{i-1})/h
-## & \xno{i-1} \leq x < \xno{i}\\
-## 1 -
-## (x - x_{i})/h,
-## & \xno{i} \leq x < \xno{i+1}\\
-## 0, & x\geq \xno{i+1}
-## \end{array}
-## \right.
-## \]
-## !et
-
-## !split
-## ===== Sześcienne $\basphi_i$ (elementy typu P3) =====
-
-## FIGURE: [../fig/phi/mpl_fe_basis_p3_4e, width=500 frac=0.6]
-
-
-## !split
-## ======= Generowanie URL =======
-## label{fem:approx:global:linearsystem}
-
-## FIGURE: [../fig/sparsity_pattern_1D_30unif, width=600 frac=0.8]
-
-## !split
-## ===== Przykład 1: Obliczenie wartości (niediagonalnego) elementu macierzy =====
-
-## FIGURE: [../fig/fe_mesh1D_phi_2_3, width=300 frac=0.5]
-
-## Uproszczenie: elementy jednakowej długości.
-
-## $A_{2,3}=\int_\Omega\basphi_2\basphi_3 dx$: $\basphi_2\basphi_3\neq 0$
-## jedynie na elemencie 2. Dla tego elementu:
-
-## !bt
-## \[ \basphi_3(x) = (x-x_2)/h,\quad \basphi_2(x) = 1- (x-x_2)/h\]
-## !et
-
-## !bt
-## \[
-## A_{2,3} = \int_\Omega \basphi_2\basphi_{3}\dx =
-## \int_{\xno{2}}^{\xno{3}}
-## \left(1 - \frac{x - \xno{2}}{h}\right) \frac{x - x_{2}}{h}
-##  \dx = \frac{h}{6}
-## \]
-## !et
-
-## !split
-## ===== Przykład 2: Obliczenie wartości (diagonalnego) elementu macierzy =====
-
-## FIGURE: [../fig/fe_mesh1D_phi_2_3, width=500 frac=0.8]
-
-## !bt
-## \[ A_{2,2} =
-## \int_{\xno{1}}^{\xno{2}}
-## \left(\frac{x - \xno{1}}{h}\right)^2\dx +
-## \int_{\xno{2}}^{\xno{3}}
-## \left(1 - \frac{x - \xno{2}}{h}\right)^2\dx
-## = \frac{2h}{3}
-## \]
-## !et
-
-## !split
-## ===== Ogólna postać wzoru na wartość elementu $A_{ij}$ - rysunek =====
-
-## FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=500 frac=0.8]
-
-## !bt
-## \[ A_{i,i-1} = \int_\Omega \basphi_i\basphi_{i-1}\dx = \hbox{?}\]
-## !et
-
-## !split
-## ===== Ogólna postać wzoru na wartość elementu $A_{ij}$ - obliczenia =====
-## ## ===== Calculating a general row in the matrix; details =====
-
-## !bt
-## \begin{align*}
-## A_{i,i-1} &= \int_\Omega \basphi_i\basphi_{i-1}\dx\\
-## &=
-## \underbrace{\int_{\xno{i-2}}^{\xno{i-1}} \basphi_i\basphi_{i-1}\dx}_{\basphi_i=0} +
-## \int_{\xno{i-1}}^{\xno{i}} \basphi_i\basphi_{i-1}\dx +
-## \underbrace{\int_{\xno{i}}^{\xno{i+1}} \basphi_i\basphi_{i-1}\dx}_{\basphi_{i-1}=0}\\
-## &= \int_{\xno{i-1}}^{\xno{i}}
-## \underbrace{\left(\frac{x - x_{i}}{h}\right)}_{\basphi_i(x)}
-## \underbrace{\left(1 - \frac{x - \xno{i-1}}{h}\right)}_{\basphi_{i-1}(x)} \dx =
-## \frac{h}{6}
-## \end{align*}
-## !et
-
-##  * $A_{i,i+1}=A_{i,i-1}$ ze względu na symetrię
-##  * $A_{i,i}=2h/3$ (obliczenia jak w przypadku $A_{2,2}$), z wyjątkiem:
-##  * $A_{0,0}=A_{N,N}=h/3$ (całka tylko na jednym elemencie)
-
-## !split
-## ===== Obliczenia dla prawej strony równania =====
-
-## FIGURE: [../fig/fe_mesh1D_phi_i_f, width=500 frac=0.8]
-
-## !bt
-## \[
-## b_i = \int_\Omega\basphi_i(x)f(x)\dx
-## = \int_{\xno{i-1}}^{\xno{i}} \frac{x - \xno{i-1}}{h} f(x)\dx
-## + \int_{x_{i}}^{\xno{i+1}} \left(1 - \frac{x - x_{i}}{h}\right) f(x)
-## \dx
-## \]
-## !et
-
-## Do dalszych obliczeń potrzebna konkretna postać $f(x)$ ...
-
-## !split
-## ===== Przykład: rozwiązanie dla obszaru dwu-elementowego -- URL i rozwiązanie =====
-
-##  * $f(x)=x(1-x)$ na $\Omega=[0,1]$
-##  * Dwa elementy o jednakowej długości: $[0,0.5]$ oraz $[0.5,1]$
-
-## !bt
-## \begin{equation*}
-## A = \frac{h}{6}\left(\begin{array}{ccc}
-## 2 & 1 & 0\\
-## 1 & 4 & 1\\
-## 0 & 1 & 2
-## \end{array}\right),\quad
-## b = \frac{h^2}{12}\left(\begin{array}{c}
-## 2 - 3h\\
-## 12 - 14h\\
-## 10 -17h
-## \end{array}\right)
-## \end{equation*}
-## !et
-
-## !bt
-## \begin{equation*} c_0 = \frac{h^2}{6},\quad c_1 = h - \frac{5}{6}h^2,\quad
-## c_2 = 2h - \frac{23}{6}h^2
-## \end{equation*}
-## !et
-
-## !split
-
-## ===== Przykład: rozwiązanie dla obszaru dwu-elementowego -- rozwiązanie-rysunek =====
-## !bt
-## \begin{equation*} u(x)=c_0\basphi_0(x) + c_1\basphi_1(x) + c_2\basphi_2(x)\end{equation*}
-## !et
-
-## FIGURE: [../fig/fe_p1_x2_2e, width=600 frac=0.7]
-
-## !split
-## ===== Przykład: Rozwiązanie dla obszaru 4-elementowego -- rozwiązanie-rysunek =====
-
-## FIGURE: [../fig/fe_p1_x2_2e_4e, width=800 frac=1.0]
-
-## !split
-## ===== Przykład: elementy typu P2 =====
-
-## !bbox
-## Przypomnienie: jeśli $f\in V$, $u$ odtworzy rozwiązanie bezbłędnie.
-## Jeśli $f$ to parabola, dowolna siatka elementów typu P2 (1 lub wiele elementów)
-## sprawi wygeneruje $u=f$.
-## To samo dotyczyć będzie elementów typu P3, P4, itd., ponieważ one wszystkie
-## potrafią odtworzyć wielomian 2. stopnia bezbłędnie.
-## !ebox
-
-## !split
-## ======= Generowanie macierzy globalnej - logika obliczeń =======
-## label{fem:approx:fe:elementwise}
-
-## (ang. assemble - gromadzić, składać, zbierać)
-
-## assembling, assemblacja?
-
-
-## FIGURE: [../mov/fe_assembly_irregular/fe_assembly_irregular, width=300 frac=0.5]
-
-## !split
-## ===== Całkowanie z perspektywy elementu =====
-
-## !bt
-## \[
-## A_{i,j} = \int_\Omega\basphi_i\basphi_jdx =
-## \sum_{e} \int_{\Omega^{(e)}} \basphi_i\basphi_jdx,\quad
-## A^{(e)}_{i,j}=\int_{\Omega^{(e)}} \basphi_i\basphi_jdx
-## \]
-## !et
-
-## Ważne spostrzeżenia:
-
-##  * $A^{(e)}_{i,j}\neq 0$ wtedy i tylko wtedy gdy
-##    węzeły $i$ oraz $j$ leżą na tym samym elemencie $e$
-##    (w przeciwnym wypadku nośniki funkcji to zbiory rozłączne)
-##  * Wszystkie niezerowe współczynniki danego elementu $A^{(e)}_{i,j}$
-##    tworzą lokalną macierz dla danego elementu (*element matrix*)
-##  * ''Wkład'' w macierz lokalną elementu  mają wyłącznie funkcje
-##    bazowe związane z węzłami leżącymi na tym elemencie
-##  * Wygodne rozwiązanie: wprowadzenie *indeksacji lokalnej*
-## ##   (*local numbering*)
-##    węzłów leżących na danym elemencie: $0,1,\ldots,d$
-
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.7cm}
-## #endif
-
-## FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=300 frac=0.4]
-
-## !split
-## ===== Macierz elementów: indeksacja lokalna/indeksacja globalna =====
-
-## !bt
-## \[
-## \tilde A^{(e)} = \{ \tilde A^{(e)}_{r,s}\},\quad
-## \tilde A^{(e)}_{r,s} =
-## \int_{\Omega^{(e)}}\basphi_{q(e,r)}\basphi_{q(e,s)}dx,
-## \quad r,s\in\Ifd=\{0,\ldots,d\}
-## \]
-## !et
-
-## !bslidecell 00 0.85
-
-##  * $r,s$ *lokalne indeksy węzłów* na elemencie: $0, 1,\ldots, d$
-##  * $i,j$ *globalne indeksy węzłów* $i,j\in\If = \{0,1,\ldots,N\}$
-##  * $i=q(e,r)$: transformacja lokalnej indeksacji w globalną 
-##    (matematyczny zapis pythonowskiego `i=elements[e][r]`)
-##    gdzie: 
-##    `elements = [[1, 2],[2,3],[3,4], ..., [7,8],[8,9,10], ...]`
-##  * Uwzględnienie macierzy lokalnej $\tilde A^{(e)}_{r,s}$
-##    w macierzy globalnej $A_{i,j}$
-##    (*assembly*)
-
-## !bt
-## \[
-##  A_{q(e,r),q(e,s)} := A_{q(e,r),q(e,s)} + \tilde A^{(e)}_{r,s},\quad
-## r,s\in\Ifd
-## \]
-## !et
-
-## !eslidecell
-
-## !bslidecell 01 0.15
-
-## |--------------------------|
-## | i     | e      | r       |
-## |---r--------r--------r----|
-## |1      | 1      | 1       |
-## |2      | 1      | 2       |
-## |2      | 2      | 1       |
-## |3      | 2      | 2       |
-## ## |3      | 3      | 1       |
-## ## |4      | 3      | 2       |
-## ## |4      | 4      | 1       |
-## ## |5      | 4      | 2       |
-## ## |5      | 5      | 1       |
-## |\vdots | \vdots | \vdots  |
-## |8      | 7      | 2       |
-## |8      | 8      | 1       |
-## |9      | 8      | 2       |
-## |10     | 8      | 3       |
-## |10     | 9      | 1       |
-## |\vdots | \vdots | \vdots  |
-## |--------------------------|
-
-## !eslidecell
-
-
-
-## !split
-## ===== Przykład: assembling macierzy dla kolejno ponumerowanych elementów P1 =====
-
-## FIGURE: [../mov/fe_assembly_regular_2x2/fe_assembly_regular_2x2, width=400 frac=0.7]
-
-## ## # #if FORMAT == "html"
-## ## "Animation": "mov/fe_assembly.html"
-## ## # #else
-## ## "Animation": "../mov/fe_assembly.html"
-## ## ## "$ {fem_doc}/mov/fe_assembly.html"
-## ## # #endif
-
-## TODO
-
-## !split
-## ## ===== Illustration of the matrix assembly: regularly numbered P3 elements =====
-## ===== Przykład: assembling macierzy dla kolejno ponumerowanych elementów P3 =====
-
-
-## FIGURE: [../mov/fe_assembly_regular_4x4/fe_assembly_regular_4x4, width=400 frac=0.7]
-
-## ## # #if FORMAT == "html"
-## ## "Animation": "mov/fe_assembly.html"
-## ## # #else
-## ## "Animation": "../mov/fe_assembly.html"
-## ## # #endif
-
-## TODO
-
-## !split
-## # ===== Illustration of the matrix assembly: irregularly numbered P1 elements =====
-## ===== Przykład: assembling macierzy dla nieregularnej siatki elementów P1 =====
-
-## FIGURE: [../mov/fe_assembly_irregular/fe_assembly_irregular, width=400 frac=0.7]
-
-## ## # #if FORMAT == "html"
-## ## "Animation": "mov/fe_assembly.html"
-## ## # #else
-## ## "Animation": "../mov/fe_assembly.html"
-## ## # #endif
-
-## TODO
-
-## !split
-## ===== Assembling prawej strony układu =====
-
-## !bt
-## \[
-## b_i = \int_\Omega f(x)\basphi_i(x)dx =
-## \sum_{e} \int_{\Omega^{(e)}} f(x)\basphi_i(x)dx,\quad
-## b^{(e)}_{i}=\int_{\Omega^{(e)}} f(x)\basphi_i(x)dx
-## \]
-## !et
-
-## FIGURE: [../fig/fe_mesh1D_phi_i_f, width=300 frac=0.4]
-
-## Ważne spostrzeżenia:
-##   * $b_i^{(e)}\neq 0$ wtedy i tylko wtedy gdy węzeł globalny $i$
-##     leży na danym elemencie $e$
-##     (w przeciwnym przypadku $\basphi_i=0$)
-##   * $d+1$ niezerowych wartości $b_i^{(e)}$ może być zgromadzonych w
-##     *lokalnym wektorze* elementu e.
-##     $\tilde b_r^{(e)}=\{ \tilde b_r^{(e)}\}$, $r\in\Ifd$
-
-## Assembling:
-## !bt
-## \[
-## b_{q(e,r)} := b_{q(e,r)} + \tilde b^{(e)}_{r},\quad
-## r\in\Ifd
-## \]
-## !et
-
-## !split
-## ======= Transformacja współrzędnych globalnych do współrzędnych unormowanych =======
-## label{fem:approx:fe:mapping}
-
-## Normalizacja współrzędnych położenia:
-
-## Zamiast całkować w granicach $[x_L, x_R]$
-## !bt
-## \begin{equation*} \tilde A^{(e)}_{r,s} = \int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
-## = \int_{x_L}^{x_R}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
-## \end{equation*}
-## !et
-## można transformować przedział $[x_L, x_R]$
-## na przedział unormowany $[-1,1]$ o współrzędnej lokalnej $X$
-
-## !split
-## ===== Transformacja liniowa $X\in [-1,1]$ w $x\in [x_L,x_R]$ =====
-
-## (Transformacja afiniczna)
-
-## !bt
-## \[
-## x = \half (x_L + x_R) + \half (x_R - x_L)X
-## \]
-## !et
-## inaczej
-## !bt
-## \[
-## x = x_m + {\half}hX, \qquad x_m=(x_L+x_R)/2,\quad h=x_R-x_L
-## \]
-## !et
-
-
-## #if FORMAT in ('latex', 'pdflatex')
-## \scriptsize
-## #endif
-
-## Transformacja odwrotna:
-## !bt
-## \[
-## X = \frac{2 x + (x_L + x_R)}{(x_R - x_L)} 
-## \]
-## !et
-
-
-## !split
-## ===== Transformacja całki =====
-## #if FORMAT in ('latex', 'pdflatex')
-## \small
-## #endif
-## Zmiana granic całkowania ->
-## całkowanie na przedziale unormowanym:
-## podstawienie $x(X)$ w miejsce $x$.
-
-## Lokalne funkcje bazowe we współrzędnych unormowanych:
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.2cm}
-## #endif
-## !bt
-## \[
-## \refphi_r(X) = \basphi_{q(e,r)}(x(X))
-## \]
-## !et
-## !bt
-## \[
-## \begin{array}{c}
-## x = \half (x_L + x_R) + \half (x_R - x_L)X \\
-## \downarrow \\
-## dx = \half (x_R - x_L) dX
-## \end{array}
-## \]
-## !et
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.5cm}
-## #endif
-
-## ## !bt
-## ## \[
-## ## \tilde A^{(e)}_{r,s}
-## ## =
-## ## \int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
-## ## =
-## ## \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\underbrace{\frac{dx}{dX}}_{\det J= h/2}dX =
-## ## \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\det J\,dX
-## ## \]
-## ## !et
+===== Metoda Galerkina =====
+
+
+!bslidecell 00 0.2
+
+FIGURE: [../figMB/orthopro.pdf, width=300 frac=1.7]
+
+!eslidecell
+
+!bslidecell 01 0.75
+!bpop
+ * $\min E$ $\rightarrow$ to samo co:  $(\e, \psib_0)=0$ (rysunek)
+ * $(\e, \psib_0)=0$ $\Rightarrow$ $(\e, \v)=0$ dla *dowolnego* $\v\in V$ (rysunek)
+ * Czyli: zamiast korzystać z aproksymacji średniokwadratowej, można
+   wymusić, aby $\e$ było ortogonalne (prostopadłe) dla dowolnego
+   $\v\in V$ -- oczywiste na rysunku a...
+ * W języku matematyki: znajdź takie $c_0$ aby $(\e, \v) = 0,\quad\forall\v\in V$
+ * Równoważnie: znajdź takie $c_0$ aby $(\e, \psib_0)=0$
+ * Podstawmy: $\e = \f - c_0\psib_0$ i rozwiążmy ze względu na $c_0$
+ * Ostatecznie: to samo równanie (a więc i to samo rozwiązanie) co w metodzie
+   najmniejszych kwadratów
+!epop
+
+!eslidecell
+
+
+
+!split
+## ===== Approximation of general vectors =====
+===== Aproksymacja wektora przestrzeni dowolniewymiarowej =====
+label{fem:approx:vec:Np1dim}
+idx{approximation!of general vectors}
+
+Dla danego wektora $\f$, znajdź przybliżenie $\u\in V$:
+
+!bt
+\begin{equation*}
+V = \hbox{span}\,\{\psib_0,\ldots,\psib_N\}
+\end{equation*}
+!et
+
+($\hbox{span}$ czyt. przestrzeń rozpięta na wektorach...)
+
+Mając dany zbiór wektorów niezależnych liniowo 
+$\psib_0,\ldots,\psib_N$,
+dowolny wektor $\u\in V$ można zapisać jako:
+
+!bt
+\[ \u = \sum_{j=0}^Nc_j\psib_j\]
+!et
+
+!bnotice Przykład 
+TODO
+!enotice
+
+!split
+## ===== Metoda najmniejszych kwadratów =====
+===== Metoda najmniejszych kwadratów =====
+
+Idea: znaleźć takie $c_0,\ldots,c_N$, aby $E= ||\e||^2$ był minimalizowany, $\e=\f-\u$.
+!bt
+\begin{align*}
+E(c_0,\ldots,c_N) &= (\e,\e) = (\f -\sum_jc_j\psib_j,\f -\sum_jc_j\psib_j)
+\nonumber\\
+&= (\f,\f) - 2\sum_{j=0}^Nc_j(\f,\psib_j) +
+\sum_{p=0}^N\sum_{q=0}^N c_pc_q(\psib_p,\psib_q)
+\end{align*}
+!et
+
+!bt
+\begin{equation*}
+\frac{\partial E}{\partial c_i} = 0,\quad i=0,\ldots,N
+\end{equation*}
+!et
+Po odrobinie obliczeń otrzymuje się *układ równań liniowych*:
+!bt
+\begin{align}
+\sum_{j=0}^N A_{i,j}c_j &= b_i,\quad i=0,\ldots,N\\
+A_{i,j} &= (\psib_i,\psib_j)\\
+b_i &= (\psib_i, \f)
+\end{align}
+!et
+
+!split
+## ===== The projection (or Galerkin) method =====
+===== Metoda Galerkina =====
+
+Można pokazać, że poszukiwanie minimalnego $||\e||$
+jest równoważne poszukiwaniu $\e$ ortogonalnego do wszystkich $\v\in V$:
+
+idx{Galerkin method} idx{projection}
+
+!bt
+\[
+(\e,\v)=0,\quad \forall\v\in V
+\]
+!et
+co jest równoważne temu aby $\e$ był ortogonalny do każdego wektora bazowego:
+
+!bt
+\[ (\e,\psib_i)=0,\quad i=0,\ldots,N \]
+!et
+
+Warunek ortogonalności -- podstawa metody Galerkina.
+Generuje ten sam układ równań liniowych co \LSM.
+
+!split
+======= Aproksymacja funkcji w przestrzeni funkcyjnej =======
+label{fem:approx:global}
+idx{approximation!of functions}
+
+Niech $V$ będzie *przestrzenią funkcyjną* rozpiętą na zbiorze *funkcji bazowych*
+$\baspsi_0,\ldots,\baspsi_N$,
+
+!bt
+\begin{equation*}
+V = \hbox{span}\,\{\baspsi_0,\ldots,\baspsi_N\}
+\end{equation*}
+!et
+
+Dowolną funkcję tej przestrzeni $u\in V$ można przedstawić jako kombinację
+liniową funkcji bazowych:
+
+!bt
+\[ u = \sum_{j\in\If} c_j\baspsi_j,\quad\If = \{0,1,\ldots,N\} \]
+!et
+
+!split
+===== Uogólnienie \LSM{} na przestrzenie funkcyjne =====
+label{fem:approx:LS}
+
+Tak jak dla przestrzeni wektorowych, minimalizujemy normę błędu $E$,
+ze względu na współczynniki $c_j$, $j\in\If$:
+
+!bt
+\[
+E = (e,e) = (f-u,f-u) = \left(f(x)-\sum_{j\in\If} c_j\baspsi_j(x), f(x)-\sum_{j\in\If} c_j\baspsi_j(x)\right)
+\]
+!et
+
+!bt
+\[ \frac{\partial E}{\partial c_i} = 0,\quad i=\in\If \]
+!et
+
+Czym jest iloczyn skalarny jeśli $\baspsi_i$ jest funkcją?
+
+!bt
+\[(f,g) = \int_\Omega f(x)g(x)\, dx\]
+!et
+(iloczyn skalarny funkcji cg jako uogólnienie il. skalarnego funkcji dyskretnych $(\u, \v) = \sum_j u_jv_j$)
+
+!split
+===== Szczegóły \LSM{} =====
+
+!bt
+\begin{align*}
+E(c_0,\ldots,c_N) &= (e,e) = (f-u,f-u) \\
+ &= (f,f) -2\sum_{j\in\If} c_j(f,\baspsi_i)
++ \sum_{p\in\If}\sum_{q\in\If} c_pc_q(\baspsi_p,\baspsi_q)
+\end{align*}
+!et
+
+!bt
+\[ \frac{\partial E}{\partial c_i} = 0,\quad i=\in\If \]
+!et
+
+Obliczenia identyczne jak dla przypadku wektorowego
+->
+w rezultacie otrzymujemy układ równań liniowych
+
+!bt
+\[
+\sum_{j\in\If}^N A_{i,j}c_j = b_i,\ i\in\If,\quad
+A_{i,j} = (\baspsi_i,\baspsi_j),\
+b_i = (f,\baspsi_i)
+\]
+!et
+
+!split
+===== Metoda Galerkina =====
+
+Jak poprzednio minimalizacja $(e,e)$ jest równoważna
+
+!bt
+\[
+(e,\baspsi_i)=0,\quad i\in\If
+label{fem:approx:Galerkin0}
+\]
+!et
+
+co z kolei jest równoważne
+
+!bt
+\[
+(e,v)=0,\quad\forall v\in V
+label{fem:approx:Galerkin}
+\]
+!et
+## which is the projection (or Galerkin) method.
+
+Równoważność wzorów jak dla przestrzeni wektorowych.
+
+Równoważność wzorów jak dla wyprowadzenia przy pomocy \LSM.
+
+
+!split
+===== Przykład: aproksymacja paraboli funkcją liniową =====
+label{fem:approx:global:linear}
+
+!bblock Problem
+## Approximate a parabola $f(x) = 10(x-1)^2 - 1$ by a straight line.
+Dla zadanej funkcji $f(x) = 10(x-1)^2 - 1$ znaleźć jej przybliżenie
+funkcją liniową.
+!eblock
+
+!bt
+\begin{equation*} V = \hbox{span}\,\{1, x\}  \end{equation*}
+!et
+czyli $\baspsi_0(x)=1$, $\baspsi_1(x)=x$ oraz $N=1$.
+Szukane
+
+!bt
+\begin{equation*}
+u=c_0\baspsi_0(x) + c_1\baspsi_1(x) = c_0 + c_1x
+\end{equation*}
+!et
+
+!split
+===== Przykład: aproksymacja paraboli funkcją liniową =====
+
+!bt
+\begin{align*}
+A_{0,0} &= (\baspsi_0,\baspsi_0) = \int_1^21\cdot 1\, dx = 1\\
+A_{0,1} &= (\baspsi_0,\baspsi_1) = \int_1^2 1\cdot x\, dx = 3/2\\
+A_{1,0} &= A_{0,1} = 3/2\\
+A_{1,1} &= (\baspsi_1,\baspsi_1) = \int_1^2 x\cdot x\,dx = 7/3\\
+b_1 &= (f,\baspsi_0) = \int_1^2 (10(x-1)^2 - 1)\cdot 1 \, dx = 7/3\\
+b_2 &= (f,\baspsi_1) = \int_1^2 (10(x-1)^2 - 1)\cdot x\, dx = 13/3
+\end{align*}
+!et
+Rozwiązanie układu równań 2x2:
+
+!bt
+\[ c_0 = -38/3,\quad c_1 = 10,\quad u(x) = 10x - \frac{38}{3} \]
+!et
+
+!split
+===== Przykład: aproksymacja paraboli funkcją liniową =====
+
+!bt
+\begin{align*}
+\left[
+\begin{array}{cc}
+     1      & \frac{3}{2} \\
+\frac{3}{2} & \frac{7}{3} \\
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+c_0 \\
+c_1 \\
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\frac{7}{3} \\
+\frac{13}{3} \\
+\end{array}
+\right]
+\quad
+\rightarrow
+\quad
+\left[
+\begin{array}{c}
+c_0 \\
+c_1 \\
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+-38/3 \\
+10 \\
+\end{array}
+\right]
+\end{align*}
+!et
+!bt
+\[ u(x) = 10x - 12 \frac{2}{3} \]
+!et
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-1.0cm}
+#endif
+
+FIGURE: [../fig/parabola_ls_linear, width=550 frac=0.8]
+
+!split
+===== Symboliczna realizacja algorytmu \LSM{} =====
+label{fem:approx:global:LS:code}
+
+Problem: napisać program/funkcję, który przeprowadzi obliczenia (obliczenie całek
+i rozwiązanie układu równań liniowych) i zwróci
+rozwiązanie postaci n $u(x)=\sum_jc_j\baspsi_j(x)$.
+
+## Consider *symbolic computation* of the linear system,
+## where
+Niech 
+ * $f(x)$ będzie dane przez funkcję `sympy` oznaczoną symbolem `f`
+   (funkcję zmiennej (symbolu) `x`)
+ * `psi` będzie listą funkcji $\sequencei{\baspsi}$,
+ * `Omega` będzie dwuelementową krotką/listą zawierającą początek i koniec
+   przedziału $\Omega$
+
+
+
+!split
+===== \LSM{} symbolicznie:  podejście nr 1 =====
+
+!bc pycod
+import sympy as sym
+
+def least_squares(f, psi, Omega):
+    N = len(psi) - 1
+    A = sym.zeros((N+1, N+1))
+    b = sym.zeros((N+1, 1))
+    x = sym.Symbol('x')
+    for i in range(N+1):
+        for j in range(i, N+1):
+            A[i,j] = sym.integrate(psi[i]*psi[j],
+                                  (x, Omega[0], Omega[1]))
+            A[j,i] = A[i,j]
+        b[i,0] = sym.integrate(psi[i]*f, (x, Omega[0], Omega[1]))
+    c = A.LUsolve(b)
+    u = 0
+    for i in range(len(psi)):
+        u += c[i,0]*psi[i]
+    return u, c
+!ec
+
+#if FORMAT in ('latex', 'pdflatex')
+\tiny
+#endif
+
+Spostrzeżenie: macierz układu jest symetryczna, dzięki czemu można zoptymalizować proces wyznaczania jej elementów
+
+ * Może się zdażyć, że obliczanie całki się nie powiedzie
+   (skomplikowana funkcja `f`)
+   , `sym.integrate` zwróci wtedy obiekt typu `sym.Integral`.
+   Ulepszenie kodu: sprawdzenie czy takie zdarzenie wystąpiło i ew.
+   obliczenia numeryczne.
+ * Ulepszenie 2: Dodatkowa flaga przy pomocy, której użytkownik może zdecydować
+   bezpośrednio jaki rodzaj całkowania (symboliczny czy numeryczny) ma zostać
+   wykorzystany.
+
+!split
+## ===== Improved code if symbolic integration fails =====
+===== \LSM{} symbolicznie:  podejście nr 2 =====
+
+!bc pycod
+def least_squares(f, psi, Omega, symbolic=True):
+    ...
+    for i in range(N+1):
+        for j in range(i, N+1):
+            integrand = psi[i]*psi[j]
+            if symbolic:
+                I = sym.integrate(integrand, (x, Omega[0], Omega[1]))
+            if not symbolic or isinstance(I, sym.Integral):
+                # Could not integrate symbolically,
+                # fall back on numerical integration
+                integrand = sym.lambdify([x], integrand)
+                I = sym.mpmath.quad(integrand, [Omega[0], Omega[1]])
+            A[i,j] = A[j,i] = I
+
+        integrand = psi[i]*f
+        if symbolic:
+            I = sym.integrate(integrand, (x, Omega[0], Omega[1]))
+        if not symbolic or isinstance(I, sym.Integral):
+            integrand = sym.lambdify([x], integrand)
+            I = sym.mpmath.quad(integrand, [Omega[0], Omega[1]])
+        b[i,0] = I
+    ...
+!ec
+
+
+!split
+===== Prezentacja rozwiązania =====
+
+Graficzne porównanie $f$ i $u$:
+
+!bc pycod
+def comparison_plot(f, u, Omega, filename='tmp.pdf'):
+    x = sym.Symbol('x')
+    # Turn f and u to ordinary Python functions
+    f = sym.lambdify([x], f, modules="numpy")
+    u = sym.lambdify([x], u, modules="numpy")
+    resolution = 401  # no of points in plot
+    xcoor  = linspace(Omega[0], Omega[1], resolution)
+    exact  = f(xcoor)
+    approx = u(xcoor)
+    plot(xcoor, approx)
+    hold('on')
+    plot(xcoor, exact)
+    legend(['approximation', 'exact'])
+    savefig(filename)
+!ec
+
+## All code in module `approx1D.py`.
+
+!split
+===== Zastosowanie kodu =====
+# ===== Application of the software: fit a parabola by a straight line =====
+
+!bc pycod
+>>> from approx1D import *
+>>> x = sym.Symbol('x')
+>>> f = 10*(x-1)**2-1
+>>> u, c = least_squares(f=f, psi=[1, x], Omega=[1, 2])
+>>> comparison_plot(f, u, Omega=[1, 2])
+!ec
+
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.7cm}
+#endif
+
+FIGURE: [../fig/parabola_ls_linear, width=600 frac=0.8]
+
+!split
+===== Przypadek aproksymacji funkcji $f\in V$ =====
+label{fem:approx:global:exact}
+
+ * Rozszerzmy zbiór funkcji bazowych przestrezni $V$ o funkcję $\baspsi_2=x^2$,
+   wciąż poszukując przybliżenia dla funkcji $f=10(x-1)^2-1$ w przestrzeni $V$
+ * -> przybliżenie paraboli pewną parabolą \ldots
+ * Rozwiązanie odwzoruje $f$ ściśle! 
+
+!bc pycod
+>>> from approx1D import *
+>>> x = sym.Symbol('x')
+>>> f = 10*(x-1)**2-1
+>>> u, c = least_squares(f=f, psi=[1, x, x**2], Omega=[1, 2])
+>>> print u
+10*x**2 - 20*x + 9
+>>> print sym.expand(f)
+10*x**2 - 20*x + 9
+!ec
+
+
+Rozwiązanie przybliżone $\equiv$ rozwiązanie dokładne, jeśli $f \in V$!
+
+!split
+===== Uogólnienie: Przypadek aproksymacji funkcji $f\in V$ =====
+
+ * A co jeśli baza to $\psi_i(x)=x^i$ dla $i=0,\ldots,N=40$?
+ * Wynik funkcji `least_squares`: dla $i>2$, $c_i=0$
+
+!bblock Wniosek ogólny:
+Jeśli $f\in V$, \LSM{} oraz metoda Galerkina zwrócą $u=f$.
+!eblock
+
+!split
+===== Dlaczego dla $f\in V$ aproksymacja jest bezbłędna? Dowód: =====
+
+Jeśli $f\in V$,
+wtedy $f=\sum_{j\in\If}d_j\baspsi_j$, dla pewnego $\sequencei{d}$.
+Wtedy
+
+!bt
+\begin{equation*}
+b_i = (f,\baspsi_i) = \sum_{j\in\If}d_j(\baspsi_j, \baspsi_i)
+= \sum_{j\in\If} d_jA_{i,j}
+\end{equation*}
+!et
+a URL $\sum_j A_{i,j}c_j = b_i$, $i\in\If$, przedstawia sie:
+
+!bt
+\begin{equation*}
+\sum_{j\in\If}c_jA_{i,j} = \sum_{j\in\If}d_jA_{i,j},\quad i\in\If
+\end{equation*}
+!et
+co oznacza, że $c_i=d_i$ dla $i\in\If$, czyli $u$ jest tożsame z $f$.
+
+!split
+===== Skończona prezycja obliczeń numerycznych =====
+label{fem:approx:global:illconditioning}
+
+Poprzednie wnioski -> teoria i obliczenia symboliczne \ldots
+
+Co w przypadku obliczeń numerycznych? -> (rozwiązanie URL macierzami
+liczb zmiennoprzecinkowych)
+
+$f$ to wciąż funkcja kwadratowa przybliżana przez
+
+!bt
+\[ u(x) = c_0 + c_1x + c_2x^2 + c_3x^3 +\cdots + c_Nx^N \]
+!et
+
+Oczekiwane: $c_2=c_3=\cdots=c_N=0$, skoro $f\in V$ oznacza $u=f$.
+
+A naprawdę?
+
+## Will we get this result with finite precision computer arithmetic?
+
+!split
+===== Skończona prezycja obliczeń numerycznych -- wyniki =====
+
+|-----------------------------------------|
+| teoria | `sympy` | `numpy32` | `numpy64` |
+|---r--------r---------r-----------r------|
+|9      | 9.62    | 5.57      |  8.98     |
+|-20    | -23.39  | -7.65     | -19.93    |
+|10     | 17.74   | -4.50     |  9.96     |
+|0      | -9.19   | 4.13      | -0.26     |
+|0      | 5.25    | 2.99      |  0.72     |
+|0      | 0.18    | -1.21     | -0.93     |
+|0      | -2.48   | -0.41     |  0.73     |
+|0      | 1.81    | -0.013    | -0.36     |
+|0      | -0.66   | 0.08      |  0.11     |
+|0      | 0.12    | 0.04      | -0.02     |
+|0      | -0.001  | -0.02     |  0.002    |
+|-----------------------------------------|
+
+  * Kolumna 2: `matrix` oraz `lu_solve` z biblioteki `sympy.mpmath.fp`
+  * Kolumna 3: `numpy` 4B liczby zmiennoprzecinkowe
+  * Kolumna 4: `numpy` 8B liczby zmiennoprzecinkowe
+
+!split
+===== Złe uwarunkowanie URL - ''liniowa zależność'' w bazie =====
+
+ * Znaczne błędy zaokrągleń rozwiązania numerycznego (!)
+ * Jednocześnie ''na oko'' (graficzne) rozwiązanie wygląda w porządku (!)
+
+Źródło kłopotów: funkcje $x^i$ dla bardzo dużych $i$ stają się praktycznie
+liniowo zależne 
+
+#if FORMAT in ('latex', 'pdflatex')
+\tiny
+#endif
+
+!bslidecell 00
+4 rozwiązania zadania przybliżenia paraboli
+
+FIGURE: [../figMB/comparison_parabola_err, width=500 frac=1.0] 
+!eslidecell
+
+!bslidecell 01
+Wykresy funkcji $x^i$ dla $i=0 \ldots 14$
+
+FIGURE: [../fig/ill_conditioning, width=500 frac=1.0] 
+!eslidecell
+
+!split
+===== Złe uwarunkowanie URL: wnioski =====
+
+ * Prawie liniowa zależność funkcji bazowych skutkuje bliskoosobliwymi macierzami
+ * macierz prawie osobliwa $\equiv$ *macierz źle uwarunkowana* ->
+   problemy w trakcie m.elim. Gaussa
+ * Baza wielomianów $1, x, x^2, x^3, x^4, \ldots$ to ''nienajszczęśliwszy'' wybór
+ * Istnieją lepsze bazy (nawet wielomianowe), ale im bardziej ortogonalne
+   te bazy są, tym lepiej ($(\baspsi_i,\baspsi_j)\approx 0$)
+
+!split
+===== Aproksymacja szeregami Fouriera; problem and code =====
+label{fem:approx:global:Fourier}
+idx{approximation!by sines}
+
+Aproksymacja funkcji $f$ szeregiem Fouriera
+
+!bt
+\[ u(x) = \sum_i a_i\sin i\pi x = \sum_{j=0}^Nc_j\sin((j+1)\pi x) \]
+!et
+
+to tylko ''zmiana bazy'':
+
+!bt
+\begin{equation*}
+V = \hbox{span}\,\{ \sin \pi x, \sin 2\pi x,\ldots,\sin (N+1)\pi x\}
+\end{equation*}
+!et
+
+Obliczenia z wykorzystaniem funkcji `least_squares`:
+
+!bc pycod
+N = 3
+from sympy import sin, pi
+psi = [sin(pi*(i+1)*x) for i in range(N+1)]
+f = 10*(x-1)**2 - 1
+Omega = [0, 1]
+u, c = least_squares(f, psi, Omega)
+comparison_plot(f, u, Omega)
+!ec
+
+!split
+===== Aproksymacja szeregami Fouriera; wykres =====
+
+L: $N=3$, P: $N=11$:
+<linebreak>
+
+FIGURE: [../fig/parabola_ls_sines4_12, width=900 frac=1]
+
+!bblock Problem:
+Dla każdej f.bazowej jest $\baspsi_i(0)=0$ przez co $u(0)=0 \neq f(0)=9$.
+Podobna sytuacja dla $x=1$.
+Wartości $u$ na brzegach będą zawsze niepoprawne!
+!eblock
+
+!split
+===== Aproksymacja szeregami Fouriera; ulepszenie =====
+
+ * Znaczna poprawa aproksymacja dla $N=11$ wyrazów,
+   pomimo niepożądanych rozbieżności w $x=0$ i $x=1$
+ * Możliwe rozwiązanie: dodać składową, która pozwoli na odwzorowanie
+   właściwych wartości na brzegu
+
+!bt
+\[ u(x) = {\color{red}f(0)(1-x) + xf(1)} + \sum_{j\in\If} c_j\baspsi_j(x) \]
+!et
+Dodatkowy wyraz nie tylko zapewnia $u(0)=f(0)$ oraz $u(1)=f(1)$,
+ale także zaskakująco dobrze poprawia jakość aproksymacji!
+approximation!
+
+!split
+## ===== Fourier series approximation; final results =====
+===== Aproksymacja szeregami Fouriera; wyniki  =====
+
+$N=3$ vs $N=11$:
+
+FIGURE: [../fig/parabola_ls_sines4_12_wfterm, width=900 frac=1.2]
+
+
+!split
+===== Bazy funkcji ortogonalnych =====
+
+Zalety wyboru funkcji sinus jako funkcji bazowych:
+
+ * funkcje bazowe są parami ortogonalne:
+   $(\baspsi_i,\baspsi_j)=0$ (jedynie  $(\baspsi_i,\baspsi_j) \neq 0$))
+   dzięki czemu
+ * macierz $A_{i,j}$ jest diagonalna, dzięki czemu
+ * nie ma potrzeby rozwiązywać URL! Rozwiązanie sprowadza się do
+   obliczenia:
+   $c_i = 2\int_0^1 f(x)\sin ((i+1)\pi x) dx$ 
+ * wynik: rozwinięcie funkcji $f$ w szereg Fouriera
+
+*W ogólnym przypadku*, dla baz ortogonalnych,
+$A_{i,j}$ jest macierzą diagonalną, a nieznane współczynniki $c_i$
+można łatwo obliczyć:
+
+!bt
+\[
+c_i = \frac{b_i}{A_{i,i}} = \frac{(f,\baspsi_i)}{(\baspsi_i,\baspsi_i)}
+\]
+!et
+
+!split
+===== Implementacja \LSM{} dla ortogonalnych funkcji bazowych =====
+
+!bc pycod
+def least_squares_orth(f, psi, Omega):
+    N = len(psi) - 1
+    A = [0]*(N+1)
+    b = [0]*(N+1)
+    x = sym.Symbol('x')
+    for i in range(N+1):
+        A[i] = sym.integrate(psi[i]**2, (x, Omega[0], Omega[1]))
+        b[i] = sym.integrate(psi[i]*f,  (x, Omega[0], Omega[1]))
+    c = [b[i]/A[i] for i in range(len(b))]
+    u = 0
+    for i in range(len(psi)):
+        u += c[i]*psi[i]
+    return u, c
+!ec
+
+!split
+===== Implementacja \LSM{} dla ortogonalnych funkcji bazowych: całkowanie symboliczne i numeryczne =====
+
+#if FORMAT in ('latex', 'pdflatex')
+\footnotesize
+#endif
+
+ * Uwzględnienie parametru sterującego wyborem rodzaju całkowania
+   (argument `symbolic`).
+ * W przypadku gdy całkowanie symboliczne zawiedzie
+   (`sym.integrate` zwraca `sym.Integral`), obliczenia wykonywane
+   numerycznie
+   (w przypadku funkcji sinus nie powinno być problemów z symbolicznym
+   obliczeniem $\int_\Omega\basphi_i^2dx$)
+
+!bc pycod
+def least_squares_orth(f, psi, Omega, symbolic=True):
+    ...
+    for i in range(N+1):
+        # Diagonal matrix term
+        A[i] = sym.integrate(psi[i]**2, (x, Omega[0], Omega[1]))
+
+        # Right-hand side term
+        integrand = psi[i]*f
+        if symbolic:
+            I = sym.integrate(integrand,  (x, Omega[0], Omega[1]))
+        if not symbolic or isinstance(I, sym.Integral):
+            print 'numerical integration of', integrand
+            integrand = sym.lambdify([x], integrand)
+            I = sym.mpmath.quad(integrand, [Omega[0], Omega[1]])
+        b[i] = I
+    ...
+!ec
+
+## Assumption above: $\int_\Omega\basphi_i^2dx$ works symbolically (but there
+## is no guarantee!)
+
+
+
+!split
+===== Metoda kolokacji (interpolacji); idea i teoria =====
+label{fem:approx:global:interp}
+
+idx{collocation method (approximation)}
+idx{approximation!collocation}
+
+Inny sposób znalezienia przybliżenia $f(x)$ przez $u(x)=\sum_jc_j\baspsi_j$:
+
+ * Wymuszamy $u(\xno{i}) = f(\xno{i})$ w pewnych wybranych punktach 
+   $\sequencei{x}$ (punktach *kolokacji*)
+ * $u$ *interpoluje* $f$
+ * metoda znana jako metoda *kolokacji* (*interpolacji*)
+
+!bt
+\[ u(\xno{i}) = \sum_{j\in\If} c_j \baspsi_j(\xno{i}) = f(\xno{i})
+\quad i\in\If,N
+\]
+!et
+
+Współczynniki wygenerowanego układu równań to po prostu wartości funkcji,
+nie ma potrzeby całkowania!
+
+!bt
+\begin{align}
+\sum_{j\in\If} A_{i,j}c_j &= b_i,\quad i\in\If\\
+A_{i,j} &= \baspsi_j(\xno{i})\\
+b_i &= f(\xno{i})
+\end{align}
+!et
+
+W ogólnym przypadku macierz wynikowa niesymetryczna: $\baspsi_j(\xno{i})\neq \baspsi_i(\xno{j})$ 
+
+!split
+=====  Metoda kolokacji -- implementacja =====
+
+Zmienna `points` przechowuje punkty kolokacji
+
+!bc pycod
+def interpolation(f, psi, points):
+    N = len(psi) - 1
+    A = sym.zeros((N+1, N+1))
+    b = sym.zeros((N+1, 1))
+    x = sym.Symbol('x')
+    # Turn psi and f into Python functions
+    psi = [sym.lambdify([x], psi[i]) for i in range(N+1)]
+    f = sym.lambdify([x], f)
+    for i in range(N+1):
+        for j in range(N+1):
+            A[i,j] = psi[j](points[i])
+        b[i,0] = f(points[i])
+    c = A.LUsolve(b)
+    u = 0
+    for i in range(len(psi)):
+        u += c[i,0]*psi[i](x)
+    return u
+!ec
+
+
+!split
+===== Metoda kolokacji: przybliżenie paraboli funkcją liniową =====
+
+ * Problem: jak wybrać $\xno{i}$?
+ * Wynik zależy od położenia punktów kolokacji!
+
+$(4/3,5/3)$ vs $(1,2)$:
+
+FIGURE: [../fig/parabola_inter, width=700 frac=1.2]
+
+!split
+===== Regresja =====
+label{fem:approx:global:regression}
+
+ * Idea: metoda kolokacji dla $m \gg N+1$ punktów
+ * Problem: Więcej równań niż niewiadomych
+ * Znana np. ze statystyki *regresja*
+
+FIGURE: [../fig/parabola_by_regression, width=800]
+
+!split
+===== Regresji -- nadokreślone URL =====
+
+## Overdetermined linear system:
+
+!bt
+\[
+u(\xno{i}) = \sum_{j\in\If} c_j \baspsi_j(\xno{i}) = f(\xno{i}),
+\quad i=0,1,\ldots,m
+\]
+!et
+
+!bt
+\[ \sum_{j\in\If} A_{i,j}c_j = b_i,\quad i=0,1,\ldots,m \]
+!et
+
+!bt
+\[ A_{i,j} = \baspsi_j(\xno{i}),\quad
+b_i = f(\xno{i})\]
+!et
+
+!split
+===== Rozwiązywanie nadokreślonych URL przy pomocy \LSM =====
+
+ * Jak rozwiązać $Ac=b$ jeśli jest więcej równań niż niewiadomych?
+ * Idea: Poszukiwanie rozwiązania minimalizującego $r=b-Ac$
+ * Rezultat: układ równań normalnych $A^TAc=A^Tb$
+ * Zapiszmy układ w postaci $Bc=d$
+ * $B = A^TA$ już kwadratowe: układ równań o rozmiarach $(N+1)\times(N+1)$ 
+
+!bt
+\begin{align*}
+B_{i,j} &= \sum_k A^T{i,k}A_{k,j} = \sum_k A{k,i}A_{k,j}
+=\sum_{k=0}^m\baspsi_i(\xno{k}) \baspsi_j(\xno{k})
+\\
+d_i &=\sum_k A^T_{i,k}b_k = \sum_k A_{k,i}b_k =\sum_{k=0}^m
+\baspsi_i(\xno{k})f(\xno{k})
+\end{align*}
+!et
+
+!split
+===== Implementacja =====
+
+!bc pycod
+def regression(f, psi, points):
+    N = len(psi) - 1
+    m = len(points)
+    # Use numpy arrays and numerical computing
+    B = np.zeros((N+1, N+1))
+    d = np.zeros(N+1)
+    # Wrap psi and f in Python functions rather than expressions
+    # so that we can evaluate psi at points[i]
+    x = sym.Symbol('x')
+    psi_sym = psi  # save symbolic expression
+    psi = [sym.lambdify([x], psi[i]) for i in range(N+1)]
+    f = sym.lambdify([x], f)
+    for i in range(N+1):
+        for j in range(N+1):
+            B[i,j] = 0
+            for k in range(m+1):
+                B[i,j] += psi[i](points[k])*psi[j](points[k])
+        d[i] = 0
+        for k in range(m+1):
+            d[i] += psi[i](points[k])*f(points[k])
+    c = np.linalg.solve(B, d)
+    u = sum(c[i]*psi_sym[i] for i in range(N+1))
+    return u, c
+!ec
+
+!split
+===== Przykład zastosowania -- kod =====
+
+ * Zadanie: Dokonać aproksymacji funkcji $f(x)=10(x-1)^2-1$
+   na przedziale $\Omega=[1,2]$
+   przy pomocy funkcji liniowej. 
+
+!bc pycod
+import sympy as sym
+x = sym.Symbol('x')
+f = 10*(x-1)**2 - 1
+psi = [1, x]
+Omega = [1, 2]
+m_values = [2-1, 8-1, 64-1]
+# Create m+3 points and use the inner m+1 points
+for m in m_values:
+    points = np.linspace(Omega[0], Omega[1], m+3)[1:-1]
+    u, c = regression(f, psi, points)
+    comparison_plot(f, u, Omega, points=points,
+        points_legend='%d interpolation points' % (m+1))
+!ec
+
+!split
+===== Przykład zastosowania -- wyniki =====
+
+!bt
+\begin{align*}
+u(x) &= 10x - 13.2,\quad 2\hbox{ punkty}\\
+u(x) &= 10x - 12.7,\quad 8\hbox{ punktów}\\
+u(x) &= 10x - 12.7,\quad 64\hbox{ punkty}
+\end{align*}
+!et
+
+FIGURE: [../fig/parabola_by_regression, width=800]
+
+!split
+===== What is the regression method used for? =====
+
+ * It is one of the most dominating methods for approximating data
+   in statistics
+ * Not so common for approximating functions
+ * Not much used for solving differential equations
+ * Recently very popular for statistical uncertainty quantification:
+   approximating the mapping from input parameters to the solution
+   via polynomials and the regression method (called polynomial chaos
+   expansions)
+
+!split
+===== Wielomiany Lagrange'a =====
+label{fem:approx:global:Lagrange}
+idx{Lagrange (interpolating) polynomial}
+
+Motywacja::
+
+ * Metoda kolokacji pozwala uniknąć całkowania
+ * Dla macierzy diagonalnej $A_{i,j} = \baspsi_j(\xno{i})$
+   rozwiązanie URL jest banalnie proste
+
+Własność *wielomianów Lagrange'a* $\baspsi_j$:
+
+!bt
+\[ \baspsi_i(\xno{j}) =\delta_{ij},\quad \delta_{ij} =
+\left\lbrace\begin{array}{ll}
+1, & i=j\\
+0, & i\neq j
+\end{array}\right.
+\]
+!et
+
+Zatem, $c_i = f(x_i)$ and
+
+!bt
+\[
+u(x) = \sum_{j\in\If} f(\xno{i})\baspsi_i(x)
+\]
+!et
+
+ * Wielomiany Lagrange'a w połączeniu z metodą kolokacji są niezwykle wygodne
+ * Często stosowane w \FEM
+
+!split
+===== Wielomiany Lagrange'a -- wzór i implementacja =====
+
+!bt
+\[
+\baspsi_i(x) =
+\prod_{j=0,j\neq i}^N
+\frac{x-\xno{j}}{\xno{i}-\xno{j}}
+= \frac{x-x_0}{\xno{i}-x_0}\cdots\frac{x-\xno{i-1}}{\xno{i}-\xno{i-1}}\frac{x-\xno{i+1}}{\xno{i}-\xno{i+1}}
+\cdots\frac{x-x_N}{\xno{i}-x_N}
+\]
+!et
+
+!bc pycod
+def Lagrange_polynomial(x, i, points):
+    p = 1
+    for k in range(len(points)):
+        if k != i:
+            p *= (x - points[k])/(points[i] - points[k])
+    return p
+!ec
+
+!split
+===== Wielomiany Lagrange'a -- zachęcający przykład zastosowania =====
+
+FIGURE: [../fig/Lagrange_ls_interp_sin_4, width=800 frac=1.2]
+
+!split
+===== Wielomiany Lagrange'a -- mniej zachęcający przykład zastosowania =====
+
+FIGURE: [../fig/Lagrange_interp_abs_8_15, width=800 frac=1.2]
+
+!split
+===== Wielomiany Lagrange'a -- efekt Runge'go =====
+
+12 punktów, dwa wielomiany stopnia 11
+(Uwaga!: $\psi_2(x_2) \neq 0$ i  $\psi_7(x_7) \neq 0$
+
+FIGURE: [../fig/Lagrange_basis_12, width=500]
+
+Problem: strong oscillations near the boundaries for larger $N$ values.
+
+!split
+===== Wielomiany Lagrange'a: jak zapobiec oscylacjom? =====
+
+Odpowiedni dobór węzłów interpolacji -- *węzły Czebyszewa*:
+
+!bt
+\[
+\xno{i} = \half (a+b) + \half(b-a)\cos\left( \frac{2i+1}{2(N+1)}\pi\right),\quad i=0\ldots,N
+\]
+!et
+na przedziale $[a,b]$.
+
+!split
+===== Wielomiany Lagrange'a + węzły Czebyszewa =====
+
+FIGURE: [../fig/Lagrange_interp_abs_Cheb_8_15, width=800 frac=1.2]
+
+!split
+===== Wielomiany Lagrange'a + węzły Czebyszewa =====
+
+12 punktów, dwa wielomiany stopnia 11.
+
+Uwaga!: Tym razem węzły są inaczej rozmieszczone!
+
+Mniej oscylacyjny charakter wielomianów w porównaniu do węzłów
+równomiernie rozmieszczonych.
+
+FIGURE: [../fig/Lagrange_basis_Cheb_12, width=500]
+
+!split
+======= Funkcje bazowe elementów skończonych =======
+label{fem:approx:fe}
+
+FIGURE: [../fig/fe_mesh1D_phi_2_3, width=500 frac=0.7]
+
+!split
+===== Funkcje bazowe o nośniku nieograniczonym: $\baspsi_i(x) \neq 0$ prawie w całym przedziale określoności =====
+
+Nośnik funkcji: domknięcie zbioru argumentów funkcji, dla których ma ona wartość różną od zera (takie iksy dla których $f(x) \neq 0$)
+
+FIGURE: [../fig/u_example_sin, width=800]
+
+!split
+===== Funkcje bazowe o nośniku ograniczonym -- \FEM{} =====
+
+ * *Nośnik zwarty* (*Local support*): domknięcie zbioru tych $x$-ów, dla których
+   $\baspsi_i(x) \neq 0$
+ * Typowe dla 1D - funkcje trójkątne (hat-shaped)
+ * $u(x)$ zbudowana przy pomocy takich funkcji $\baspsi_i$
+   będzie funkcją przedziałami liniową 
+ * Niech symbol $\basphi_i$ oznacza odtąd tego typu funkcję trójkątną
+   (przyjmijmy również $\baspsi_i=\basphi_i$)
+
+FIGURE: [../fig/fe_mesh1D_phi_2_3, width=500 frac=0.6]
+
+!split
+===== Kombinacja liniowa funkcji trójkątnych =====
+
+FIGURE: [../fig/u_example_fe2, width=500]
+
+!split
+===== Elementy i węzły =====
+label{fem:approx:fe:def:elements:nodes}
+
+Podzielmy $\Omega$ na $N_e$ rozdzielnych podobszarów podobszarów -- *elementów*:
+
+!bt
+\[
+\Omega = \Omega^{(0)}\cup \cdots \cup \Omega^{(N_e)}
+\]
+!et
+
+Na każdym elemencie wprowadzamy $N_n$ *wezłów*
+(punktów): $\xno{0},\ldots,\xno{N_n-1}$
+
+ * $\basphi_i(x)$ -- $i$-ta funkcja bazowa 
+ * $\basphi_i=1$ w węźle $i$ i $\basphi_i=0$ w pozostałych węzłach
+ * $\basphi_i$ to wielomian Lagrange'a na każdym elemencie
+ * Dla węzłów granicznych, leżących w punktach łączących dwa elementy
+   funkcja $\basphi_i$
+   jest zbudowane z wielomianów Lagrange'a na obu elementach
+
+!split
+===== Przykład: obszar podzielony na elementy dwuwęzłowe (elementy typu P1) =====
+
+FIGURE: [../fig/fe_mesh1D_P1, width=500 frac=0.8]
+
+Struktura `nodes` -- współrzędne węzłów.
+
+Struktura `elements` --  numery (globalne) węzłów tworzących
+odpowiedni element.
+
+!bc pycod
+nodes = [0, 1.2, 2.4, 3.6, 4.8, 5]
+elements = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5]]
+!ec
+
+!split
+===== Przykład: dwie funkcje bazowe na siatce =====
+
+FIGURE: [../fig/fe_mesh1D_phi_2_3, width=600 frac=0.8]
+
+
+!split
+===== Przykład: elementy niejednorodne o trzech węzłach (elementy typu P2) =====
+
+FIGURE: [../fig/fe_mesh1D_P2, width=500 frac=0.8]
+
+!bc pycod
+nodes = [0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0]
+elements = [[0, 1, 2], [2, 3, 4], [4, 5, 6], [6, 7, 8]]
+!ec
+
+!split
+===== Przykład: funkcje bazowe na siatce (elementy typu P2) =====
+
+FIGURE: [../fig/phi/mpl_fe_basis_p2_4e, width=800]
+
+!split
+===== Przykład: elementy typu P3 (o czterech węzłach interpolacji) =====
+
+FIGURE: [../fig/fe_mesh1D_d4_stretched, width=500 frac=0.8]
+
+!bc pycod
+d = 3  # d+1 nodes per element
+num_elements = 4
+num_nodes = num_elements*d + 1
+nodes = [i*0.5 for i in range(num_nodes)]
+elements = [[i*d+j for j in range(d+1)] for i in range(num_elements)]
+!ec
+
+!split
+===== Przykład: funkcje bazowe na siatce (elementy typu P3) =====
+
+FIGURE: [../fig/phi/mpl_fe_basis_p3_4e, width=800]
+
+!split
+===== Indeksacja nieregularna =====
+
+FIGURE: [../fig/fe_mesh1D_random_numbering, width=500 frac=0.8]
+
+!bc pycod
+nodes = [1.5, 5.5, 4.2, 0.3, 2.2, 3.1]
+elements = [[2, 1], [4, 5], [0, 4], [3, 0], [5, 2]]
+!ec
+
+
+!split
+===== Współczynniki $c_i$ -- interpretacja =====
+
+Ważna własność: $c_i$
+to wartość funkcji $u$ w węźle $i$, $\xno{i}$:
+
+!bt
+\[
+u(\xno{i}) = \sum_{j\in\If} c_j\basphi_j(\xno{i}) =
+c_i\basphi_i(\xno{i}) = c_i
+\]
+!et
+
+Powód: $\basphi_j(\xno{i}) =0$ jeśli $i\neq j$ i $\basphi_i(\xno{i}) =1$
+
+!split
+===== Własności funkcji bazowych =====
+
+ * $\basphi_i(x) \neq 0$ jedynie na tych elementach, które zawierają węzeł
+   o globalnym indeksie $i$
+ * $\basphi_i(x)\basphi_j(x) \neq 0$ wtedy i tylko wtedy gdy
+   węzly $i$ oraz $j$ leżą na tym samym elemencie
+
+Ponieważ $A_{i,j}=\int\basphi_i\basphi_j\dx$,
+*większość współczynników macierzy będzie równa zero*
+-> macierze rzadkie
+
+FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=500 frac=0.5]
+
+!split
+===== Konstrukcja kwadratowych $\basphi_i$ (elementy typu P2) =====
+
+FIGURE: [../fig/phi/mpl_fe_basis_p2_4e, width=500 frac=0.6]
+
+ o każdy węzeł elementu ma przypisany wielomian Lagrange'a
+ o Wielomian o wartości 1 na brzegu elementu należy ''połączyć'' z wielomianem
+   z sąsiedniego elementu, który ma wartość 1 w tym samym punkcie
+
+!split
+===== Liniowe $\basphi_i$ (elementy typu P1) =====
+
+FIGURE: [../fig/phi/mpl_fe_basis_p1_4e, width=500 frac=0.6]
+
+!bt
+\[
+\basphi_i(x) = \left\lbrace\begin{array}{ll}
+0, & x < \xno{i-1}\\
+(x - \xno{i-1})/h
+& \xno{i-1} \leq x < \xno{i}\\
+1 -
+(x - x_{i})/h,
+& \xno{i} \leq x < \xno{i+1}\\
+0, & x\geq \xno{i+1}
+\end{array}
+\right.
+\]
+!et
+
+!split
+===== Sześcienne $\basphi_i$ (elementy typu P3) =====
+
+FIGURE: [../fig/phi/mpl_fe_basis_p3_4e, width=500 frac=0.6]
+
+
+!split
+======= Generowanie URL =======
+label{fem:approx:global:linearsystem}
+
+FIGURE: [../fig/sparsity_pattern_1D_30unif, width=600 frac=0.8]
+
+!split
+===== Przykład 1: Obliczenie wartości (niediagonalnego) elementu macierzy =====
+
+FIGURE: [../fig/fe_mesh1D_phi_2_3, width=300 frac=0.5]
+
+Uproszczenie: elementy jednakowej długości.
+
+$A_{2,3}=\int_\Omega\basphi_2\basphi_3 dx$: $\basphi_2\basphi_3\neq 0$
+jedynie na elemencie 2. Dla tego elementu:
+
+!bt
+\[ \basphi_3(x) = (x-x_2)/h,\quad \basphi_2(x) = 1- (x-x_2)/h\]
+!et
+
+!bt
+\[
+A_{2,3} = \int_\Omega \basphi_2\basphi_{3}\dx =
+\int_{\xno{2}}^{\xno{3}}
+\left(1 - \frac{x - \xno{2}}{h}\right) \frac{x - x_{2}}{h}
+ \dx = \frac{h}{6}
+\]
+!et
+
+!split
+===== Przykład 2: Obliczenie wartości (diagonalnego) elementu macierzy =====
+
+FIGURE: [../fig/fe_mesh1D_phi_2_3, width=500 frac=0.8]
+
+!bt
+\[ A_{2,2} =
+\int_{\xno{1}}^{\xno{2}}
+\left(\frac{x - \xno{1}}{h}\right)^2\dx +
+\int_{\xno{2}}^{\xno{3}}
+\left(1 - \frac{x - \xno{2}}{h}\right)^2\dx
+= \frac{2h}{3}
+\]
+!et
+
+!split
+===== Ogólna postać wzoru na wartość elementu $A_{ij}$ - rysunek =====
+
+FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=500 frac=0.8]
+
+!bt
+\[ A_{i,i-1} = \int_\Omega \basphi_i\basphi_{i-1}\dx = \hbox{?}\]
+!et
+
+!split
+===== Ogólna postać wzoru na wartość elementu $A_{ij}$ - obliczenia =====
+## ===== Calculating a general row in the matrix; details =====
+
+!bt
+\begin{align*}
+A_{i,i-1} &= \int_\Omega \basphi_i\basphi_{i-1}\dx\\
+&=
+\underbrace{\int_{\xno{i-2}}^{\xno{i-1}} \basphi_i\basphi_{i-1}\dx}_{\basphi_i=0} +
+\int_{\xno{i-1}}^{\xno{i}} \basphi_i\basphi_{i-1}\dx +
+\underbrace{\int_{\xno{i}}^{\xno{i+1}} \basphi_i\basphi_{i-1}\dx}_{\basphi_{i-1}=0}\\
+&= \int_{\xno{i-1}}^{\xno{i}}
+\underbrace{\left(\frac{x - x_{i}}{h}\right)}_{\basphi_i(x)}
+\underbrace{\left(1 - \frac{x - \xno{i-1}}{h}\right)}_{\basphi_{i-1}(x)} \dx =
+\frac{h}{6}
+\end{align*}
+!et
+
+ * $A_{i,i+1}=A_{i,i-1}$ ze względu na symetrię
+ * $A_{i,i}=2h/3$ (obliczenia jak w przypadku $A_{2,2}$), z wyjątkiem:
+ * $A_{0,0}=A_{N,N}=h/3$ (całka tylko na jednym elemencie)
+
+!split
+===== Obliczenia dla prawej strony równania =====
+
+FIGURE: [../fig/fe_mesh1D_phi_i_f, width=500 frac=0.8]
+
+!bt
+\[
+b_i = \int_\Omega\basphi_i(x)f(x)\dx
+= \int_{\xno{i-1}}^{\xno{i}} \frac{x - \xno{i-1}}{h} f(x)\dx
++ \int_{x_{i}}^{\xno{i+1}} \left(1 - \frac{x - x_{i}}{h}\right) f(x)
+\dx
+\]
+!et
+
+Do dalszych obliczeń potrzebna konkretna postać $f(x)$ ...
+
+!split
+===== Przykład: rozwiązanie dla obszaru dwu-elementowego -- URL i rozwiązanie =====
+
+ * $f(x)=x(1-x)$ na $\Omega=[0,1]$
+ * Dwa elementy o jednakowej długości: $[0,0.5]$ oraz $[0.5,1]$
+
+!bt
+\begin{equation*}
+A = \frac{h}{6}\left(\begin{array}{ccc}
+2 & 1 & 0\\
+1 & 4 & 1\\
+0 & 1 & 2
+\end{array}\right),\quad
+b = \frac{h^2}{12}\left(\begin{array}{c}
+2 - 3h\\
+12 - 14h\\
+10 -17h
+\end{array}\right)
+\end{equation*}
+!et
+
+!bt
+\begin{equation*} c_0 = \frac{h^2}{6},\quad c_1 = h - \frac{5}{6}h^2,\quad
+c_2 = 2h - \frac{23}{6}h^2
+\end{equation*}
+!et
+
+!split
+
+===== Przykład: rozwiązanie dla obszaru dwu-elementowego -- rozwiązanie-rysunek =====
+!bt
+\begin{equation*} u(x)=c_0\basphi_0(x) + c_1\basphi_1(x) + c_2\basphi_2(x)\end{equation*}
+!et
+
+FIGURE: [../fig/fe_p1_x2_2e, width=600 frac=0.7]
+
+!split
+===== Przykład: Rozwiązanie dla obszaru 4-elementowego -- rozwiązanie-rysunek =====
+
+FIGURE: [../fig/fe_p1_x2_2e_4e, width=800 frac=1.0]
+
+!split
+===== Przykład: elementy typu P2 =====
+
+!bbox
+Przypomnienie: jeśli $f\in V$, $u$ odtworzy rozwiązanie bezbłędnie.
+Jeśli $f$ to parabola, dowolna siatka elementów typu P2 (1 lub wiele elementów)
+sprawi wygeneruje $u=f$.
+To samo dotyczyć będzie elementów typu P3, P4, itd., ponieważ one wszystkie
+potrafią odtworzyć wielomian 2. stopnia bezbłędnie.
+!ebox
+
+!split
+======= Generowanie macierzy globalnej - logika obliczeń =======
+label{fem:approx:fe:elementwise}
+
+(ang. assemble - gromadzić, składać, zbierać)
+
+assembling, assemblacja?
+
+
+FIGURE: [../mov/fe_assembly_irregular/fe_assembly_irregular, width=300 frac=0.5]
+
+!split
+===== Całkowanie z perspektywy elementu =====
+
+!bt
+\[
+A_{i,j} = \int_\Omega\basphi_i\basphi_jdx =
+\sum_{e} \int_{\Omega^{(e)}} \basphi_i\basphi_jdx,\quad
+A^{(e)}_{i,j}=\int_{\Omega^{(e)}} \basphi_i\basphi_jdx
+\]
+!et
+
+Ważne spostrzeżenia:
+
+ * $A^{(e)}_{i,j}\neq 0$ wtedy i tylko wtedy gdy
+   węzeły $i$ oraz $j$ leżą na tym samym elemencie $e$
+   (w przeciwnym wypadku nośniki funkcji to zbiory rozłączne)
+ * Wszystkie niezerowe współczynniki danego elementu $A^{(e)}_{i,j}$
+   tworzą lokalną macierz dla danego elementu (*element matrix*)
+ * ''Wkład'' w macierz lokalną elementu  mają wyłącznie funkcje
+   bazowe związane z węzłami leżącymi na tym elemencie
+ * Wygodne rozwiązanie: wprowadzenie *indeksacji lokalnej*
+##   (*local numbering*)
+   węzłów leżących na danym elemencie: $0,1,\ldots,d$
+
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.7cm}
+#endif
+
+FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=300 frac=0.4]
+
+!split
+===== Macierz elementów: indeksacja lokalna/indeksacja globalna =====
+
+!bt
+\[
+\tilde A^{(e)} = \{ \tilde A^{(e)}_{r,s}\},\quad
+\tilde A^{(e)}_{r,s} =
+\int_{\Omega^{(e)}}\basphi_{q(e,r)}\basphi_{q(e,s)}dx,
+\quad r,s\in\Ifd=\{0,\ldots,d\}
+\]
+!et
+
+!bslidecell 00 0.85
+
+ * $r,s$ *lokalne indeksy węzłów* na elemencie: $0, 1,\ldots, d$
+ * $i,j$ *globalne indeksy węzłów* $i,j\in\If = \{0,1,\ldots,N\}$
+ * $i=q(e,r)$: transformacja lokalnej indeksacji w globalną 
+   (matematyczny zapis pythonowskiego `i=elements[e][r]`)
+   gdzie: 
+   `elements = [[1, 2],[2,3],[3,4], ..., [7,8],[8,9,10], ...]`
+ * Uwzględnienie macierzy lokalnej $\tilde A^{(e)}_{r,s}$
+   w macierzy globalnej $A_{i,j}$
+   (*assembly*)
+
+!bt
+\[
+ A_{q(e,r),q(e,s)} := A_{q(e,r),q(e,s)} + \tilde A^{(e)}_{r,s},\quad
+r,s\in\Ifd
+\]
+!et
+
+!eslidecell
+
+!bslidecell 01 0.15
+
+|--------------------------|
+| i     | e      | r       |
+|---r--------r--------r----|
+|1      | 1      | 1       |
+|2      | 1      | 2       |
+|2      | 2      | 1       |
+|3      | 2      | 2       |
+## |3      | 3      | 1       |
+## |4      | 3      | 2       |
+## |4      | 4      | 1       |
+## |5      | 4      | 2       |
+## |5      | 5      | 1       |
+|\vdots | \vdots | \vdots  |
+|8      | 7      | 2       |
+|8      | 8      | 1       |
+|9      | 8      | 2       |
+|10     | 8      | 3       |
+|10     | 9      | 1       |
+|\vdots | \vdots | \vdots  |
+|--------------------------|
+
+!eslidecell
+
+
+
+!split
+===== Przykład: assembling macierzy dla kolejno ponumerowanych elementów P1 =====
+
+FIGURE: [../mov/fe_assembly_regular_2x2/fe_assembly_regular_2x2, width=400 frac=0.7]
+
+## # #if FORMAT == "html"
+## "Animation": "mov/fe_assembly.html"
+## # #else
+## "Animation": "../mov/fe_assembly.html"
+## ## "$ {fem_doc}/mov/fe_assembly.html"
+## # #endif
+
+TODO
+
+!split
+## ===== Illustration of the matrix assembly: regularly numbered P3 elements =====
+===== Przykład: assembling macierzy dla kolejno ponumerowanych elementów P3 =====
+
+
+FIGURE: [../mov/fe_assembly_regular_4x4/fe_assembly_regular_4x4, width=400 frac=0.7]
+
+## # #if FORMAT == "html"
+## "Animation": "mov/fe_assembly.html"
+## # #else
+## "Animation": "../mov/fe_assembly.html"
+## # #endif
+
+TODO
+
+!split
+# ===== Illustration of the matrix assembly: irregularly numbered P1 elements =====
+===== Przykład: assembling macierzy dla nieregularnej siatki elementów P1 =====
+
+FIGURE: [../mov/fe_assembly_irregular/fe_assembly_irregular, width=400 frac=0.7]
+
+## # #if FORMAT == "html"
+## "Animation": "mov/fe_assembly.html"
+## # #else
+## "Animation": "../mov/fe_assembly.html"
+## # #endif
+
+TODO
+
+!split
+===== Assembling prawej strony układu =====
+
+!bt
+\[
+b_i = \int_\Omega f(x)\basphi_i(x)dx =
+\sum_{e} \int_{\Omega^{(e)}} f(x)\basphi_i(x)dx,\quad
+b^{(e)}_{i}=\int_{\Omega^{(e)}} f(x)\basphi_i(x)dx
+\]
+!et
+
+FIGURE: [../fig/fe_mesh1D_phi_i_f, width=300 frac=0.4]
+
+Ważne spostrzeżenia:
+  * $b_i^{(e)}\neq 0$ wtedy i tylko wtedy gdy węzeł globalny $i$
+    leży na danym elemencie $e$
+    (w przeciwnym przypadku $\basphi_i=0$)
+  * $d+1$ niezerowych wartości $b_i^{(e)}$ może być zgromadzonych w
+    *lokalnym wektorze* elementu e.
+    $\tilde b_r^{(e)}=\{ \tilde b_r^{(e)}\}$, $r\in\Ifd$
+
+Assembling:
+!bt
+\[
+b_{q(e,r)} := b_{q(e,r)} + \tilde b^{(e)}_{r},\quad
+r\in\Ifd
+\]
+!et
+
+!split
+======= Transformacja współrzędnych globalnych do współrzędnych unormowanych =======
+label{fem:approx:fe:mapping}
+
+Normalizacja współrzędnych położenia:
+
+Zamiast całkować w granicach $[x_L, x_R]$
+!bt
+\begin{equation*} \tilde A^{(e)}_{r,s} = \int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
+= \int_{x_L}^{x_R}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
+\end{equation*}
+!et
+można transformować przedział $[x_L, x_R]$
+na przedział unormowany $[-1,1]$ o współrzędnej lokalnej $X$
+
+!split
+===== Transformacja liniowa $X\in [-1,1]$ w $x\in [x_L,x_R]$ =====
+
+(Transformacja afiniczna)
+
+!bt
+\[
+x = \half (x_L + x_R) + \half (x_R - x_L)X
+\]
+!et
+inaczej
+!bt
+\[
+x = x_m + {\half}hX, \qquad x_m=(x_L+x_R)/2,\quad h=x_R-x_L
+\]
+!et
+
+
+#if FORMAT in ('latex', 'pdflatex')
+\scriptsize
+#endif
+
+Transformacja odwrotna:
+!bt
+\[
+X = \frac{2 x + (x_L + x_R)}{(x_R - x_L)} 
+\]
+!et
+
+
+!split
+===== Transformacja całki =====
+#if FORMAT in ('latex', 'pdflatex')
+\small
+#endif
+Zmiana granic całkowania ->
+całkowanie na przedziale unormowanym:
+podstawienie $x(X)$ w miejsce $x$.
+
+Lokalne funkcje bazowe we współrzędnych unormowanych:
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.2cm}
+#endif
+!bt
+\[
+\refphi_r(X) = \basphi_{q(e,r)}(x(X))
+\]
+!et
+!bt
+\[
+\begin{array}{c}
+x = \half (x_L + x_R) + \half (x_R - x_L)X \\
+\downarrow \\
+dx = \half (x_R - x_L) dX
+\end{array}
+\]
+!et
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.5cm}
+#endif
 
 ## !bt
 ## \[
@@ -1858,440 +1857,451 @@
 ## =
 ## \int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
 ## =
-## \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\underbrace{\frac{dx}{dX}}_{\det J= h/2}dX \]
-## !et
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-1.0cm}
-## #endif
-## !bt
-## \[
-## \tilde A^{(e)}_{r,s}
-## =
+## \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\underbrace{\frac{dx}{dX}}_{\det J= h/2}dX =
 ## \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\det J\,dX
 ## \]
 ## !et
-## #if FORMAT in ('latex', 'pdflatex')
-## \vspace{-0.2cm}
-## #endif
-## !bt
-## \[
-## \tilde b^{(e)}_{r} = \int_{\Omega^{(e)}}f(x)\basphi_{q(e,r)}(x)dx
-## = \int\limits_{-1}^1 f(x(X))\refphi_r(X)\det J\,dX
-## \]
-## !et
 
-## !split
-## ===== Zalety całkowania na przedziale unormowanym =====
+!bt
+\[
+\tilde A^{(e)}_{r,s}
+=
+\int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
+=
+\int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\underbrace{\frac{dx}{dX}}_{\det J= h/2}dX \]
+!et
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-1.0cm}
+#endif
+!bt
+\[
+\tilde A^{(e)}_{r,s}
+=
+\int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\det J\,dX
+\]
+!et
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.2cm}
+#endif
+!bt
+\[
+\tilde b^{(e)}_{r} = \int_{\Omega^{(e)}}f(x)\basphi_{q(e,r)}(x)dx
+= \int\limits_{-1}^1 f(x(X))\refphi_r(X)\det J\,dX
+\]
+!et
 
-##   * Całkowanie zawsze w tych samych granicach całkowania $[-1,1]$
-##   * Potrzebne wzory tylko dla $\refphi_r(X)$ na jednym elemencie 
-##     (brak funkcji definiowanych na przedziałach (piecewise polynomial))
-##   * Funkcja $\refphi_r(X)$ jest taka sama dla wszystkich elementów
-##     niezależnie od ich położenia i rozmiarów (długości). Długość odcinka
-##     jest uwzględniona poprzez jakobian $\det J$
+!split
+===== Zalety całkowania na przedziale unormowanym =====
 
-## !split
-## ===== Funkcje bazowe P1 na elemencie unormowanym =====
+  * Całkowanie zawsze w tych samych granicach całkowania $[-1,1]$
+  * Potrzebne wzory tylko dla $\refphi_r(X)$ na jednym elemencie 
+    (brak funkcji definiowanych na przedziałach (piecewise polynomial))
+  * Funkcja $\refphi_r(X)$ jest taka sama dla wszystkich elementów
+    niezależnie od ich położenia i rozmiarów (długości). Długość odcinka
+    jest uwzględniona poprzez jakobian $\det J$
 
-## !bt
-## \begin{align}
-## \refphi_0(X) &= \half (1 - X)
-## label{fem:approx:fe:mapping:P1:phi0}\\
-## \refphi_1(X) &= \half (1 + X)
-## label{fem:approx:fe:mapping:P1:phi1}
-## \end{align}
-## !et
+!split
+===== Funkcje bazowe P1 na elemencie unormowanym =====
 
-## (proste funkcje wielomianowe zamiast definicji funkcji na podprzedziałach
+!bt
+\begin{align}
+\refphi_0(X) &= \half (1 - X)
+label{fem:approx:fe:mapping:P1:phi0}\\
+\refphi_1(X) &= \half (1 + X)
+label{fem:approx:fe:mapping:P1:phi1}
+\end{align}
+!et
 
-
-
-## !split
-## ===== Funkcje bazowe P2 na elemencie unormowanym =====
-
-## !bt
-## \begin{align}
-## \refphi_0(X) &= \half (X-1)X\\
-## \refphi_1(X) &= 1 - X^2\\
-## \refphi_2(X) &= \half (X+1)X
-## \end{align}
-## !et
-
-## Łatwość wygenerowania elementów dowolnego rzędu... Jak?
-
-## !split
-## ===== Sposoby znalezienia wzorów na funkcje bazowe =====
-
-##  o Transformacja globalnych funkcji bazowych $\basphi_i(x)$
-##    na element unormowany ze współrzędną $X$
-##  o Obliczenie $\refphi_r(X)$ 
-##    * dla zadanego stopnia $d$ szukamy wielomianów opartych o węzły
-##      wewnątrz przedziału $[-1,1]$ o własności
-##      * $\refphi_r(X)=1$ w węźle $r$
-##      * $\refphi_r(X)=0$ we wszystkich pozostałych $d$ węzłach
-##  o Wykorzystanie wzoru interpolacyjnego Lagrange'a
+(proste funkcje wielomianowe zamiast definicji funkcji na podprzedziałach
 
 
-## !split
-## ===== Całkowanie po elemencie unormowanym - lokalna macierz =====
-## label{fem:approx:fe:intg:ref}
 
-## #if FORMAT in ('latex', 'pdflatex')
-## \small
-## #endif
+!split
+===== Funkcje bazowe P2 na elemencie unormowanym =====
 
-## Założenie: elementy typu P1, oraz funkcja $f(x)=x(1-x)$.
+!bt
+\begin{align}
+\refphi_0(X) &= \half (X-1)X\\
+\refphi_1(X) &= 1 - X^2\\
+\refphi_2(X) &= \half (X+1)X
+\end{align}
+!et
 
-## !bt
-## \begin{align}
-## \tilde A^{(e)}_{0,0}
-## &= \int_{-1}^1 \refphi_0(X)\refphi_0(X)\frac{h}{2} dX\nonumber\\
-## &=\int_{-1}^1 \half(1-X)\half(1-X) \frac{h}{2} dX =
-## \frac{h}{8}\int_{-1}^1 (1-X)^2 dX = \frac{h}{3}
-## label{fem:approx:fe:intg:ref:Ae00}\\
-## \tilde A^{(e)}_{1,0}
-## &= \int_{-1}^1 \refphi_1(X)\refphi_0(X)\frac{h}{2} dX\nonumber\\
-## &=\int_{-1}^1 \half(1+X)\half(1-X) \frac{h}{2} dX =
-## \frac{h}{8}\int_{-1}^1 (1-X^2) dX = \frac{h}{6}\\
-## \tilde A^{(e)}_{0,1} &= \tilde A^{(e)}_{1,0}
-## label{fem:approx:fe:intg:ref:Ae10}\\
-## \tilde A^{(e)}_{1,1}
-## &= \int_{-1}^1 \refphi_1(X)\refphi_1(X)\frac{h}{2} dX\nonumber\\
-## &=\int_{-1}^1 \half(1+X)\half(1+X) \frac{h}{2} dX =
-## \frac{h}{8}\int_{-1}^1 (1+X)^2 dX = \frac{h}{3}
-## label{fem:approx:fe:intg:ref:Ae11}
-## \end{align}
-## !et
+Łatwość wygenerowania elementów dowolnego rzędu... Jak?
 
-## !split
-## ===== Całkowanie po elemencie unormowanym - wektor prawej strony =====
+!split
+===== Sposoby znalezienia wzorów na funkcje bazowe =====
 
-## !bt
-## \begin{align}
-## \tilde b^{(e)}_{0}
-## &= \int_{-1}^1 f(x(X))\refphi_0(X)\frac{h}{2} dX\nonumber\\
-## &= \int_{-1}^1 (x_m + \half hX)(1-(x_m + \half hX))
-## \half(1-X)\frac{h}{2} dX \nonumber\\
-## &= - \frac{1}{24} h^{3} + \frac{1}{6} h^{2} x_{m} - \frac{1}{12} h^{2} - \half h x_{m}^{2} + \half h x_{m}
-## label{fem:approx:fe:intg:ref:be0}\\
-## \tilde b^{(e)}_{1}
-## &= \int_{-1}^1 f(x(X))\refphi_1(X)\frac{h}{2} dX\nonumber\\
-## &= \int_{-1}^1 (x_m + \half hX)(1-(x_m + \half hX))
-## \half(1+X)\frac{h}{2} dX \nonumber\\
-## &= - \frac{1}{24} h^{3} - \frac{1}{6} h^{2} x_{m} + \frac{1}{12} h^{2} -
-## \half h x_{m}^{2} + \half h x_{m}
-## \end{align}
-## !et
+ o Transformacja globalnych funkcji bazowych $\basphi_i(x)$
+   na element unormowany ze współrzędną $X$
+ o Obliczenie $\refphi_r(X)$ 
+   * dla zadanego stopnia $d$ szukamy wielomianów opartych o węzły
+     wewnątrz przedziału $[-1,1]$ o własności
+     * $\refphi_r(X)=1$ w węźle $r$
+     * $\refphi_r(X)=0$ we wszystkich pozostałych $d$ węzłach
+ o Wykorzystanie wzoru interpolacyjnego Lagrange'a
 
-## $x_m$: element midpoint.
 
-## !split
-## ===== Obliczenia symboliczne zamiast żmudnego liczenia na kartce... =====
-## !bc pycod
-## >>> import sympy as sym
-## >>> x, x_m, h, X = sym.symbols('x x_m h X')
-## >>> sym.integrate(h/8*(1-X)**2, (X, -1, 1))
-## h/3
-## >>> sym.integrate(h/8*(1+X)*(1-X), (X, -1, 1))
-## h/6
-## >>> x = x_m + h/2*X
-## >>> b_0 = sym.integrate(h/4*x*(1-x)*(1-X), (X, -1, 1))
-## >>> print b_0
-## -h**3/24 + h**2*x_m/6 - h**2/12 - h*x_m**2/2 + h*x_m/2
-## !ec
+!split
+===== Całkowanie po elemencie unormowanym - lokalna macierz =====
+label{fem:approx:fe:intg:ref}
 
-## ## Can print out in LaTeX too (convenient for copying into reports):
+#if FORMAT in ('latex', 'pdflatex')
+\small
+#endif
 
-## ## !bc pycod
-## ## >>> print sym.latex(b_0, mode='plain')
-## ## - \frac{1}{24} h^{3} + \frac{1}{6} h^{2} x_{m}
-## ## - \frac{1}{12} h^{2} - \half h x_{m}^{2}
-## ## + \half h x_{m}
-## ## !ec
+Założenie: elementy typu P1, oraz funkcja $f(x)=x(1-x)$.
 
-## !split
-## ======= Implementacja =======
+!bt
+\begin{align}
+\tilde A^{(e)}_{0,0}
+&= \int_{-1}^1 \refphi_0(X)\refphi_0(X)\frac{h}{2} dX\nonumber\\
+&=\int_{-1}^1 \half(1-X)\half(1-X) \frac{h}{2} dX =
+\frac{h}{8}\int_{-1}^1 (1-X)^2 dX = \frac{h}{3}
+label{fem:approx:fe:intg:ref:Ae00}\\
+\tilde A^{(e)}_{1,0}
+&= \int_{-1}^1 \refphi_1(X)\refphi_0(X)\frac{h}{2} dX\nonumber\\
+&=\int_{-1}^1 \half(1+X)\half(1-X) \frac{h}{2} dX =
+\frac{h}{8}\int_{-1}^1 (1-X^2) dX = \frac{h}{6}\\
+\tilde A^{(e)}_{0,1} &= \tilde A^{(e)}_{1,0}
+label{fem:approx:fe:intg:ref:Ae10}\\
+\tilde A^{(e)}_{1,1}
+&= \int_{-1}^1 \refphi_1(X)\refphi_1(X)\frac{h}{2} dX\nonumber\\
+&=\int_{-1}^1 \half(1+X)\half(1+X) \frac{h}{2} dX =
+\frac{h}{8}\int_{-1}^1 (1+X)^2 dX = \frac{h}{3}
+label{fem:approx:fe:intg:ref:Ae11}
+\end{align}
+!et
 
-##  * Funkcje przedstawione na kolejnych slajdach
-##    znajdują sie w module `fe_approx1D.py`
-##  * Przedstawione funkcje działają w trybie symbolicznym, jak i numerycznym
-##  * Kod zawiera wszystkie kroku obliczeń elementami skończonymi.
+!split
+===== Całkowanie po elemencie unormowanym - wektor prawej strony =====
 
-## !split
-## ===== Generowanie funkcji bazowych na przedziale unormowanymi =====
+!bt
+\begin{align}
+\tilde b^{(e)}_{0}
+&= \int_{-1}^1 f(x(X))\refphi_0(X)\frac{h}{2} dX\nonumber\\
+&= \int_{-1}^1 (x_m + \half hX)(1-(x_m + \half hX))
+\half(1-X)\frac{h}{2} dX \nonumber\\
+&= - \frac{1}{24} h^{3} + \frac{1}{6} h^{2} x_{m} - \frac{1}{12} h^{2} - \half h x_{m}^{2} + \half h x_{m}
+label{fem:approx:fe:intg:ref:be0}\\
+\tilde b^{(e)}_{1}
+&= \int_{-1}^1 f(x(X))\refphi_1(X)\frac{h}{2} dX\nonumber\\
+&= \int_{-1}^1 (x_m + \half hX)(1-(x_m + \half hX))
+\half(1+X)\frac{h}{2} dX \nonumber\\
+&= - \frac{1}{24} h^{3} - \frac{1}{6} h^{2} x_{m} + \frac{1}{12} h^{2} -
+\half h x_{m}^{2} + \half h x_{m}
+\end{align}
+!et
 
-## Niech $\refphi_r(X)$ będzie wielomianem Lagrange'a stopnia `d`:
+$x_m$: element midpoint.
 
-## !bc pycod
-## import sympy as sym
-## import numpy as np
+!split
+===== Obliczenia symboliczne zamiast żmudnego liczenia na kartce... =====
+!bc pycod
+>>> import sympy as sym
+>>> x, x_m, h, X = sym.symbols('x x_m h X')
+>>> sym.integrate(h/8*(1-X)**2, (X, -1, 1))
+h/3
+>>> sym.integrate(h/8*(1+X)*(1-X), (X, -1, 1))
+h/6
+>>> x = x_m + h/2*X
+>>> b_0 = sym.integrate(h/4*x*(1-x)*(1-X), (X, -1, 1))
+>>> print b_0
+-h**3/24 + h**2*x_m/6 - h**2/12 - h*x_m**2/2 + h*x_m/2
+!ec
 
-## def phi_r(r, X, d):
-##     if isinstance(X, sym.Symbol):
-##         h = sym.Rational(1, d)  # node spacing
-##         nodes = [2*i*h - 1 for i in range(d+1)]
-##     else:
-##         # assume X is numeric: use floats for nodes
-##         nodes = np.linspace(-1, 1, d+1)
-##     return Lagrange_polynomial(X, r, nodes)
-
-## def Lagrange_polynomial(x, i, points):
-##     p = 1
-##     for k in range(len(points)):
-##         if k != i:
-##             p *= (x - points[k])/(points[i] - points[k])
-##     return p
-
-## def basis(d=1):
-##     """Return the complete basis."""
-##     X = sym.Symbol('X')
-##     phi = [phi_r(r, X, d) for r in range(d+1)]
-##     return phi
-## !ec
-
-## !split
-## ===== Obliczanie współczynników macierzy =====
+## Can print out in LaTeX too (convenient for copying into reports):
 
 ## !bc pycod
-## def element_matrix(phi, Omega_e, symbolic=True):
-##     n = len(phi)
-##     A_e = sym.zeros((n, n))
-##     X = sym.Symbol('X')
-##     if symbolic:
-##         h = sym.Symbol('h')
-##     else:
-##         h = Omega_e[1] - Omega_e[0]
-##     detJ = h/2  # dx/dX
-##     for r in range(n):
-##         for s in range(r, n):
-##             A_e[r,s] = sym.integrate(phi[r]*phi[s]*detJ, (X, -1, 1))
-##             A_e[s,r] = A_e[r,s]
-##     return A_e
+## >>> print sym.latex(b_0, mode='plain')
+## - \frac{1}{24} h^{3} + \frac{1}{6} h^{2} x_{m}
+## - \frac{1}{12} h^{2} - \half h x_{m}^{2}
+## + \half h x_{m}
 ## !ec
 
-## !split
-## ===== Przykład: Obliczenia macierzy współczynników: symbolicznie vs numerycznie =====
-## !bc pycod
-## >>> from fe_approx1D import *
-## >>> phi = basis(d=1)
-## >>> phi
-## [1/2 - X/2, 1/2 + X/2]
-## >>> element_matrix(phi, Omega_e=[0.1, 0.2], symbolic=True)
-## [h/3, h/6]
-## [h/6, h/3]
-## >>> element_matrix(phi, Omega_e=[0.1, 0.2], symbolic=False)
-## [0.0333333333333333, 0.0166666666666667]
-## [0.0166666666666667, 0.0333333333333333]
-## !ec
+!split
+======= Implementacja =======
 
-## !split
-## ===== Obliczenia współczynników wektora prawej strony =====
+ * Funkcje przedstawione na kolejnych slajdach
+   znajdują sie w module `fe_approx1D.py`
+ * Przedstawione funkcje działają w trybie symbolicznym, jak i numerycznym
+ * Kod zawiera wszystkie kroku obliczeń elementami skończonymi.
 
-## !bc pycod
-## def element_vector(f, phi, Omega_e, symbolic=True):
-##     n = len(phi)
-##     b_e = sym.zeros((n, 1))
-##     # Make f a function of X
-##     X = sym.Symbol('X')
-##     if symbolic:
-##         h = sym.Symbol('h')
-##     else:
-##         h = Omega_e[1] - Omega_e[0]
-##     x = (Omega_e[0] + Omega_e[1])/2 + h/2*X  # mapping
-##     f = f.subs('x', x)  # substitute mapping formula for x
-##     detJ = h/2  # dx/dX
-##     for r in range(n):
-##         b_e[r] = sym.integrate(f*phi[r]*detJ, (X, -1, 1))
-##     return b_e
-## !ec
+!split
+===== Generowanie funkcji bazowych na przedziale unormowanymi =====
 
-## Zwróć uwagę na `f.subs('x', x)` -> podstawienie $x(X)$ za `x` we formule na `f`
-## (od teraz `f` jest funkcją $f(X)$)
+Niech $\refphi_r(X)$ będzie wielomianem Lagrange'a stopnia `d`:
 
-## !split
-## ===== Powrót do całkowania numerycznego w razie niepowodzenia całkowania symbolicznego $\int f\refphi_r dx$ =====
+!bc pycod
+import sympy as sym
+import numpy as np
 
-##   * Macierz lewej strony: tylko wielomiany -> `sympy` zawsze da radę
-##   * Wektor prawej strony: całkowanie $\int f\refphi \dx$ może się nie powieść
-##     (`sympy` zwróci obiekt typu `Integral` zamiast liczby)
+def phi_r(r, X, d):
+    if isinstance(X, sym.Symbol):
+        h = sym.Rational(1, d)  # node spacing
+        nodes = [2*i*h - 1 for i in range(d+1)]
+    else:
+        # assume X is numeric: use floats for nodes
+        nodes = np.linspace(-1, 1, d+1)
+    return Lagrange_polynomial(X, r, nodes)
 
-## !bc pycod
-## def element_vector(f, phi, Omega_e, symbolic=True):
-##         ...
-##         I = sym.integrate(f*phi[r]*detJ, (X, -1, 1))  # try...
-##         if isinstance(I, sym.Integral):
-##             h = Omega_e[1] - Omega_e[0]  # Ensure h is numerical
-##             detJ = h/2
-##             integrand = sym.lambdify([X], f*phi[r]*detJ)
-##             I = sym.mpmath.quad(integrand, [-1, 1])
-##         b_e[r] = I
-##         ...
-## !ec
+def Lagrange_polynomial(x, i, points):
+    p = 1
+    for k in range(len(points)):
+        if k != i:
+            p *= (x - points[k])/(points[i] - points[k])
+    return p
 
-## !split
-## ===== Assembling URL i rozwiązanie =====
+def basis(d=1):
+    """Return the complete basis."""
+    X = sym.Symbol('X')
+    phi = [phi_r(r, X, d) for r in range(d+1)]
+    return phi
+!ec
 
-## !bc pycod
-## def assemble(nodes, elements, phi, f, symbolic=True):
-##     N_n, N_e = len(nodes), len(elements)
-##     zeros = sym.zeros if symbolic else np.zeros
-##     A = zeros((N_n, N_n))
-##     b = zeros((N_n, 1))
-##     for e in range(N_e):
-##         Omega_e = [nodes[elements[e][0]], nodes[elements[e][-1]]]
+!split
+===== Obliczanie współczynników macierzy =====
 
-##         A_e = element_matrix(phi, Omega_e, symbolic)
-##         b_e = element_vector(f, phi, Omega_e, symbolic)
+!bc pycod
+def element_matrix(phi, Omega_e, symbolic=True):
+    n = len(phi)
+    A_e = sym.zeros((n, n))
+    X = sym.Symbol('X')
+    if symbolic:
+        h = sym.Symbol('h')
+    else:
+        h = Omega_e[1] - Omega_e[0]
+    detJ = h/2  # dx/dX
+    for r in range(n):
+        for s in range(r, n):
+            A_e[r,s] = sym.integrate(phi[r]*phi[s]*detJ, (X, -1, 1))
+            A_e[s,r] = A_e[r,s]
+    return A_e
+!ec
 
-##         for r in range(len(elements[e])):
-##             for s in range(len(elements[e])):
-##                 A[elements[e][r],elements[e][s]] += A_e[r,s]
-##             b[elements[e][r]] += b_e[r]
-##     return A, b
-## !ec
+!split
+===== Przykład: Obliczenia macierzy współczynników: symbolicznie vs numerycznie =====
+!bc pycod
+>>> from fe_approx1D import *
+>>> phi = basis(d=1)
+>>> phi
+[1/2 - X/2, 1/2 + X/2]
+>>> element_matrix(phi, Omega_e=[0.1, 0.2], symbolic=True)
+[h/3, h/6]
+[h/6, h/3]
+>>> element_matrix(phi, Omega_e=[0.1, 0.2], symbolic=False)
+[0.0333333333333333, 0.0166666666666667]
+[0.0166666666666667, 0.0333333333333333]
+!ec
 
-## !split
-## ===== Rozwiązanie URL =====
+!split
+===== Obliczenia współczynników wektora prawej strony =====
 
-## !bc pycod
-## if symbolic:
-##     c = A.LUsolve(b)           # sympy arrays, symbolic Gaussian elim.
-## else:
-##     c = np.linalg.solve(A, b)  # numpy arrays, numerical solve
-## !ec
+!bc pycod
+def element_vector(f, phi, Omega_e, symbolic=True):
+    n = len(phi)
+    b_e = sym.zeros((n, 1))
+    # Make f a function of X
+    X = sym.Symbol('X')
+    if symbolic:
+        h = sym.Symbol('h')
+    else:
+        h = Omega_e[1] - Omega_e[0]
+    x = (Omega_e[0] + Omega_e[1])/2 + h/2*X  # mapping
+    f = f.subs('x', x)  # substitute mapping formula for x
+    detJ = h/2  # dx/dX
+    for r in range(n):
+        b_e[r] = sym.integrate(f*phi[r]*detJ, (X, -1, 1))
+    return b_e
+!ec
 
-## Uwaga: obliczanie współczynników macierzy `A`, `b` oraz rozwiązanie URL
-## `A.LUsolve(b)` może być baaardzo czasochłonne\ldots
+Zwróć uwagę na `f.subs('x', x)` -> podstawienie $x(X)$ za `x` we formule na `f`
+(od teraz `f` jest funkcją $f(X)$)
+
+!split
+===== Powrót do całkowania numerycznego w razie niepowodzenia całkowania symbolicznego $\int f\refphi_r dx$ =====
+
+  * Macierz lewej strony: tylko wielomiany -> `sympy` zawsze da radę
+  * Wektor prawej strony: całkowanie $\int f\refphi \dx$ może się nie powieść
+    (`sympy` zwróci obiekt typu `Integral` zamiast liczby)
+
+!bc pycod
+def element_vector(f, phi, Omega_e, symbolic=True):
+        ...
+        I = sym.integrate(f*phi[r]*detJ, (X, -1, 1))  # try...
+        if isinstance(I, sym.Integral):
+            h = Omega_e[1] - Omega_e[0]  # Ensure h is numerical
+            detJ = h/2
+            integrand = sym.lambdify([X], f*phi[r]*detJ)
+            I = sym.mpmath.quad(integrand, [-1, 1])
+        b_e[r] = I
+        ...
+!ec
+
+!split
+===== Assembling URL i rozwiązanie =====
+
+!bc pycod
+def assemble(nodes, elements, phi, f, symbolic=True):
+    N_n, N_e = len(nodes), len(elements)
+    zeros = sym.zeros if symbolic else np.zeros
+    A = zeros((N_n, N_n))
+    b = zeros((N_n, 1))
+    for e in range(N_e):
+        Omega_e = [nodes[elements[e][0]], nodes[elements[e][-1]]]
+
+        A_e = element_matrix(phi, Omega_e, symbolic)
+        b_e = element_vector(f, phi, Omega_e, symbolic)
+
+        for r in range(len(elements[e])):
+            for s in range(len(elements[e])):
+                A[elements[e][r],elements[e][s]] += A_e[r,s]
+            b[elements[e][r]] += b_e[r]
+    return A, b
+!ec
+
+!split
+===== Rozwiązanie URL =====
+
+!bc pycod
+if symbolic:
+    c = A.LUsolve(b)           # sympy arrays, symbolic Gaussian elim.
+else:
+    c = np.linalg.solve(A, b)  # numpy arrays, numerical solve
+!ec
+
+Uwaga: obliczanie współczynników macierzy `A`, `b` oraz rozwiązanie URL
+`A.LUsolve(b)` może być baaardzo czasochłonne\ldots
 
 
-## !split
-## ===== Przykład: generowanie macierzy symbolicznie =====
+!split
+===== Przykład: generowanie macierzy symbolicznie =====
 
-## !bc pycod
-## >>> h, x = sym.symbols('h x')
-## >>> nodes = [0, h, 2*h]
-## >>> elements = [[0, 1], [1, 2]]
-## >>> phi = basis(d=1)
-## >>> f = x*(1-x)
-## >>> A, b = assemble(nodes, elements, phi, f, symbolic=True)
-## >>> A
-## [h/3,   h/6,   0]
-## [h/6, 2*h/3, h/6]
-## [  0,   h/6, h/3]
-## >>> b
-## [     h**2/6 - h**3/12]
-## [      h**2 - 7*h**3/6]
-## [5*h**2/6 - 17*h**3/12]
-## >>> c = A.LUsolve(b)
-## >>> c
-## [                           h**2/6]
-## [12*(7*h**2/12 - 35*h**3/72)/(7*h)]
-## [  7*(4*h**2/7 - 23*h**3/21)/(2*h)]
-## !ec
+!bc pycod
+>>> h, x = sym.symbols('h x')
+>>> nodes = [0, h, 2*h]
+>>> elements = [[0, 1], [1, 2]]
+>>> phi = basis(d=1)
+>>> f = x*(1-x)
+>>> A, b = assemble(nodes, elements, phi, f, symbolic=True)
+>>> A
+[h/3,   h/6,   0]
+[h/6, 2*h/3, h/6]
+[  0,   h/6, h/3]
+>>> b
+[     h**2/6 - h**3/12]
+[      h**2 - 7*h**3/6]
+[5*h**2/6 - 17*h**3/12]
+>>> c = A.LUsolve(b)
+>>> c
+[                           h**2/6]
+[12*(7*h**2/12 - 35*h**3/72)/(7*h)]
+[  7*(4*h**2/7 - 23*h**3/21)/(2*h)]
+!ec
 
-## !split
-## ===== Przykład: generowanie macierzy numerycznie =====
+!split
+===== Przykład: generowanie macierzy numerycznie =====
 
-## !bc pycod
-## >>> nodes = [0, 0.5, 1]
-## >>> elements = [[0, 1], [1, 2]]
-## >>> phi = basis(d=1)
-## >>> x = sym.Symbol('x')
-## >>> f = x*(1-x)
-## >>> A, b = assemble(nodes, elements, phi, f, symbolic=False)
-## >>> A
-## [ 0.166666666666667, 0.0833333333333333,                  0]
-## [0.0833333333333333,  0.333333333333333, 0.0833333333333333]
-## [                 0, 0.0833333333333333,  0.166666666666667]
-## >>> b
-## [          0.03125]
-## [0.104166666666667]
-## [          0.03125]
-## >>> c = A.LUsolve(b)
-## >>> c
-## [0.0416666666666666]
-## [ 0.291666666666667]
-## [0.0416666666666666]
-## !ec
+!bc pycod
+>>> nodes = [0, 0.5, 1]
+>>> elements = [[0, 1], [1, 2]]
+>>> phi = basis(d=1)
+>>> x = sym.Symbol('x')
+>>> f = x*(1-x)
+>>> A, b = assemble(nodes, elements, phi, f, symbolic=False)
+>>> A
+[ 0.166666666666667, 0.0833333333333333,                  0]
+[0.0833333333333333,  0.333333333333333, 0.0833333333333333]
+[                 0, 0.0833333333333333,  0.166666666666667]
+>>> b
+[          0.03125]
+[0.104166666666667]
+[          0.03125]
+>>> c = A.LUsolve(b)
+>>> c
+[0.0416666666666666]
+[ 0.291666666666667]
+[0.0416666666666666]
+!ec
 
-## !split
-## ===== Struktura macierzy współczynników =====
-## label{fem:approx:fe:A:structure}
+!split
+===== Struktura macierzy współczynników =====
+label{fem:approx:fe:A:structure}
 
-## !bc pycod
-## >>> d=1; N_e=8; Omega=[0,1]  # 8 linear elements on [0,1]
-## >>> phi = basis(d)
-## >>> f = x*(1-x)
-## >>> nodes, elements = mesh_symbolic(N_e, d, Omega)
-## >>> A, b = assemble(nodes, elements, phi, f, symbolic=True)
-## >>> A
-## [h/3,   h/6,     0,     0,     0,     0,     0,     0,   0]
-## [h/6, 2*h/3,   h/6,     0,     0,     0,     0,     0,   0]
-## [  0,   h/6, 2*h/3,   h/6,     0,     0,     0,     0,   0]
-## [  0,     0,   h/6, 2*h/3,   h/6,     0,     0,     0,   0]
-## [  0,     0,     0,   h/6, 2*h/3,   h/6,     0,     0,   0]
-## [  0,     0,     0,     0,   h/6, 2*h/3,   h/6,     0,   0]
-## [  0,     0,     0,     0,     0,   h/6, 2*h/3,   h/6,   0]
-## [  0,     0,     0,     0,     0,     0,   h/6, 2*h/3, h/6]
-## [  0,     0,     0,     0,     0,     0,     0,   h/6, h/3]
-## !ec
+!bc pycod
+>>> d=1; N_e=8; Omega=[0,1]  # 8 linear elements on [0,1]
+>>> phi = basis(d)
+>>> f = x*(1-x)
+>>> nodes, elements = mesh_symbolic(N_e, d, Omega)
+>>> A, b = assemble(nodes, elements, phi, f, symbolic=True)
+>>> A
+[h/3,   h/6,     0,     0,     0,     0,     0,     0,   0]
+[h/6, 2*h/3,   h/6,     0,     0,     0,     0,     0,   0]
+[  0,   h/6, 2*h/3,   h/6,     0,     0,     0,     0,   0]
+[  0,     0,   h/6, 2*h/3,   h/6,     0,     0,     0,   0]
+[  0,     0,     0,   h/6, 2*h/3,   h/6,     0,     0,   0]
+[  0,     0,     0,     0,   h/6, 2*h/3,   h/6,     0,   0]
+[  0,     0,     0,     0,     0,   h/6, 2*h/3,   h/6,   0]
+[  0,     0,     0,     0,     0,     0,   h/6, 2*h/3, h/6]
+[  0,     0,     0,     0,     0,     0,     0,   h/6, h/3]
+!ec
 
-## Uwaga (zadanie domowe): Odtworzenie tego powyższego wyniku przy pomocy
-## ''obliczeń ołówkowych'' naprawdę pomoże w zrozumieniu materiału.
+Uwaga (zadanie domowe): Odtworzenie tego powyższego wyniku przy pomocy
+''obliczeń ołówkowych'' naprawdę pomoże w zrozumieniu materiału.
 
-## !split
-## ===== Wynik w przypadku ogólnym ($N$ jednakowych elementów) =====
+!split
+===== Wynik w przypadku ogólnym ($N$ jednakowych elementów) =====
 
-##  * Macierz rzadka -> większość współczynników to zera
-##  * Przykład dla elementów typu P1, siatka regularna
+ * Macierz rzadka -> większość współczynników to zera
+ * Przykład dla elementów typu P1, siatka regularna
 
-## !bt
-## \[
-## A = \frac{h}{6}
-## \left(
-## \begin{array}{cccccccccc}
-## 2 & 1 & 0
-## &\cdots & \cdots & \cdots & \cdots & \cdots & 0 \\
-## 1 & 4 & 1 & \ddots &   & &  & &  \vdots \\
-## 0 & 1 & 4 & 1 &
-## \ddots & &  &  & \vdots \\
-## \vdots & \ddots &  & \ddots & \ddots & 0 &  & & \vdots \\
-## \vdots &  & \ddots & \ddots & \ddots & \ddots & \ddots & & \vdots \\
-## \vdots & &  & 0 & 1 & 4 & 1 & \ddots & \vdots \\
-## \vdots & & &  & \ddots & \ddots & \ddots &\ddots  & 0 \\
-## \vdots & & & &  &\ddots  & 1  & 4  & 1 \\
-## 0 &\cdots & \cdots &\cdots & \cdots & \cdots  & 0 & 1 & 2
-## \end{array}
-## \right)
-## \]
-## !et
+!bt
+\[
+A = \frac{h}{6}
+\left(
+\begin{array}{cccccccccc}
+2 & 1 & 0
+&\cdots & \cdots & \cdots & \cdots & \cdots & 0 \\
+1 & 4 & 1 & \ddots &   & &  & &  \vdots \\
+0 & 1 & 4 & 1 &
+\ddots & &  &  & \vdots \\
+\vdots & \ddots &  & \ddots & \ddots & 0 &  & & \vdots \\
+\vdots &  & \ddots & \ddots & \ddots & \ddots & \ddots & & \vdots \\
+\vdots & &  & 0 & 1 & 4 & 1 & \ddots & \vdots \\
+\vdots & & &  & \ddots & \ddots & \ddots &\ddots  & 0 \\
+\vdots & & & &  &\ddots  & 1  & 4  & 1 \\
+0 &\cdots & \cdots &\cdots & \cdots & \cdots  & 0 & 1 & 2
+\end{array}
+\right)
+\]
+!et
 
-## !split
-## ===== Macierz rzadka  dla elementów typu P2 (siatka regularna) =====
+!split
+===== Macierz rzadka  dla elementów typu P2 (siatka regularna) =====
 
-## !bt
-## \[
-## A = \frac{h}{30}
-## \left(
-## \begin{array}{ccccccccc}
-## 4 & 2 & - 1 & 0
-##   & 0 & 0 & 0 & 0 & 0\\
-##   2 & 16 & 2
-##   & 0 & 0 & 0 & 0 & 0 & 0\\- 1 & 2 &
-##   8 & 2 & - 1 & 0 & 0 & 0 & 0\\
-##   0 & 0 & 2 & 16 & 2 & 0 & 0 & 0 & 0\\
-##   0 & 0 & - 1 & 2 & 8 & 2 & - 1 & 0 & 0\\
-##   0 & 0 & 0 & 0 & 2 & 16 & 2 & 0 & 0\\
-##   0 & 0 & 0 & 0 & - 1 & 2 & 8 & 2 & - 1
-##   \\0 & 0 & 0 & 0 & 0 & 0 &
-##   2 & 16 & 2\\0 & 0 & 0 & 0 & 0
-##   & 0 & - 1 & 2 & 4
-## \end{array}
-## \right)
-## \]
-## !et
+!bt
+\[
+A = \frac{h}{30}
+\left(
+\begin{array}{ccccccccc}
+4 & 2 & - 1 & 0
+  & 0 & 0 & 0 & 0 & 0\\
+  2 & 16 & 2
+  & 0 & 0 & 0 & 0 & 0 & 0\\- 1 & 2 &
+  8 & 2 & - 1 & 0 & 0 & 0 & 0\\
+  0 & 0 & 2 & 16 & 2 & 0 & 0 & 0 & 0\\
+  0 & 0 & - 1 & 2 & 8 & 2 & - 1 & 0 & 0\\
+  0 & 0 & 0 & 0 & 2 & 16 & 2 & 0 & 0\\
+  0 & 0 & 0 & 0 & - 1 & 2 & 8 & 2 & - 1
+  \\0 & 0 & 0 & 0 & 0 & 0 &
+  2 & 16 & 2\\0 & 0 & 0 & 0 & 0
+  & 0 & - 1 & 2 & 4
+\end{array}
+\right)
+\]
+!et
 
-## !split
+!split
 ===== Macierz rzadka dla siatek regularnych/indeksowanych losowo dla elementów P1 =====
 
  * Po lewej: węzły i elementy ideksowane od lewej do prawej
@@ -2350,280 +2360,336 @@ approximate(f=x*(1-x)**8, symbolic=False, d=2, N_e=4)
 
 FIGURE: [../fig/fe_p1_p2_x9_248e, width=800 frac=0.9]
 
+
+
+
+
+
+
+
+
+
+
+
+
 !split
-## ======= Porównanie aproksymacji elementami skończonymi i różnicami skończonymi =======
-## label{fem:approx:fe:fd}
+## ## ======= Porównanie aproksymacji elementami skończonymi i różnicami skończonymi =======
+## ## label{fem:approx:fe:fd}
+## 
+## ##  * Przybliżenie różnicami skończonymi $u_i$ funkcji $f(x)$:
+## ##    po prostu $u_i = f(x_i)$ (próbkowanie)
+## ##  * W \FEM{} to samo $u\approx\sum_i c_i\basphi_i$ + dodatkowo interpolacja
+## ##    (następny slajd)
+## ##  * $u\approx\sum_i c_i\basphi_i$ + metoda Galerkina lub \LSM{}:
+## ##    must derive and solve a linear system
+## ##  * What is *really* the difference in the approximation $u$?
+## 
+## ## !split
+## ## ===== Interpolation/collocation with finite elements =====
+## 
+## ## Let $\{\xno{i}\}_{i\in\If}$ be the nodes in the mesh.
+## ## Collocation/interpolation means
+## 
+## ## !bt
+## ## \[
+## ## u(\xno{i})=f(\xno{i}),\quad i\in\If,
+## ## \]
+## ## !et
+## ## which translates to
+## 
+## ## !bt
+## ## \[ \sum_{j\in\If} c_j \basphi_j(\xno{i}) = f(\xno{i}),\]
+## ## !et
+## ## but $\basphi_j(\xno{i})=0$ if $i\neq j$ so the sum collapses to one
+## ## term $c_i\basphi_i(\xno{i}) = c_i$, and we have the result
+## 
+## ## !bt
+## ## \[
+## ## c_i = f(\xno{i})
+## ## \]
+## ## !et
+## 
+## ## Same result as the standard finite difference approach, but finite elements
+## ## define $u$ also *between* the $\xno{i}$ points
+## 
+## ## !split
+## ## ===== Galerkin/project and least squares vs collocation/interpolation or finite differences =====
+## 
+## ##  * Scope: work with P1 elements
+## ##  * Use projection/Galerkin or least squares (equivalent)
+## ##  * Interpret the resulting linear system as finite difference equations
+## 
+## ## The P1 finite element machinery results in a linear system where
+## ## equation no $i$ is
+## 
+## ## !bt
+## ## \[
+## ## \frac{h}{6}(u_{i-1} + 4u_i + u_{i+1}) = (f,\basphi_i)
+## ## \]
+## ## !et
+## 
+## ## Note:
+## 
+## ##   * We have used $u_i$ for $c_i$ to make notation similar to
+## ##     finite differences
+## ##   * The finite difference counterpart is just $u_i=f_i$
+## 
+## ## !split
+## ## ===== Expressing the left-hand side in finite difference operator notation =====
+## 
+## ## Rewrite the left-hand side of finite element equation no $i$:
+## 
+## ## !bt
+## ## \[
+## ## h(u_i + \frac{1}{6}(u_{i-1} - 2u_i + u_{i+1})) = [h(u + \frac{h^2}{6}D_x D_x u)]_i
+## ## \]
+## ## !et
+## ## This is the standard finite difference approximation of
+## 
+## ## !bt
+## ## \[ h(u + \frac{h^2}{6}u'')\]
+## ## !et
+## 
+## ## !split
+## ## ===== Treating the right-hand side; Trapezoidal rule =====
+## 
+## ## !bt
+## ## \[ (f,\basphi_i) = \int_{\xno{i-1}}^{\xno{i}} f(x)\frac{1}{h} (x - \xno{i-1}) dx
+## ## + \int_{\xno{i}}^{\xno{i+1}} f(x)\frac{1}{h}(1 - (x - x_{i})) dx
+## ## \]
+## ## !et
+## ## Cannot do much unless we specialize $f$ or use *numerical integration*.
+## 
+## ## Trapezoidal rule using the nodes:
+## 
+## ## !bt
+## ## \[ (f,\basphi_i) = \int_\Omega f\basphi_i dx\approx h\half(
+## ## f(\xno{0})\basphi_i(\xno{0}) + f(\xno{N})\basphi_i(\xno{N}))
+## ## + h\sum_{j=1}^{N-1} f(\xno{j})\basphi_i(\xno{j})
+## ## \]
+## ## !et
+## ## $\basphi_i(\xno{j})=\delta_{ij}$, so this formula collapses to one term:
+## 
+## ## !bt
+## ## \[
+## ## (f,\basphi_i) \approx hf(\xno{i}),\quad i=1,\ldots,N-1\thinspace.
+## ## \]
+## ## !et
+## 
+## ## Same result as in collocation (interpolation)
+## ## and the finite difference method!
+## 
+## ## !split
+## ## ===== Treating the right-hand side; Simpson's rule =====
+## 
+## ## !bt
+## ## \[ \int_\Omega g(x)dx \approx \frac{h}{6}\left( g(\xno{0}) +
+## ## 2\sum_{j=1}^{N-1} g(\xno{j})
+## ## + 4\sum_{j=0}^{N-1} g(\xno{j+\half}) + f(\xno{2N})\right),
+## ## \]
+## ## !et
+## ## Our case: $g=f\basphi_i$. The sums collapse because $\basphi_i=0$ at most of
+## ## the points.
+## 
+## ## !bt
+## ## \[
+## ## (f,\basphi_i) \approx \frac{h}{3}(f_{i-\half} + f_i + f_{i+\half})
+## ## \]
+## ## !et
+## 
+## ## Conclusions:
+## 
+## ##   * While the finite difference method just samples $f$ at $x_i$,
+## ##     the finite element method applies an average (smoothing) of $f$ around $x_i$
+## ##   * On the left-hand side we have a term $\sim hu''$, and $u''$
+## ##     also contribute to smoothing
+## ##   * There is some inherent smoothing in the finite element
+## ##     method
+## 
+## ## !split
+## ## ===== Finite element approximation vs finite differences =====
+## 
+## ## With Trapezoidal integration of $(f,\basphi_i)$, the finite element
+## ## method essentially solve
+## 
+## ## !bt
+## ## \[
+## ## u + \frac{h^2}{6} u'' = f,\quad u'(0)=u'(L)=0,
+## ## \]
+## ## !et
+## ## by the finite difference method
+## 
+## ## !bt
+## ## \[
+## ## [u + \frac{h^2}{6} D_x D_x u = f]_i
+## ## \]
+## ## !et
+## 
+## ## With Simpson integration of $(f,\basphi_i)$ we essentially solve
+## 
+## ## !bt
+## ## \[
+## ## [u + \frac{h^2}{6} D_x D_x u = \bar f]_i,
+## ## \]
+## ## !et
+## ## where
+## ## !bt
+## ## \[ \bar f_i = \frac{1}{3}(f_{i-1/2} + f_i + f_{i+1/2}) \]
+## ## !et
+## 
+## ## Note: as $h\rightarrow 0$, $hu''\rightarrow 0$ and $\bar f_i\rightarrow f_i$.
+## 
+## ## !split
+## ## ===== Making finite elements behave as finite differences =====
+## 
+## ##  * Can we adjust the finite element method so that we do not
+## ##    get the extra $hu''$ smoothing term and averaging of $f$?
+## ##  * This allows finite elements to inherit
+## ##    (desired) properties of finite differences
+## 
+## ## idx{mass matrix} idx{mass lumping} idx{lumped mass matrix}
+## 
+## ## Result:
+## 
+## ##  * Compute all integrals by the Trapezoidal method and P1 elements
+## ##  * Specifically, the coefficient matrix becomes diagonal (``lumped'') -
+## ##    no linear system (!)
+## ##  * Loss of accuracy? The Trapezoidal rule has error $\Oof{h^2}$,
+## ##    the same as the approximation error in P1 elements
+## 
 
-##  * Przybliżenie różnicami skończonymi $u_i$ funkcji $f(x)$:
-##    po prostu $u_i = f(x_i)$ (próbkowanie)
-##  * W \FEM{} to samo $u\approx\sum_i c_i\basphi_i$ + dodatkowo interpolacja
-##    (następny slajd)
-##  * $u\approx\sum_i c_i\basphi_i$ + metoda Galerkina lub \LSM{}:
-##    must derive and solve a linear system
-##  * What is *really* the difference in the approximation $u$?
 
-## !split
-## ===== Interpolation/collocation with finite elements =====
 
-## Let $\{\xno{i}\}_{i\in\If}$ be the nodes in the mesh.
-## Collocation/interpolation means
 
-## !bt
-## \[
-## u(\xno{i})=f(\xno{i}),\quad i\in\If,
-## \]
-## !et
-## which translates to
 
-## !bt
-## \[ \sum_{j\in\If} c_j \basphi_j(\xno{i}) = f(\xno{i}),\]
-## !et
-## but $\basphi_j(\xno{i})=0$ if $i\neq j$ so the sum collapses to one
-## term $c_i\basphi_i(\xno{i}) = c_i$, and we have the result
 
-## !bt
-## \[
-## c_i = f(\xno{i})
-## \]
-## !et
 
-## Same result as the standard finite difference approach, but finite elements
-## define $u$ also *between* the $\xno{i}$ points
 
-## !split
-## ===== Galerkin/project and least squares vs collocation/interpolation or finite differences =====
 
-##  * Scope: work with P1 elements
-##  * Use projection/Galerkin or least squares (equivalent)
-##  * Interpret the resulting linear system as finite difference equations
 
-## The P1 finite element machinery results in a linear system where
-## equation no $i$ is
 
-## !bt
-## \[
-## \frac{h}{6}(u_{i-1} + 4u_i + u_{i+1}) = (f,\basphi_i)
-## \]
-## !et
 
-## Note:
 
-##   * We have used $u_i$ for $c_i$ to make notation similar to
-##     finite differences
-##   * The finite difference counterpart is just $u_i=f_i$
 
-## !split
-## ===== Expressing the left-hand side in finite difference operator notation =====
 
-## Rewrite the left-hand side of finite element equation no $i$:
 
-## !bt
-## \[
-## h(u_i + \frac{1}{6}(u_{i-1} - 2u_i + u_{i+1})) = [h(u + \frac{h^2}{6}D_x D_x u)]_i
-## \]
-## !et
-## This is the standard finite difference approximation of
-
-## !bt
-## \[ h(u + \frac{h^2}{6}u'')\]
-## !et
-
-## !split
-## ===== Treating the right-hand side; Trapezoidal rule =====
-
-## !bt
-## \[ (f,\basphi_i) = \int_{\xno{i-1}}^{\xno{i}} f(x)\frac{1}{h} (x - \xno{i-1}) dx
-## + \int_{\xno{i}}^{\xno{i+1}} f(x)\frac{1}{h}(1 - (x - x_{i})) dx
-## \]
-## !et
-## Cannot do much unless we specialize $f$ or use *numerical integration*.
-
-## Trapezoidal rule using the nodes:
-
-## !bt
-## \[ (f,\basphi_i) = \int_\Omega f\basphi_i dx\approx h\half(
-## f(\xno{0})\basphi_i(\xno{0}) + f(\xno{N})\basphi_i(\xno{N}))
-## + h\sum_{j=1}^{N-1} f(\xno{j})\basphi_i(\xno{j})
-## \]
-## !et
-## $\basphi_i(\xno{j})=\delta_{ij}$, so this formula collapses to one term:
-
-## !bt
-## \[
-## (f,\basphi_i) \approx hf(\xno{i}),\quad i=1,\ldots,N-1\thinspace.
-## \]
-## !et
-
-## Same result as in collocation (interpolation)
-## and the finite difference method!
-
-## !split
-## ===== Treating the right-hand side; Simpson's rule =====
-
-## !bt
-## \[ \int_\Omega g(x)dx \approx \frac{h}{6}\left( g(\xno{0}) +
-## 2\sum_{j=1}^{N-1} g(\xno{j})
-## + 4\sum_{j=0}^{N-1} g(\xno{j+\half}) + f(\xno{2N})\right),
-## \]
-## !et
-## Our case: $g=f\basphi_i$. The sums collapse because $\basphi_i=0$ at most of
-## the points.
-
-## !bt
-## \[
-## (f,\basphi_i) \approx \frac{h}{3}(f_{i-\half} + f_i + f_{i+\half})
-## \]
-## !et
-
-## Conclusions:
-
-##   * While the finite difference method just samples $f$ at $x_i$,
-##     the finite element method applies an average (smoothing) of $f$ around $x_i$
-##   * On the left-hand side we have a term $\sim hu''$, and $u''$
-##     also contribute to smoothing
-##   * There is some inherent smoothing in the finite element
-##     method
-
-## !split
-## ===== Finite element approximation vs finite differences =====
-
-## With Trapezoidal integration of $(f,\basphi_i)$, the finite element
-## method essentially solve
-
-## !bt
-## \[
-## u + \frac{h^2}{6} u'' = f,\quad u'(0)=u'(L)=0,
-## \]
-## !et
-## by the finite difference method
-
-## !bt
-## \[
-## [u + \frac{h^2}{6} D_x D_x u = f]_i
-## \]
-## !et
-
-## With Simpson integration of $(f,\basphi_i)$ we essentially solve
-
-## !bt
-## \[
-## [u + \frac{h^2}{6} D_x D_x u = \bar f]_i,
-## \]
-## !et
-## where
-## !bt
-## \[ \bar f_i = \frac{1}{3}(f_{i-1/2} + f_i + f_{i+1/2}) \]
-## !et
-
-## Note: as $h\rightarrow 0$, $hu''\rightarrow 0$ and $\bar f_i\rightarrow f_i$.
-
-## !split
-## ===== Making finite elements behave as finite differences =====
-
-##  * Can we adjust the finite element method so that we do not
-##    get the extra $hu''$ smoothing term and averaging of $f$?
-##  * This allows finite elements to inherit
-##    (desired) properties of finite differences
-
-## idx{mass matrix} idx{mass lumping} idx{lumped mass matrix}
-
-## Result:
-
-##  * Compute all integrals by the Trapezoidal method and P1 elements
-##  * Specifically, the coefficient matrix becomes diagonal (``lumped'') -
-##    no linear system (!)
-##  * Loss of accuracy? The Trapezoidal rule has error $\Oof{h^2}$,
-##    the same as the approximation error in P1 elements
-
-## !split
-======= Limitations of the nodes and element concepts =======
+!split
+======= Ograniczenia zaprezentowanego podejścia elementów skończonych =======
 label{fem:approx:fe:limitations}
 
-So far,
+## So far,
+Najczęstsza interpretacja:
 
- * *Nodes*: points for defining $\basphi_i$ and computing $u$ values
- * *Elements*: subdomain (containing a few nodes)
- * This is a common notion of nodes and elements
+ * *Węzły*: punkty potrzebne do zdefiniowania $\basphi_i$ i obliczania
+wartości $u$ (wymagane do geometrii i aproksymacji funkcji)
+ * *Elementy*: podobszary (zawierające kilka węzłów)
 
-One problem:
+Problem:
 
- * Our algorithms need nodes at the element boundaries
- * This is often not desirable, so we need to throw the `nodes` and
-   `elements` arrays away and find a more generalized element concept
+ * węzły na brzegu potrzebne przy warunkach brzegowych,
+   a nie zawsze tak musi być dla szczególnych rodzajów interpolacji
+   (np. elementy stałe)
+ * Trzeba wymyśleć coś lepszego...
 
 !split
-===== The generalized element concept has cells, vertices, nodes, and degrees of freedom =====
+===== Uogólnienie koncepcji elementu skończonego (komórki, wierzchołki, węzły, stopnie swobody) =====
 label{fem:approx:fe:element}
 
- * We introduce *cell* for the subdomain that we up to now called element
- * A cell has *vertices* (interval end points)
- * *Nodes* are, almost as before,
-   points where we want to compute unknown functions
- * *Degrees of freedom* is what the $c_j$ represent (usually function values
-   at nodes)
+ * Rozdzielenie aproksymacji geometrii (obszaru) od aproksymacji funkcji ''nad'' obszarem
+ * Nowe pojęcia: *komórka* (ang. cell) -- podobszar, element, kawałek obszaru
+ * Komórka zbudowana jest z *wierzchołków* (ang. vertices <- vertex)
+   -- (krańców przedziału w 1D) 
+ * *Węzły* (ang. nodes) p- punkty, w których należy wyznaczyć wartość poszukiwanej funkcji
+   (nie muszą pokrywać się z wierzchołkami!, ale mogą\ldots)
+ * *Stopnie swobody* (ang. degrees of freedom)
+    -- wielkości reprezentowane przez $c_j$
+    (niewiadome w URL) -> najczęściej: wartości funkcji w węźle
+    $\sum_{j\in\If} c_j \basphi_j(\xno{i}) = c_i$
+
+wierzchołki -> komórki -> interpolacja geometrii
+
+węzły, stopnie swobody -> interpolacja funkcji 
 
 !split
-===== The concept of a finite element =====
+===== Pojęcie elementu skończonego =====
 
 idx{finite element, definition} idx{dof map}
 
-  o a *reference cell* in a local reference coordinate system
-  o a set of *basis functions* $\refphi_r$ defined on the cell
-  o a set of *degrees of freedom* (e.g., function values)
-    that uniquely determine
-    the basis functions such that $\refphi_r=1$ for degree of freedom
-    number $r$ and $\refphi_r=0$ for all other degrees of freedom
-  o a mapping between local and global degree of freedom numbers (*dof map*)
-  o a geometric *mapping* of the reference cell onto to cell in the physical
-    domain: $[-1,1]\ \Rightarrow\ [x_L,x_R]$
+  o *komórka odniesienia* z unormowanym, lokalnym układem współrzędnych
+  o zbiór  *funkcji bazowych* $\refphi_r$ dla komórki
+  o zbiór *stopni swobody* (t.j. wartości funkcji), jednoznacznie wyznaczający
+    funkcje bazowe, dobrane tak aby $\refphi_r=1$ dla $r$-tego stopnia swobody
+    oraz $\refphi_r=0$ dla wszystkich pozostałych stopni swobody
+    
+  o odwzorowanie (ang. mapping) pomiędzy lokalną a globalną
+    indeksacją (transformacja numeracji) stopni swobody (*odwzorowanie dof* -- *dof map*)
+  o odwzorowanie komórki unormowanej na komórkę rzeczywistego obszaru 
+    (w 1D: $[-1,1]\ \Rightarrow\ [x_L,x_R]$)
 
 !split
-===== Basic data structures: `vertices`, `cells`, `dof_map` =====
+===== Struktury danych: `vertices`, `cells`, `dof_map` =====
 label{fem:approx:fe:element:impl}
 
 idx{`cells` list} idx{`vertices` list} idx{`dof_map` list}
 
-  * Cell vertex coordinates: `vertices` (equals `nodes` for P1 elements)
-  * Element vertices: `cells[e][r]` holds global vertex number of
-    local vertex no `r` in element `e` (same as `elements` for P1 elements)
-  * `dof_map[e,r]` maps local dof `r` in element `e` to global dof
-    number (same as `elements` for P$d$ elements)
+  * Współrzędne wierzchołków komórek: `vertices` (równoważne strukturze `nodes` dla elementów P1)
+  * Wierzchołki dla elementów (komórek): `cells[e][r]`
+    numer globalny dla wierchołka `r` elementu `e`
+    (równoważne strukturze `elements` dla elementów typu P1)
+  * `dof_map[e,r]` odwzorowanie lokalnego indeksu stopnia swobody `r` elementu `e`
+    na number globalny (równoważne strukturze `elements` dla elementów typu P$d$) 
 
-The assembly process now applies `dof_map`:
+W trakcie assemblingu należy skorzystać ze struktury `dof_map`:
 
 !bc pycod
 A[dof_map[e][r], dof_map[e][s]] += A_e[r,s]
 b[dof_map[e][r]] += b_e[r]
 !ec
 
-!split
-===== Example: data structures for P2 elements =====
+## # !split
+## # ===== Example: data structures for P2 elements =====
 
-FIGURE: [../fig/fe_mesh1D_P2, width=500 frac=0.8]
+## FIGURE: [../fig/fe_mesh1D_P2, width=500 frac=0.8]
 
+## !bc pycod
+## vertices = [0, 0.4, 1]
+## cells = [[0, 1], [1, 2]]
+## dof_map = [[0, 1, 2], [2, 3, 4]]
+## !ec
+
+!bslidecell 00
+FIGURE: [../fig/fe_mesh1D_P2, width=500 frac=1.2]
+!eslidecell
+
+!bslidecell 01
 !bc pycod
 vertices = [0, 0.4, 1]
 cells = [[0, 1], [1, 2]]
 dof_map = [[0, 1, 2], [2, 3, 4]]
 !ec
+!eslidecell
 
 !split
-===== Example: P0 elements =====
+===== Przykład: elementy P0 =====
 
-Example: Same mesh, but $u$ is piecewise constant in each cell (P0 element).
-Same `vertices` and `cells`, but
+Przykład: Ta sama siatka, ale $u$ to funkcja stała na każdej komórce (przedziałami stała) -> elementy typu P0.
+
+Te same struktury `vertices` i `cells`, ale dodatkowo
 
 !bc pycod
 dof_map = [[0], [1]]
 !ec
-May think of one node in the middle of each element.
 
-!bblock Note:
-We will hereafter work with `cells`, `vertices`, and `dof_map`.
+Można traktować te elementy jak elementy z interpolacją opartą na węźle
+znajdującym się pośrodku elementu.
+
+!bblock Uwaga:
+Od tej pory będziemy wykorzystywać struktury `cells`, `vertices`, i `dof_map`.
 !eblock
 
 !split
-===== A program with the fundamental algorithmic steps =====
+## ===== A program with the fundamental algorithmic steps =====
+===== Szkielet programu =====
 
 !bc pycod
 # Use modified fe_approx1D module
@@ -2649,675 +2715,861 @@ x_u, u = u_glob(c, vertices, cells, dof_map,
 plot(x_u, u)
 !ec
 
+!split
+===== Przybliżenie paraboli elementami P0 =====
 
-## !split
-## ===== Approximating a parabola by P0 elements =====
+FIGURE: [../fig/fe_p0_x2_4e_8e, width=800]
 
-## FIGURE: [../fig/fe_p0_x2_4e_8e, width=800]
+Funkcja `approximate` ''opakowuje'' polecenia z poprzedniego slajdu:
 
-## The `approximate` function automates the steps in the previous slide:
+!bc pycod
+from fe_approx1D_numint import *
+x=sym.Symbol("x")
+for N_e in 4, 8:
+    approximate(x*(1-x), d=0, N_e=N_e, Omega=[0,1])
+!ec
 
-## !bc pycod
-## from fe_approx1D_numint import *
-## x=sym.Symbol("x")
-## for N_e in 4, 8:
-##     approximate(x*(1-x), d=0, N_e=N_e, Omega=[0,1])
-## !ec
+!split
+===== Obliczanie błędów aproksymacji; uwagi ogólne =====
+label{fem:approx:fe:element:impl:error}
 
-## !split
-## ===== Computing the error of the approximation; principles =====
-## label{fem:approx:fe:element:impl:error}
+Błąd jako funkcja:
 
-## !bt
-## \[ L^2 \hbox{ error: }\quad ||e||_{L^2} =
-## \left(\int_{\Omega} e^2 dx\right)^{1/2}\]
-## !et
+!bt
+\[ e(x) = f(x) - u(x) \]
+!et
 
-## Accurate approximation of the integral:
+Błąd -- dyskretna wartość -> normy:
+!bt
+\[ L^2 \hbox{ error: }\quad ||e||_{L^2} =
+\left(\int_{\Omega} e^2 dx\right)^{1/2}\]
+!et
 
-##  * Sample $u(x)$ at many points in each element (call `u_glob`, returns `x` and `u`)
-##  * Use the Trapezoidal rule based on the samples
-##  * It is important to integrate $u$ accurately *over the elements*
-##  * (In a finite difference method we would just sample the mesh point values)
+Szacowanie całki:
 
-## !split
-## ===== Computing the error of the approximation; details =====
+ * dokładne, analityczne (symboliczne) - nieuniwersalne -> kwadratury
+ * odpowiednio dokładne spróbkowanie $u(x)$ w wielu punktach każdego elementu
+   (np. poprzez wywołanie `u_glob`, które zwróci `x` i `u`), a następnie
+ * scałkowanie metodą trapezów
+ * Uwaga! Ważne! Całka powinna być policzona dokładnie ''po elementach''
+   (zmienność funkcji $f$)
+## * (In a finite difference method we would just sample the mesh point values)
 
-## !bwarning Note
-## We need a version of the Trapezoidal rule valid
-## for non-uniformly spaced points:
+!split
+===== Obliczanie błędów aproksymacji; szczegóły =====
 
-## !bt
-## \[ \int_\Omega g(x) dx \approx \sum_{j=0}^{n-1} \half(g(x_j) +
-## g(x_{j+1}))(x_{j+1}-x_j)\]
-## !et
-## !ewarning
+!bwarning Uwaga
+Ponieważ elementy mogą być różnych rozmiarów (długości)
+siatka dyskretna może być niejednorodna, (ponadto powtórzone punkty
+na granicach elementów, widziane z perspektywy dwóch sąsiadujących elementów)
 
-## !bc pycod
-## # Given c, compute x and u values on a very fine mesh
-## x, u = u_glob(c, vertices, cells, dof_map,
-##               resolution_per_element=101)
-## # Compute the error on the very fine mesh
-## e = f(x) - u
-## e2 = e**2
-## # Vectorized Trapezoidal rule
-## E = np.sqrt(0.5*np.sum((e2[:-1] + e2[1:])*(x[1:] - x[:-1]))
-## !ec
+->
 
-## !split
-## ===== How does the error depend on $h$ and $d$? =====
+potrzebna prymitywna implementacja wzoru trapezów:
 
-## Theory and experiments show that the least squares or projection/Galerkin
-## method in combination with P$d$ elements of equal length $h$ has an error
+!bt
+\[ \int_\Omega g(x) dx \approx \sum_{j=0}^{n-1} \half(g(x_j) +
+g(x_{j+1}))(x_{j+1}-x_j)\]
+!et
+!ewarning
 
-## !bt
-## \[
-## ||e||_{L^2} = Ch^{d+1}
-## \]
-## !et
-## where $C$ depends on $f$, but not on $h$ or $d$.
+!bc pycod
+# Given c, compute x and u values on a very fine mesh
+x, u = u_glob(c, vertices, cells, dof_map,
+              resolution_per_element=101)
+# Compute the error on the very fine mesh
+e = f(x) - u
+e2 = e**2
+# Vectorized Trapezoidal rule
+E = np.sqrt(0.5*np.sum((e2[:-1] + e2[1:])*(x[1:] - x[:-1]))
+!ec
 
+!split
+===== Zależność błędu od $h$ i $d$ =====
 
-## !split
-## ===== Cubic Hermite polynomials; definition =====
+Teoria i eksperymenty pokazują, że aplikacja \LSM{} czy metody Galerkina
+dla elementów skończonych typu P$d$ o tej samej długości $h$ daje błąd:
 
-##  * Can we construct $\basphi_i(x)$ with continuous derivatives? Yes!
-
-## Consider a reference cell $[-1,1]$. We introduce two nodes, $X=-1$ and $X=1$.
-## The degrees of freedom are
-
-##   * 0: value of function at $X=-1$
-##   * 1: value of first derivative at $X=-1$
-##   * 2: value of function at $X=1$
-##   * 3: value of first derivative at $X=1$
-
-## !bblock
-## Derivatives as unknowns ensure the same $\basphi_i'(x)$ value at nodes
-## and thereby continuous derivatives.
-## !eblock
-
-## !split
-## ===== Cubic Hermite polynomials; derivation =====
-
-## 4 constraints on $\refphi_r$ (1 for dof $r$, 0 for all others):
-
-##   * $\refphi_0(\Xno{0}) = 1$, $\refphi_0(\Xno{1}) = 0$,
-##     $\refphi_0'(\Xno{0}) = 0$, $\refphi_0'(\Xno{1}) = 0$
-##   * $\refphi_1'(\Xno{0}) = 1$, $\refphi_1'(\Xno{1}) = 0$,
-##     $\refphi_1(\Xno{0}) = 0$, $\refphi_1(\Xno{1}) = 0$
-##   * $\refphi_2(\Xno{1}) = 1$, $\refphi_2(\Xno{0}) = 0$,
-##     $\refphi_2'(\Xno{0}) = 0$, $\refphi_2'(\Xno{1}) = 0$
-##   * $\refphi_3'(\Xno{1}) = 1$, $\refphi_3'(\Xno{0}) = 0$,
-##     $\refphi_3(\Xno{0}) = 0$, $\refphi_3(\Xno{1}) = 0$
-
-## This gives 4 linear, coupled
-## equations *for each* $\refphi_r$ to determine the 4
-## coefficients in the cubic polynomial
-
-## !split
-## ===== Cubic Hermite polynomials; result =====
+!bt
+\[
+||e||_{L^2} = C | f^{d+1} | h^{d+1}
+\]
+!et
+gdzie $C$ zależy od $d$ i $\Omega = [0, L]$ ale nie zależy od $h$,
+oraz
+!bt
+\[
+|f^{d+1}|^{2} = \int_0^L  \left( \frac{d^{d+1}f}{d x^{d+1}} \right)^2 dx
+\]
+!et
 
 
-## !bt
-## \begin{align}
-## \refphi_0(X) &= 1 - \frac{3}{4}(X+1)^2 + \frac{1}{4}(X+1)^3\\
-## \refphi_1(X) &= -(X+1)(1 - \half(X+1))^2\\
-## \refphi_2(X) &= \frac{3}{4}(X+1)^2 - \half(X+1)^3\\
-## \refphi_3(X) &= -\half(X+1)(\half(X+1)^2 - (X+1))\\
-## \end{align}
-## !et
+!split
+===== Kubiczne wielomiany Hermite'a - definicja =====
 
-## !split
-## ======= Numerical integration =======
+ * Czy da się skonstruować $\basphi_i(x)$ z ciągłą pochodną? Tak!
 
-##  * $\int_\Omega f\basphi_idx$ must in general be computed by numerical integration
-##  * Numerical integration is often used for the matrix too
+Niech dana będzie unormowana komórka $[-1,1]$ z dwoma węzłami $X=-1$ i $X=1$.
+Stopnie swobody:
 
-## !split
-## ===== Common form of a numerical integration rule =====
+  * 0: wartość funkcji w $X=-1$
+  * 1: wartość pierwszej pochodnej w $X=-1$
+  * 2: wartość funkcji w $X=1$
+  * 3: wartość pierwszej pochodnej w $X=1$
 
-## !bt
-## \[
-## \int_{-1}^{1} g(X)dX \approx \sum_{j=0}^M w_jg(\bar X_j),
-## \]
-## !et
-## where
+!bblock
+Uwzględnienie wartości pochodnych zadanej funkcji w węzłach
+jako stopni swobody zapewnia kontrolę ciągłości pochodnej.
+!eblock
 
-##  * $\bar X_j$ are *integration points*
-##  * $w_j$ are *integration weights*
+!split
+===== Kubiczne wielomiany Hermite'a - wyprowadzenie =====
 
-## Different rules correspond to different choices of points and weights
+4 ogranicznia na $\refphi_r$ (1 dla stopnia swobody $r$, 0 dla pozostałych):
 
-## !split
+  * $\refphi_0(\Xno{0}) = 1$, $\refphi_0(\Xno{1}) = 0$,
+    $\refphi_0'(\Xno{0}) = 0$, $\refphi_0'(\Xno{1}) = 0$
+  * $\refphi_1'(\Xno{0}) = 1$, $\refphi_1'(\Xno{1}) = 0$,
+    $\refphi_1(\Xno{0}) = 0$, $\refphi_1(\Xno{1}) = 0$
+  * $\refphi_2(\Xno{1}) = 1$, $\refphi_2(\Xno{0}) = 0$,
+    $\refphi_2'(\Xno{0}) = 0$, $\refphi_2'(\Xno{1}) = 0$
+  * $\refphi_3'(\Xno{1}) = 1$, $\refphi_3'(\Xno{0}) = 0$,
+    $\refphi_3(\Xno{0}) = 0$, $\refphi_3(\Xno{1}) = 0$
+
+Cztery układy równań liniowych z 4 niewiadomymi -
+współczynnikami wielomianów 3 stopnia.
+
+!split
+===== Kubiczne wielomiany Hermite'a - wynik =====
+
+!bt
+\begin{align}
+\refphi_0(X) &= 1 - \frac{3}{4}(X+1)^2 + \frac{1}{4}(X+1)^3\\
+\refphi_1(X) &= -(X+1)(1 - \half(X+1))^2\\
+\refphi_2(X) &= \frac{3}{4}(X+1)^2 - \half(X+1)^3\\
+\refphi_3(X) &= -\half(X+1)(\half(X+1)^2 - (X+1))\\
+\end{align}
+!et
+
+!split
+
+!split
+===== Kubiczne wielomiany Hermite'a - sprawdzenie =====
+
+!bc pycod
+# definition of the interval ends
+x = np.array([-1, 1]) 
+
+C = []  # list of polynomials stored as coefficients 
+B = []  # list of basis functions
+dB = [] # list of the derivatives of basis functions
+
+for k in np.arange(0,4):
+    A = np.array(  [[   x[0]**3,   x[0]**2, x[0], 1 ],
+                    [ 3*x[0]**2, 2*x[0],       1, 0 ],
+                    [   x[1]**3,   x[1]**2, x[1], 1 ],
+                    [ 3*x[1]**2, 2*x[1],       1, 0 ]])
+
+    b = np.zeros( (4,1) ); b[k] = 1 
+    
+    c = np.linalg.solve(A, b); C.append( c )
+
+    B.append( lambda x:     C[k][0,0] * x**3 +   C[k][1,0] * x**2 + C[k][2,0] * x + C[k][3,0] )
+    dB.append( lambda x: 3* C[k][0,0] * x**2 + 2*C[k][1,0] * x + C[k][2,0] )
+
+
+!ec
+
+!split
+===== Kubiczne wielomiany Hermite'a - sprawdzenie =====
+!bc pycod
+
+# Check numerically that resulting cubic polynomial
+# fulfills imposed requirements
+A = [1,       1,       2,      1]      # basis function coefficients 
+#    U(x[0])  dU(x[0]) U(x[1]) dU(x[1])
+
+xx = np.arange(-1,1, 0.001)  
+U = np.zeros(xx.shape)
+
+for k in np.arange(0,4):
+    U = U + A[k] * B[k](xx)
+
+# numerical approximation of the derivatives at the ends of the interval
+dl = (U[1]-U[0])/(xx[1]-xx[0])
+dr = (U[-1]-U[-2])/(xx[-1]-xx[-2])
+
+numericalApproximationOfA = [ U[0], dl, U[-1], dr]
+
+print(numericalApproximationOfA)
+!ec
+
+Wynik działania skryptu:
+!bc pycod
+[1.0, 0.9992502500000269, 1.999000749750002, 0.9977517500000526]
+!ec
+
+!split
+===== Kubiczne wielomiany Hermite'a - wyniki =====
+
+!bslidecell 00
+FIGURE: [../figMB/cubicHermiteBasis, width=500 frac=1.2]
+!eslidecell
+
+!bslidecell 01
+FIGURE: [../figMB/cubicHermiteDerivs, width=500 frac=1.2]
+!eslidecell
+
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-1.5cm}
+#endif
+
+
+## !bslidecell 10
+FIGURE: [../figMB/cubicHermiteResult, width=500 frac=0.6]
+## !eslidecell
+
+!split
+======= Całkowanie numeryczne =======
+
+ * $\int_\Omega f\basphi_idx$ - konieczność całkowania numerycznego 
+ * Współczynniki macierzy lewej strony - zwykle również numerycznie (bo wygodnie)
+
+!split
+===== Ogólna postać kwadratury =====
+
+!bt
+\[
+\int_{-1}^{1} g(X)dX \approx \sum_{j=0}^M w_jg(\bar X_j),
+\]
+!et
+gdzie
+
+ * $\bar X_j$ to *węzły kwadratury*
+ * $w_j$ -- *wagi kwadratury*
+
+Różne metody -> różny wybór węzłów i wag
+
+!split
 ## ===== The Midpoint rule =====
+===== Wzór prostokątów =====
 
-## Simplest possibility: the Midpoint rule,
+(ang. midpoint rule) -- metoda punktu środkowego
 
-## !bt
-## \[
-## \int_{-1}^{1} g(X)dX \approx 2g(0),\quad \bar X_0=0,\ w_0=2,
-## \]
-## !et
+Najprostsza metoda
+
+!bt
+\[
+\int_{-1}^{1} g(X)dX \approx 2g(0),\quad \bar X_0=0,\ w_0=2,
+\]
+!et
 
-## Exact for linear integrands
+Dokładna dla funkcji podcałkowych będących wielomianami 1. stopnia
+
+!split
+===== Metody Newtona-Cotesa =====
+label{fem:approx:fe:numint1}
+
+idx{numerical integration!Midpoint rule}
+idx{numerical integration!Trapezoidal rule}
+idx{numerical integration!Simpson's rule}
+idx{Midpoint rule} idx{Trapezoidal rule} idx{Simpson's rule}
+
+ * Idea: węzły kwadratury równomiernie rozmieszczone na $[-1,1]$
+ * Węzły kwadratury często pokrywają się węzłami siatki
+#  * Very useful for making $\basphi_i\basphi_j=0$ and get diagonal
+#   (``mass'') matrices (``lumping'')
+
+
+Wzór trapezów:
+
+!bt
+\[
+\int_{-1}^{1} g(X)dX \approx g(-1) + g(1),\quad \bar X_0=-1,\ \bar X_1=1,\ w_0=w_1=1,
+\]
+!et
+Wzór Simpsona (parabol):
+!bt
+\[
+\int_{-1}^{1} g(X)dX \approx \frac{1}{3}\left(g(-1) + 4g(0)
++ g(1)\right),
+\]
+!et
+gdzie
+
+!bt
+\[
+\bar X_0=-1,\ \bar X_1=0,\ \bar X_2=1,\ w_0=w_2=\frac{1}{3},\ w_1=\frac{4}{3}
+\]
+!et
+
+!split
+===== Metoda Gaussa-Legendre'a  =====
+
+idx{Gauss-Legendre quadrature}
+
+ * optymalne położenie węzłów kwadratury -> wyższa dokładność
+ * Kwadratury Gaussa-Legendre'a dobranie położenia węzłów oraz wag tak,
+   aby całkować z jak najlepszą dokładnością
+
+!bt
+\begin{align}
+M=1&:\quad \bar X_0=-\frac{1}{\sqrt{3}},\
+\bar X_1=\frac{1}{\sqrt{3}},\ w_0=w_1=1\\
+M=2&:\quad \bar X_0=-\sqrt{\frac{3}{{5}}},\ \bar X_0=0,\
+\bar X_2= \sqrt{\frac{3}{{5}}},\ w_0=w_2=\frac{5}{9},\ w_1=\frac{8}{9}
+\end{align}
+!et
+
+ * $M=1$: dokładna dla wielomianów 3. stopnia
+ * $M=2$: dokładna dla wielomianów 5. stopnia 
+ * W ogólności, $M$-punktowy wzór Gaussa-Legendre'a jest dokładny dla wielomianów
+   stopnia $2M+1$y.
+
+Plik `numint.py zawiera zbiór węzłów i wag dla metody Gaussa-Legendre'a.
+
+
+
+!split
+======= Aproksymacja funkcji w 2D =======
+label{fem:approx:2D}
+
+!bnotice Rozwinięcie podejścia z 1D
+Rozwiązania i algorytmy przedstawione dla aproksymacji funkcji $f(x)$ w 1D
+da się rozwinąć i ''przenieść'' na przypadki funkcji $f(x,y)$ w 2D i
+ $f(x,y,z)$ w 3D. Ogólne wzory pozostają takie same.
+!enotice
+
+!split
+===== Krótkie omówienie zagadnienia w 2D =====
+
+Iloczyn skalarny w 2D:
 
-## !split
-## ===== Newton-Cotes rules apply the nodes =====
-## label{fem:approx:fe:numint1}
+!bt
+\[
+(f,g) = \int_\Omega f(x,y)g(x,y) dx dy
+\]
+!et
+
+Zastosowanie \LSM{} lub metody Galerkina da URL:
+
+!bt
+\begin{align*}
+\sum_{j\in\If} A_{i,j}c_j &= b_i,\quad i\in\If\\
+A_{i,j} &= (\baspsi_i,\baspsi_j)\\
+b_i &= (f,\baspsi_i)
+\end{align*}
+!et
 
-## idx{numerical integration!Midpoint rule}
-## idx{numerical integration!Trapezoidal rule}
-## idx{numerical integration!Simpson's rule}
-## idx{Midpoint rule} idx{Trapezoidal rule} idx{Simpson's rule}
+Problem: Jak skonstruować dwuwymiarowe funkcje bazowe $\baspsi_i(x,y)$?
 
-##  * Idea: use a fixed, uniformly distributed set of points in $[-1,1]$
-##  * The points often coincides with nodes
-##  * Very useful for making $\basphi_i\basphi_j=0$ and get diagonal
-##    (``mass'') matrices (``lumping'')
-
-
-## The Trapezoidal rule:
-
-## !bt
-## \[
-## \int_{-1}^{1} g(X)dX \approx g(-1) + g(1),\quad \bar X_0=-1,\ \bar X_1=1,\ w_0=w_1=1,
-## \]
-## !et
-
-## Simpson's rule:
-
-## !bt
-## \[
-## \int_{-1}^{1} g(X)dX \approx \frac{1}{3}\left(g(-1) + 4g(0)
-## + g(1)\right),
-## \]
-## !et
-## where
-
-## !bt
-## \[
-## \bar X_0=-1,\ \bar X_1=0,\ \bar X_2=1,\ w_0=w_2=\frac{1}{3},\ w_1=\frac{4}{3}
-## \]
-## !et
-
-## !split
-## ===== Gauss-Legendre rules apply optimized points =====
-
-## idx{Gauss-Legendre quadrature}
-
-##  * Optimize the location of points to get higher accuracy
-##  * Gauss-Legendre rules (quadrature) adjust points and weights to
-##    integrate polynomials exactly
-
-## !bt
-## \begin{align}
-## M=1&:\quad \bar X_0=-\frac{1}{\sqrt{3}},\
-## \bar X_1=\frac{1}{\sqrt{3}},\ w_0=w_1=1\\
-## M=2&:\quad \bar X_0=-\sqrt{\frac{3}{{5}}},\ \bar X_0=0,\
-## \bar X_2= \sqrt{\frac{3}{{5}}},\ w_0=w_2=\frac{5}{9},\ w_1=\frac{8}{9}
-## \end{align}
-## !et
-
-##  * $M=1$: integrates 3rd degree polynomials exactly
-##  * $M=2$: integrates 5th degree polynomials exactly
-##  * In general, $M$-point rule integrates a polynomial
-##    of degree $2M+1$ exactly.
-
-## See `numint.py`
-## for a large collection of Gauss-Legendre rules.
-
-
-## !split
-## ======= Approximation of functions in 2D =======
-## label{fem:approx:2D}
-
-## !bnotice Extensibility of 1D ideas.
-## All the concepts and algorithms developed for approximation of 1D functions
-## $f(x)$ can readily be extended to 2D functions $f(x,y)$ and 3D functions
-## $f(x,y,z)$. Key formulas stay the same.
-## !enotice
-
-## !split
-## ===== Quick overview of the 2D case =====
-
-## Inner product in 2D:
-
-## !bt
-## \[
-## (f,g) = \int_\Omega f(x,y)g(x,y) dx dy
-## \]
-## !et
-
-## Least squares and project/Galerkin lead to a linear system
-
-## !bt
-## \begin{align*}
-## \sum_{j\in\If} A_{i,j}c_j &= b_i,\quad i\in\If\\
-## A_{i,j} &= (\baspsi_i,\baspsi_j)\\
-## b_i &= (f,\baspsi_i)
-## \end{align*}
-## !et
-
-## Challenge: How to construct 2D basis functions $\baspsi_i(x,y)$?
-
-## !split
-## ===== 2D basis functions as tensor products of 1D functions =====
-## label{fem:approx:2D:global}
-
-## Use a 1D basis for $x$ variation and a similar for $y$ variation:
-
-## !bt
-## \begin{align}
-## V_x &= \mbox{span}\{ \hat\baspsi_0(x),\ldots,\hat\baspsi_{N_x}(x)\}
-## label{fem:approx:2D:Vx}\\
-## V_y &= \mbox{span}\{ \hat\baspsi_0(y),\ldots,\hat\baspsi_{N_y}(y)\}
-## label{fem:approx:2D:Vy}
-## \end{align}
-## !et
-
-## The 2D vector space can be defined as a *tensor product* $V = V_x\otimes V_y$
-## with basis functions
-
-## !bt
-## \[
-## \baspsi_{p,q}(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y)
-## \quad p\in\Ix,q\in\Iy\tp
-## \]
-## !et
-
-## !split
-## ===== Tensor products =====
-
-## Given two vectors $a=(a_0,\ldots,a_M)$ and $b=(b_0,\ldots,b_N)$
-## their *outer tensor product*, also called the *dyadic product*,
-## is $p=a\otimes b$, defined through
-
-## !bt
-## \[ p_{i,j}=a_ib_j,\quad i=0,\ldots,M,\ j=0,\ldots,N\tp\]
-## !et
-## Note: $p$ has two indices (as a matrix or two-dimensional array)
-
-## Example: 2D basis as tensor product of 1D spaces,
-
-## !bt
-## \[ \baspsi_{p,q}(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y),
-## \quad p\in\Ix,q\in\Iy\]
-## !et
-
-## !split
-## ===== Double or single index? =====
-
-## The 2D basis can employ a double index and double sum:
-
-## !bt
-## \[ u = \sum_{p\in\Ix}\sum_{q\in\Iy} c_{p,q}\baspsi_{p,q}(x,y)
-## \]
-## !et
-
-## Or just a single index:
-
-## !bt
-## \[ u = \sum_{j\in\If} c_j\baspsi_j(x,y)\]
-## !et
-
-## with an index mapping $(p,q)\rightarrow i$:
-
-## !bt
-## \[
-## \baspsi_i(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y),
-## \quad i=p (N_y+1) + q\hbox{ or } i=q (N_x+1) + p
-## \]
-## !et
-
-## !split
-## ===== Example on 2D (bilinear) basis functions; formulas =====
-
-## In 1D we use the basis
-
-## !bt
-## \[ \{ 1, x \} \]
-## !et
-
-## 2D tensor product (all combinations):
-
-## !bt
-## \[ \baspsi_{0,0}=1,\quad \baspsi_{1,0}=x, \quad \baspsi_{0,1}=y,
-## \quad \baspsi_{1,1}=xy
-## \]
-## !et
-## or with a single index:
-
-## !bt
-## \[ \baspsi_0=1,\quad \baspsi_1=x, \quad \baspsi_2=y,\quad\baspsi_3 =xy
-## \]
-## !et
-
-## See notes for details of a hand-calculation.
-
-## !split
-## ===== Example on 2D (bilinear) basis functions; plot =====
-
-## Quadratic $f(x,y) = (1+x^2)(1+2y^2)$ (left), bilinear $u$ (right):
-
-## FIGURE: [../fig/approx2D_bilinear, width=800]
-
-## !split
-## ===== Implementation; principal changes to the 1D code =====
-## label{fem:approx:2D:global:code}
-
-## Very small modification of `approx1D.py`:
-
-##  * `Omega = [[0, L_x], [0, L_y]]`
-##  * Symbolic integration in 2D
-##  * Construction of 2D (tensor product) basis functions
-
-## !split
-## ===== Implementation; 2D integration =====
-
-## !bc pycod
-## import sympy as sym
-
-## integrand = psi[i]*psi[j]
-## I = sym.integrate(integrand,
-##                  (x, Omega[0][0], Omega[0][1]),
-##                  (y, Omega[1][0], Omega[1][1]))
-
-## # Fall back on numerical integration if symbolic integration
-## # was unsuccessful
-## if isinstance(I, sym.Integral):
-##     integrand = sym.lambdify([x,y], integrand)
-##     I = sym.mpmath.quad(integrand,
-##                        [Omega[0][0], Omega[0][1]],
-##                        [Omega[1][0], Omega[1][1]])
-## !ec
-
-## !split
-## ===== Implementation; 2D basis functions =====
-
-## Tensor product of 1D ``Taylor-style'' polynomials $x^i$:
-
-## !bc pycod
-## def taylor(x, y, Nx, Ny):
-##     return [x**i*y**j for i in range(Nx+1) for j in range(Ny+1)]
-## !ec
-
-## Tensor product of 1D sine functions $\sin((i+1)\pi x)$:
-
-## !bc pycod
-## def sines(x, y, Nx, Ny):
-##     return [sym.sin(sym.pi*(i+1)*x)*sym.sin(sym.pi*(j+1)*y)
-##             for i in range(Nx+1) for j in range(Ny+1)]
-## !ec
-## Complete code in
-## `approx2D.py`.
-
-
-## !split
-## ===== Implementation; application =====
-
-## $f(x,y) = (1+x^2)(1+2y^2)$
-
-## !bc ipy
-## >>> from approx2D import *
-## >>> f = (1+x**2)*(1+2*y**2)
-## >>> psi = taylor(x, y, 1, 1)
-## >>> Omega = [[0, 2], [0, 2]]
-## >>> u, c = least_squares(f, psi, Omega)
-## >>> print u
-## 8*x*y - 2*x/3 + 4*y/3 - 1/9
-## >>> print sym.expand(f)
-## 2*x**2*y**2 + x**2 + 2*y**2 + 1
-## !ec
-
-## !split
-## ===== Implementation; trying a perfect expansion =====
-
-## Add higher powers to the basis such that $f\in V$:
-
-## !bc ipy
-## >>> psi = taylor(x, y, 2, 2)
-## >>> u, c = least_squares(f, psi, Omega)
-## >>> print u
-## 2*x**2*y**2 + x**2 + 2*y**2 + 1
-## >>> print u-f
-## 0
-## !ec
-
-## Expected: $u=f$ when $f\in V$
-
-## !split
-## ===== Generalization to 3D =====
-## label{fem:approx:3D:global}
-
-## Key idea:
-
-## !bt
-## \[ V = V_x\otimes V_y\otimes V_z\]
-## !et
-
-## !bnotice Repeated outer tensor product of multiple vectors
-
-## !bt
-## \begin{align*}
-## a^{(q)} &= (a^{(q)}_0,\ldots,a^{(q)}_{N_q}),\quad q=0,\ldots,m\\
-## p &= a^{(0)}\otimes\cdots\otimes a^{(m)}\\
-## p_{i_0,i_1,\ldots,i_m} &= a^{(0)}_{i_1}a^{(1)}_{i_1}\cdots a^{(m)}_{i_m}
-## \end{align*}
-## !et
-
-## !enotice
-
-## !bt
-## \begin{align*}
-## \baspsi_{p,q,r}(x,y,z) &= \hat\baspsi_p(x)\hat\baspsi_q(y)\hat\baspsi_r(z)\\
-## u(x,y,z) &= \sum_{p\in\Ix}\sum_{q\in\Iy}\sum_{r\in\Iz} c_{p,q,r}
-## \baspsi_{p,q,r}(x,y,z)
-## \end{align*}
-## !et
-
-## !split
-## ======= Finite elements in 2D and 3D =======
-
-## The two great advantages of the finite element method:
-
-##   * Can handle complex-shaped domains in 2D and 3D
-##   * Can easily provide higher-order polynomials in the approximation
-
+!split
+===== Funkcje bazowe 2D jako iloczyn tensorowy funkcji 1D =====
+label{fem:approx:2D:global}
+
+Korzystając z funkcji bazowych 1D zmiennej $x$
+oraz funkcji bazowych 1D zmiennej $y$:
+
+!bt
+\begin{align}
+V_x &= \mbox{span}\{ \hat\baspsi_0(x),\ldots,\hat\baspsi_{N_x}(x)\}
+label{fem:approx:2D:Vx}\\
+V_y &= \mbox{span}\{ \hat\baspsi_0(y),\ldots,\hat\baspsi_{N_y}(y)\}
+label{fem:approx:2D:Vy}
+\end{align}
+!et
+
+Przestrzeń wektorowa 2D może być zdefinowana jako *iloczyn tensorowy* 
+ $V = V_x\otimes V_y$ z funkcjami bazowymi:
+
+!bt
+\[
+\baspsi_{p,q}(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y)
+\quad p\in\Ix,q\in\Iy\tp
+\]
+!et
+
+!split
+===== Iloczyn tensorowy =====
+
+Niech dane będą dwa wektory
+$a=(a_0,\ldots,a_M)$ i
+$b=(b_0,\ldots,b_N)$. Ich *zewnętrznym iloczynem tensorowym*
+(" *iloczynem diadycznym* ":"https://pl.wikipedia.org/wiki/Iloczyn_diadyczny"
+jeśli $N=M$) jest $p=a\otimes b$ zdefiniowane jako:
+
+!bt
+\[ p_{i,j}=a_ib_j,\quad i=0,\ldots,M,\ j=0,\ldots,N\tp\]
+!et
+Uwaga: $p$ to macierz/tablica dwuwymiarowa
+
+Przykład: baza 2D jako iloczyn tensorowy przestrzeni 1D:
+
+!bt
+\[ \baspsi_{p,q}(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y),
+\quad p\in\Ix,q\in\Iy\]
+!et
+
+#if FORMAT in ('latex', 'pdflatex')
+\tiny
+#endif
+
+"iloczyn tensorowy macierzy":"https://pl.wikipedia.org/wiki/Iloczyn_Kroneckera"
+(dowolnych wymiarów)
+->
+
+"iloczyn tensorowy wektorów":"https://pl.wikipedia.org/wiki/Iloczyn_Kroneckera#Iloczyn_tensorowy_wektor%C3%B3w"
+(dowolnych wymiarów)
+->
+
+"iloczyn diadyczny":"https://pl.wikipedia.org/wiki/Iloczyn_diadyczny"
+(tego samego wymiaru)
+
+"tensor":"https://pl.wikipedia.org/wiki/Tensor"
+
+!split
+===== Równoważność notacji z dwoma lub jednym indeksem =====
+
+Baza przestrzeni 2D wymaga dwóch indeksów (i podwójnego sumowania) :
+!bt
+\[ u = \sum_{p\in\Ix}\sum_{q\in\Iy} c_{p,q}\baspsi_{p,q}(x,y)
+\]
+!et
+
+Lub tylko jednego indeksu
+
+!bt
+\[ u = \sum_{j\in\If} c_j\baspsi_j(x,y)\]
+!et
+
+o ile posiadamy odwzorowanie $(p,q)\rightarrow i$:
+
+!bt
+\[
+\baspsi_i(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y),
+\quad i=p (N_y+1) + q\hbox{ or } i=q (N_x+1) + p
+\]
+!et
+
+!split
+===== Przykładowa baza przestrzeni 2D; wzory =====
+
+Dla dwuelementowej bazy 1D
+
+!bt
+\[ \{ 1, x \} \]
+!et
+
+iloczyn tensorowy (wszystkie kombinacje) generuje bazę przestrzeni 2D:
+
+!bt
+\[ \baspsi_{0,0}=1,\quad \baspsi_{1,0}=x, \quad \baspsi_{0,1}=y,
+\quad \baspsi_{1,1}=xy
+\]
+!et
+W notacji jednoindeksowej:
+
+!bt
+\[ \baspsi_0=1,\quad \baspsi_1=x, \quad \baspsi_2=y,\quad\baspsi_3 =xy
+\]
+!et
+
+!split
+===== Przykładowa baza przestrzeni 2D; zastosowanie =====
+!bt
+\[ \baspsi_0=1,\quad \baspsi_1=x, \quad \baspsi_2=y,\quad\baspsi_3 =xy
+\]
+!et
+
+!bt
+\[
+\int_0^{L_y} \int_0^{L_x}
+\left\{
+\left[
+\begin{array}{cccc}
+1\cdot 1 & 1 \cdot x  & 1 \cdot y & 1 \cdot xy  \\
+x\cdot 1 & x \cdot x  & x \cdot y & x \cdot xy  \\
+y\cdot 1 & y \cdot x  & y \cdot y & y \cdot xy  \\
+xy\cdot 1 & xy \cdot x  & xy \cdot y & xy \cdot xy  
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+c_0 \\
+c_1 \\
+c_2 \\
+c_3 
+\end{array}
+\right]
+## dxdy
+=
+## \int_0^{L_y} \int_0^{L_x} 
+\left[
+\begin{array}{c}
+1\cdot f(x,y) \\
+x\cdot f(x,y) \\
+y\cdot f(x,y)  \\
+xy\cdot f(x,y)   
+\end{array}
+\right]
+\right\}
+dxdy
+\]
+!et
+
+
+Funkcja aproksymowana (kwadratowa) $f(x,y) = (1+x^2)(1+2y^2)$ (po lewej),
+funkcja aproksymująca (biliniowa) $u$ (po prawej) ($x^2y^2$ vs $xy$):
+
+FIGURE: [../fig/approx2D_bilinear, width=800]
+
+
+
+!split
+===== Implementacja; principal changes to the 1D code =====
+label{fem:approx:2D:global:code}
+
+Zmiany w kodzie w stosunku do wersji 1D (`approx1D.py`):
+
+ * `Omega = [[0, L_x], [0, L_y]]`
+ * Całkowanie symboliczne w 2D
+ * Generowanie funkcji bazowych 2D (jako iloczynów tensorowych)
+
+!split
+===== Implementacja 2D: całkowanie =====
+
+!bc pycod
+import sympy as sym
+
+integrand = psi[i]*psi[j]
+I = sym.integrate(integrand,
+                 (x, Omega[0][0], Omega[0][1]),
+                 (y, Omega[1][0], Omega[1][1]))
+
+# Fall back on numerical integration if symbolic integration
+# was unsuccessful
+if isinstance(I, sym.Integral):
+    integrand = sym.lambdify([x,y], integrand)
+    I = sym.mpmath.quad(integrand,
+                       [Omega[0][0], Omega[0][1]],
+                       [Omega[1][0], Omega[1][1]])
+!ec
+
+!split
+===== Implementacja 2D: funkcje bazowe =====
+
+Iloczyn tensorowy bazy potęgowej $x^i$ (bazy Taylora):
+
+!bc pycod
+def taylor(x, y, Nx, Ny):
+    return [x**i*y**j for i in range(Nx+1) for j in range(Ny+1)]
+!ec
+
+Iloczyn tensorowy bazy sinusoidalnej $\sin((i+1)\pi x)$:
+
+!bc pycod
+def sines(x, y, Nx, Ny):
+    return [sym.sin(sym.pi*(i+1)*x)*sym.sin(sym.pi*(j+1)*y)
+            for i in range(Nx+1) for j in range(Ny+1)]
+!ec
+Cały kod w `approx2D.py`.
+
+
+!split
+===== Implementacja 2D: zastosowanie =====
+
+$f(x,y) = (1+x^2)(1+2y^2)$
+
+!bc ipy
+>>> from approx2D import *
+>>> f = (1+x**2)*(1+2*y**2)
+>>> psi = taylor(x, y, 1, 1)
+>>> Omega = [[0, 2], [0, 2]]
+>>> u, c = least_squares(f, psi, Omega)
+>>> print u
+8*x*y - 2*x/3 + 4*y/3 - 1/9
+>>> print sym.expand(f)
+2*x**2*y**2 + x**2 + 2*y**2 + 1
+!ec
+
+!split
+===== Implementacja 2D: przykład zastosowanie bazy umożliwiającej konstrukcję rozwiązania dokładnego =====
+
+Dodajemy funkcje bazowe o wyższych potęgach tak, aby $f\in V$.
+Spodziewany wynik: $u=f$
+
+!bc ipy
+>>> psi = taylor(x, y, 2, 2)
+>>> u, c = least_squares(f, psi, Omega)
+>>> print u
+2*x**2*y**2 + x**2 + 2*y**2 + 1
+>>> print u-f
+0
+!ec
+
+
+
+!split
+===== Uogólnienie do zagadnień 3D =====
+label{fem:approx:3D:global}
+
+Kluczowa idea:
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.5cm}
+#endif
+
+!bt
+\[ V = V_x\otimes V_y\otimes V_z\]
+!et
+!bnotice Zastosowanie iloczynu tensorowego do wygenerowania bazy przestrzeni $m$ wymiarowerj
+!bt
+\begin{align*}
+a^{(q)} &= (a^{(q)}_0,\ldots,a^{(q)}_{N_q}),\quad q=0,\ldots,m\\
+p &= a^{(0)}\otimes\cdots\otimes a^{(m)}\\
+p_{i_0,i_1,\ldots,i_m} &= a^{(0)}_{i_1}a^{(1)}_{i_1}\cdots a^{(m)}_{i_m}
+\end{align*}
+!et
+!enotice
+W szczególności dla 3D:
+#if FORMAT in ('latex', 'pdflatex')
+\vspace{-0.6cm}
+#endif
+
+!bt
+\begin{align*}
+\baspsi_{p,q,r}(x,y,z) &= \hat\baspsi_p(x)\hat\baspsi_q(y)\hat\baspsi_r(z)\\
+u(x,y,z) &= \sum_{p\in\Ix}\sum_{q\in\Iy}\sum_{r\in\Iz} c_{p,q,r}
+\baspsi_{p,q,r}(x,y,z)
+\end{align*}
+!et
+
+!split
+======= Elementy skończone w 2D i 3D =======
+
+Zalety \FEM{} w zastosowaniach 2D i 3D:
+
+  * łatwość aproksymowania skomplikowanych geometrii
+  * łatwość generowania wielomianów (funkcji bazowych) wyższych rzędów w celu
+    zwiększenia dokładności aproksymacji funkcji
+
+\FEM{} w 1D: głównie dla celów dydaktycznych, debugowania
 ## Finite elements in 1D: mostly for learning, insight, debugging
 
 
-## !split
+!split
 ## ===== Examples on cell types =====
+===== Przykłady komórek 2D i 3D =====
 
-## 2D:
+2D:
 
-##  * triangles
-##  * quadrilaterals
+ * trójkąty (triangles)
+ * czworokąty (quadrilaterals)
 
-## 3D:
+3D:
 
-##  * tetrahedra
-##  * hexahedra
+ * czworościany (tetrahedra)
+ * sześciościany (hexahedra)
 
-## !split
+!split
 ## ===== Rectangular domain with 2D P1 elements =====
+===== Obszar prostokątny (2D) zbudowany z elementów typu P1 =====
+FIGURE: [../fig/mesh2D_rect_P1, width=800]
 
-## FIGURE: [../fig/mesh2D_rect_P1, width=800]
-
-
-## !split
+!split
 ## ===== Deformed geometry with 2D P1 elements =====
+===== Nieregularny obszar 2D zbudowany z elementów typu P1 =====
 
-## FIGURE: [../fig/mesh2D_quarter_circle, width=600 frac=0.8]
+FIGURE: [../fig/mesh2D_quarter_circle, width=600 frac=0.8]
 
-## !split
+!split
 ## ===== Rectangular domain with 2D Q1 elements =====
+===== Obszar prostokątny (2D) zbudowany z elementów typu Q1 =====
 
-## FIGURE: [../fig/mesh2D_rect_Q1, width=500]
 
-## !split
+FIGURE: [../fig/mesh2D_rect_Q1, width=500]
+
+!split
 ## ===== Basis functions over triangles in the physical domain =====
+===== Aproksymacja funkcji 2D na siatce elementów trójkątnych =====
 
-## The P1 triangular 2D element: $u$ is linear $ax + by + c$ over each
-## triangular cell
+Element trójkątny typu P1: aproksymacja $u$ na każdym elemencie (komórce)
+funkcją liniową $ax + by + c$
+## over each triangular cell
 
-## FIGURE: [../fig/demo2D_4x3r, width=400]
+FIGURE: [../fig/demo2D_4x3r, width=400]
 
-## !split
-## ===== Basic features of 2D elements =====
+!split
+===== Własności elementów 2D typu P1 =====
 
-##  * Cells = triangles
-##  * Vertices = corners of the cells
-##  * Nodes = vertices
-##  * Degrees of freedom = function values at the nodes
+ * Komórki = trójkąty
+ * Wierzchołki = wierzchołki komórek
+ * węzły = wierzchołki trójkąta
+ * Stopnie swobody = wartości funkcji w węzłach
 
-## ## # #ifdef OUT
-##  * $\refphi_r(X,Y)$ is a linear function over the reference cell
-##  * The global counterpart $\basphi_i(x,y)$ is a linear function over the
-##    physical cell
-## ## # #endif
+## # #ifdef OUT
+ * $\refphi_r(X,Y)$ jest funkcją liniową na komórce unormowanej
+ * $\basphi_i(x,y)$ jest odzorowaniem $\refphi_r(X,Y)$ na komórce rzeczywistej
+## # #endif
 
-## !split
-## ===== Linear mapping of reference element onto general triangular cell =====
+!split
+===== Odwzorowanie liniowe elementu unormowanego na komórkę trójkątną =====
 
-## FIGURE: [../fig/ElmT3n2D_map, width=400]
+FIGURE: [../fig/ElmT3n2D_map, width=400]
 
-## !split
-## ===== $\basphi_i$: pyramid shape, composed of planes =====
+!split
+===== $\basphi_i$: funkcja-piramida =====
 
-##  * $\basphi_i(x,y)$ varies linearly over each cell
-##  * $\basphi_i=1$ at vertex (node) $i$, 0 at all other vertices (nodes)
+ * $\basphi_i(x,y)$ -- zmienność liniowa na poszczególnych komórkach
+ * $\basphi_i=1$ w wierzchołku (węźle) $i$, 0 w pozostałych wierzchołkach (węzłach)
 
-## FIGURE: [../fig/demo2D_basisfunc, width=400]
+FIGURE: [../fig/demo2D_basisfunc, width=400]
 
-## !split
-## ===== Element matrices and vectors =====
+!split
+===== Elementy macierzy i wektora prawej strony =====
 
-##  * As in 1D, the contribution from one cell to the matrix involves
-##    just a few entries, collected in the element matrix and vector
-##  * $\basphi_i\basphi_j\neq 0$ only if $i$ and $j$ are
-##    degrees of freedom (vertices/nodes) in the same element
-##  * The 2D P1 element has a $3\times 3$ element matrix
+ * Jak w 1D, wkład pojedynczej komórki do macierzy globalnego URL ogranicza się
+   do kilku wartości w macierzy i wektorze wyrazów wolnych
+ * $\basphi_i\basphi_j\neq 0$ wtedy i tylko wtedy gdy $i$ oraz $j$
+   są stopniami swobody (wierzchołkami/węzłami) na tym samym elemencie
+ * Lokalna macierz trójkątengo elementu P1 to macierz o rozmiarach $3\times 3$
+ 
+!split
+===== Funkcje bazowe na unormowanym elemencie trójkątnym =====
 
-## !split
-## ===== Basis functions over triangles in the reference cell =====
+FIGURE: [../fig/fenics-book/elements/P1_2d, width=100 frac=0.3]
 
-## FIGURE: [../fig/fenics-book/elements/P1_2d, width=100 frac=0.3]
+!bt
+\begin{align}
+\refphi_0(X,Y) &= 1 - X - Y\\
+\refphi_1(X,Y) &= X\\
+\refphi_2(X,Y) &= Y
+\end{align}
+!et
 
-## !bt
-## \begin{align}
-## \refphi_0(X,Y) &= 1 - X - Y\\
-## \refphi_1(X,Y) &= X\\
-## \refphi_2(X,Y) &= Y
-## \end{align}
-## !et
+Funkcje bazowe $\refphi_r$ wyższych stopni opierają się na
+większej liczbie węzłów (stopni swobody)
 
-## Higher-degree $\refphi_r$ introduce more nodes (dof = node values)
+!split
+===== Elementy trójkątne typu P1, P2, P3, P4, P5, P6 przestrzeni 2D =====
 
-## !split
-## ===== 2D P1, P2, P3, P4, P5, and P6 elements =====
+FIGURE: [../fig/fenics-book/elements/P1-6_2d, width=320 frac=0.5]
 
-## FIGURE: [../fig/fenics-book/elements/P1-6_2d, width=320 frac=0.5]
+!split
+===== Elementy P1 przestrzeni 1D, 2D i 3D =====
 
-## !split
-## ===== P1 elements in 1D, 2D, and 3D =====
+FIGURE: [../fig/fenics-book/elements/P1-1d2d3d, width=320 frac=0.5]
 
-## FIGURE: [../fig/fenics-book/elements/P1-1d2d3d, width=320 frac=0.5]
+!split
+===== Elementy P2 przestrzeni 1D, 2D i 3D =====
 
-## !split
-## ===== P2 elements in 1D, 2D, and 3D =====
+idx{simplex elements} idx{simplices} idx{faces} idx{edges}
 
-## idx{simplex elements} idx{simplices} idx{faces} idx{edges}
+FIGURE: [../fig/fenics-book/elements/P2-1d2d3d, width=320 frac=0.5]
 
-## FIGURE: [../fig/fenics-book/elements/P2-1d2d3d, width=320 frac=0.5]
+ * Interval, triangle, tetrahedron: *sympleksy* (ang. *simplex* ->
+   *simplices*/*simplexes*)
+ * *ściana* (ang. *face*) -- bok komórki (ścianka/krawedź/punkt)
+ * W czworościanie również *krawędzie* (*edges*)
 
-##  * Interval, triangle, tetrahedron: *simplex* element
-##    (plural quick-form: *simplices*)
-##  * Side of the cell is called *face*
-##  * Thetrahedron has also *edges*
+!split
+===== Odwzorowanie afiniczne komórki unormowanej -- wzór =====
 
-## !split
-## ===== Affine mapping of the reference cell; formula =====
+Transformacja (Odwzorowanie) komórki we współrzędnych unormowanych
 
-## Mapping of local $\X = (X,Y)$ coordinates in the reference cell to
-## global, physical $\x = (x,y)$ coordinates:
+$\X = (X,Y)$
 
-## !bt
-## \begin{equation}
-## \x = \sum_{r} \refphi_r^{(1)}(\X)\xdno{q(e,r)}
-## label{fem:approx:fe:affine:map}
-## \end{equation}
-## !et
+do komórki we współrzędnych globalnych:
 
-## where
+$\x = (x,y)$:
 
-##   * $r$ runs over the local vertex numbers in the cell
-##   * $\xdno{i}$ are the $(x,y)$ coordinates of vertex $i$
-##   * $\refphi_r^{(1)}$ are P1 basis functions
+!bt
+\begin{equation}
+\x = \sum_{r} \refphi_r^{(1)}(\X)\xdno{q(e,r)}
+label{fem:approx:fe:affine:map}
+\end{equation}
+!et
 
-## This mapping preserves the straight/planar faces and edges.
+gdzie
 
-## !split
-## ===== Affine mapping of the reference cell; figure =====
+  * $r$ przebiega przez wszystkie wierzchołki komórki
+  * $\xdno{i}$ to globalne współrzędne $(x,y)$ wierzchołka $i$
+  * $\refphi_r^{(1)}$ to funkcja bazowa typu P1
 
-## FIGURE: [../fig/ElmT3n2D_map, width=400]
 
-## !split
-## ===== Isoparametric mapping of the reference cell =====
+Odwzorowanie zachowuje liniowość ścian i krawędzi.
 
-## idx{isoparametric mapping} idx{mapping of reference cells!isoparametric mapping}
+* TODO (Przykład rachunkowy)
 
-## Idea: Use the basis functions
-## of the element (not only the P1 functions)
-## to map the element
+!split
+===== Odwzorowanie afiniczne komórki unormowanej =====
 
-## !bt
-## \[
-## \x = \sum_{r} \refphi_r(\X)\xdno{q(e,r)}
-## \]
-## !et
+FIGURE: [../fig/ElmT3n2D_map, width=400]
 
-## Advantage: higher-order polynomial basis functions now map the
-## reference cell to a *curved* triangle or tetrahedron.
+!split
+===== Komórki izoparametryczne =====
 
-## FIGURE: [../fig/ElmT6n2D_map, width=400]
+idx{isoparametric mapping} idx{mapping of reference cells!isoparametric mapping}
 
-## !split
-## ===== Computing integrals =====
+Idea: Wykorzystanie funkcji bazowych elementu (nie tylko funkcji typu P1 ale
+i wyższych rzędów) do odwzorowania geometrii:
 
-## Integrals must be transformed from $\Omega^{(e)}$ (physical cell)
-## to $\tilde\Omega^r$ (reference cell):
+!bt
+\[
+\x = \sum_{r} \refphi_r(\X)\xdno{q(e,r)}
+\]
+!et
 
-## !bt
-## \begin{align}
-## \int_{\Omega^{(e)}}\basphi_i (\x) \basphi_j (\x) \dx &=
-## \int_{\tilde\Omega^r} \refphi_i (\X) \refphi_j (\X)
-## \det J\, \dX\\
-## \int_{\Omega^{(e)}}\basphi_i (\x) f(\x) \dx &=
-## \int_{\tilde\Omega^r} \refphi_i (\X) f(\x(\X)) \det J\, \dX
-## \end{align}
-## !et
-## where $\dx = dx dy$ or $\dx = dxdydz$ and $\det J$ is the determinant of the
-## Jacobian of the mapping $\x(\X)$.
+Zaleta: pozwala generować elementy o geomtrii *nielinowej*
 
-## !bt
-## \[
-## J = \left[\begin{array}{cc}
-## \frac{\partial x}{\partial X} & \frac{\partial x}{\partial Y}\\
-## \frac{\partial y}{\partial X} & \frac{\partial y}{\partial Y}
-## \end{array}\right], \quad
-## \det J = \frac{\partial x}{\partial X}\frac{\partial y}{\partial Y}
-## - \frac{\partial x}{\partial Y}\frac{\partial y}{\partial X}
-## \]
-## !et
+FIGURE: [../fig/ElmT6n2D_map, width=400]
 
-## Affine mapping
-## (ref{fem:approx:fe:affine:map}): $\det J=2\Delta$, $\Delta = \hbox{cell volume}$
+!split
+===== Obliczanie całek =====
 
-## !split
-## ===== Remark on going from 1D to 2D/3D =====
+Wymagana transformacja całek z $\Omega^{(e)}$ (komórka we współrządnych globalnych)
+w $\tilde\Omega^r$ (komórka unormowana/odniesienia):
 
-## !bblock
+!bt
+\begin{align}
+\int_{\Omega^{(e)}}\basphi_i (\x) \basphi_j (\x) \dx &=
+\int_{\tilde\Omega^r} \refphi_i (\X) \refphi_j (\X)
+\det J\, \dX\\
+\int_{\Omega^{(e)}}\basphi_i (\x) f(\x) \dx &=
+\int_{\tilde\Omega^r} \refphi_i (\X) f(\x(\X)) \det J\, \dX
+\end{align}
+!et
+gdzie $\dx = dx dy$ lub $\dx = dxdydz$ oraz $\det J$ to wyznacznik
+jakobianu odwzorowania $\x(\X)$.
+
+!bt
+\[
+J = \left[\begin{array}{cc}
+\frac{\partial x}{\partial X} & \frac{\partial x}{\partial Y}\\
+\frac{\partial y}{\partial X} & \frac{\partial y}{\partial Y}
+\end{array}\right], \quad
+\det J = \frac{\partial x}{\partial X}\frac{\partial y}{\partial Y}
+- \frac{\partial x}{\partial Y}\frac{\partial y}{\partial X}
+\]
+!et
+
+Odwzorowanie afiniczne
+(ref{fem:approx:fe:affine:map}):
+$\det J=2\Delta$, $\Delta = \hbox{powierzchnia komórki/elementu}$
+
+!split
+===== Uwaga dot. uogólnienia FEM z 1D do 2D/3D =====
+
+!bblock
+Ogólna idea \FEM{} oraz kroki algorytmu -- takie same niezależnie
+od wymiarowości geometrii.
+
+Im wyższy wymiar przestrzeni, tym większy nakład obliczeniowy.
+ze względu na komplikację wzorów.
+
+Obliczenia ręczne - nużące, podatne na popełnienie pomyłki.
+
+Automatyzacja i algorytmizacja problemu pożądana.
+
 ## Finite elements in 2D and 3D builds on the same
 ## *ideas* and *concepts* as in 1D, but there is simply much
 ## more to compute because the
@@ -3325,4 +3577,4 @@ plot(x_u, u)
 ## and the book keeping with dof maps also gets more complicated.
 ## The manual work is tedious, lengthy, and error-prone
 ## so automation by the computer is a must.
-## !eblock
+!eblock
