@@ -5,11 +5,21 @@
 ======= Hans Petter Langtangen =======
 (1962-2016)
 
-"Strona domowa":"https://hplgit.github.io/homepage/index.html"
+ * "Strona domowa":"https://hplgit.github.io/homepage/index.html"
 
-"Github":"https://github.com/hplgit"
+ * "Github":"https://github.com/hplgit"
 
+ * "DocOnce i publikacje":"https://doconce.github.io"
 
+ * "Książka (EN)":"http://hplgit.github.io/fem-book/doc/web/index.html"
+
+ * Ten wykład w aktualnej wersji:
+   * "PDF":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/pdf/approx-beamer.pdf"
+   * "HTML":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-1.pdf"
+   * "HTML-solarized":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-solarize.pdf"
+   * "reveal-js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal.html"
+   * "reveal-js-beige":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal-beige.html"
+   * "deck.js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-deck.html"
 
 !split
 ======= Metoda elementów skończonych - wstęp =======
@@ -25,7 +35,7 @@ FIGURE: [../fig/dolfin_mesh, width=200 frac=1]
 
 !bslidecell 01
 !bpop
- * pozwala rozwiązywać \PDE{} dla obszarów o ''złożonej geometrii''
+ * pozwala rozwiązywać \PDE{} dla obszarów o złożonej geometrii
  * pozwala ''regulować'' dokładność siatki tam gdzie to potrzebne
  * możliwość użycia aproksymacji wyższego rzędu
  * dobre, matematyczne podstawy - co pozwala na dokładną analizę metody

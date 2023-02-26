@@ -39,80 +39,108 @@ system pdflatex $filename
 system pdflatex $filename
 mv -f $filename.pdf ${filename}-plain.pdf
 
-# HTML
-preprocess -DFORMAT=html tmp.p.tex > newcommands_keep.tex
-
-# reveal.js HTML5 slides
-html=${filename}-reveal
-system doconce format html $filename --pygments_html_style=native --keep_pygments_html_bg --html_output=$html
-doconce replace 'P$d$' 'Pd' ${html}.html
-system doconce slides_html ${html}.html reveal --html_slide_theme=darkgray
-
-html=${filename}-reveal-beige
-system doconce format html $filename --pygments_html_style=perldoc --keep_pygments_html_bg --html_output=$html
-doconce replace 'P$d$' 'Pd' ${html}.html
-system doconce slides_html ${html}.html reveal --html_slide_theme=beige
+# # HTML
+# preprocess -DFORMAT=html tmp.p.tex > newcommands_keep.tex
+# 
+# # reveal.js HTML5 slides
+# html=${filename}-reveal
+# system doconce format html $filename --pygments_html_style=native --keep_pygments_html_bg --html_output=$html
+# doconce replace 'P$d$' 'Pd' ${html}.html
+# system doconce slides_html ${html}.html reveal --html_slide_theme=darkgray
+# 
+# html=${filename}-reveal-beige
+# system doconce format html $filename --pygments_html_style=perldoc --keep_pygments_html_bg --html_output=$html
+# doconce replace 'P$d$' 'Pd' ${html}.html
+# system doconce slides_html ${html}.html reveal --html_slide_theme=beige
 
 # deck.js HTML5 slides
-#html=${filename}-deck
-#system doconce format html $filename --pygments_html_style=perldoc --keep_pygme#nts_html_bg --html_output=$html
-#doconce replace 'P$d$' 'Pd' ${html}.html
-#system doconce slides_html ${html}.html deck --html_slide_theme=sandstone.default
-
-# Plain HTML with everything in one file
-html=${filename}-1
-system doconce format html $filename --html_style=bloodish --html_output=$html -DWITH_TOC
+html=${filename}-deck
+system doconce format html $filename --pygments_html_style=perldoc --keep_pygme#nts_html_bg --html_output=$html
 doconce replace 'P$d$' 'Pd' ${html}.html
-doconce replace "<li>" "<p><li>" ${html}.html
-doconce split_html ${html}.html --method=space8
+system doconce slides_html ${html}.html deck --html_slide_theme=sandstone.default
 
-# HTML with solarized style and one big file
-html=${filename}-solarized
-system doconce format html $filename --html_style=solarized3 --html_output=$html --pygments_html_style=perldoc --pygments_html_linenos  -DWITH_TOC
-doconce replace 'P$d$' 'Pd' ${html}.html
-doconce replace "<li>" "<p><li>" ${html}.html
-doconce split_html ${html}.html --method=space8
+# # Plain HTML with everything in one file
+# html=${filename}-1
+# system doconce format html $filename --html_style=bloodish --html_output=$html -DWITH_TOC
+# doconce replace 'P$d$' 'Pd' ${html}.html
+# doconce replace "<li>" "<p><li>" ${html}.html
+# doconce split_html ${html}.html --method=space8
+# 
+# # HTML with solarized style and one big file
+# html=${filename}-solarized
+# system doconce format html $filename --html_style=solarized3 --html_output=$html --pygments_html_style=perldoc --pygments_html_linenos  -DWITH_TOC
+# doconce replace 'P$d$' 'Pd' ${html}.html
+# doconce replace "<li>" "<p><li>" ${html}.html
+# doconce split_html ${html}.html --method=space8
+# 
+# # Drop split HTML files - too much hassle with cranking up the font
+# # for each slide...
+# 
+# # LaTeX Beamer
+# rm -f *.aux
+# preprocess -DFORMAT=pdflatex tmp.p.tex > newcommands_keep.tex
+# system doconce format pdflatex $filename --latex_title_layout=beamer --latex_table_format=footnotesize --latex_admon_title_no_period --latex_code_style=pyg --movie_prefix=https://raw.githubusercontent.com/hplgit/fdm-book/master/doc/.src/chapters/${nickname}/
+# system doconce slides_beamer $filename --beamer_slide_theme=red_shadow
+# system pdflatex -shell-escape $filename
+# pdflatex -shell-escape $filename
+# pdflatex -shell-escape $filename
+# cp ${filename}.pdf ${filename}-beamer.pdf
+# rm -f ${filename}.pdf
+# cp ${filename}.tex ${filename}-beamer.tex  # sometimes nice to look at
+# 
+# # Handouts
+# system doconce format pdflatex $filename --latex_title_layout=beamer --latex_table_format=footnotesize --latex_admon_title_no_period --latex_code_style=pyg
+# system doconce slides_beamer $filename --beamer_slide_theme=red_shadow --handout
+# system pdflatex -shell-escape $filename
+# pdflatex -shell-escape $filename
+# pdflatex -shell-escape $filename
+# pdfnup --nup 2x3 --frame true --delta "1cm 1cm" --scale 0.9 --outfile ${filename}-beamer-handouts2x3.pdf ${filename}.pdf
+# rm -f ${filename}.pdf
+# 
+# # Ordinary plain LaTeX
+# rm -f *.aux  # important
+# system doconce format pdflatex $filename --latex_admon=paragraph --latex_code_style=lst-yellow2
+# doconce replace 'section{' 'section*{' ${filename}.tex
+# system pdflatex $filename
+# system pdflatex $filename
+# mv -f $filename.pdf ${filename}-plain.pdf
 
-# Drop split HTML files - too much hassle with cranking up the font
-# for each slide...
 
-# LaTeX Beamer
-rm -f *.aux
-preprocess -DFORMAT=pdflatex tmp.p.tex > newcommands_keep.tex
-system doconce format pdflatex $filename --latex_title_layout=beamer --latex_table_format=footnotesize --latex_admon_title_no_period --latex_code_style=pyg --movie_prefix=https://raw.githubusercontent.com/hplgit/fdm-book/master/doc/.src/chapters/${nickname}/
-system doconce slides_beamer $filename --beamer_slide_theme=red_shadow
-system pdflatex -shell-escape $filename
-pdflatex -shell-escape $filename
-pdflatex -shell-escape $filename
-cp ${filename}.pdf ${filename}-beamer.pdf
-rm -f ${filename}.pdf
-cp ${filename}.tex ${filename}-beamer.tex  # sometimes nice to look at
-
-# Handouts
-system doconce format pdflatex $filename --latex_title_layout=beamer --latex_table_format=footnotesize --latex_admon_title_no_period --latex_code_style=pyg
-system doconce slides_beamer $filename --beamer_slide_theme=red_shadow --handout
-system pdflatex -shell-escape $filename
-pdflatex -shell-escape $filename
-pdflatex -shell-escape $filename
-pdfnup --nup 2x3 --frame true --delta "1cm 1cm" --scale 0.9 --outfile ${filename}-beamer-handouts2x3.pdf ${filename}.pdf
-rm -f ${filename}.pdf
-
-# Ordinary plain LaTeX
-rm -f *.aux  # important
-system doconce format pdflatex $filename --latex_admon=paragraph --latex_code_style=lst-yellow2
-doconce replace 'section{' 'section*{' ${filename}.tex
-system pdflatex $filename
-system pdflatex $filename
-mv -f $filename.pdf ${filename}-plain.pdf
-
-
-# Publish (added by MB)
+##### Publish (added by MB)
 repo=../../../..
 dest=${repo}/doc/pub/slides
 if [ ! -d $dest ]; then mkdir $dest; fi
+
+# pdf
 if [ ! -d $dest/pdf ]; then mkdir $dest/pdf; fi
-cp ${filename}-beamer.pdf $dest/pdf
+cp -f ${filename}-beamer.pdf $dest/pdf
+
+# html and html5-reveal.js
+if [ ! -d $dest/html ]; then mkdir $dest/html; fi
+if [ ! -d $dest/html/fig ]; then mkdir $dest/html/fig; fi
+if [ ! -d $dest/html/figMB ]; then mkdir $dest/html/figMB; fi
+cp -f ../fig/* $dest/html/fig/
+cp -f ../figMB/* $dest/html/figMB/
+if [ ! -d $dest/html/pages ]; then mkdir $dest/html/pages; fi
+
+# # html
+cp -f ${filename}-solarized.html $dest/html/pages/
+cp -f ${filename}-1.html $dest/html/pages/
+
+
+# # html-deckjs
+if [ ! -d $dest/html/pages/deck.js-latest ]; then mkdir $dest/html/pages/deck.js-latest; fi
+cp -rf reveal.js/* $dest/html/pages/reveal.js/
+cp -f ${filename}-solarized.html $dest/html/pages/
+cp -f ${filename}-1.html $dest/html/pages/
+
+# # html-reveal.js
+# if [ ! -d $dest/html/pages/reveal ]; then mkdir $dest/html/reveal; fi
+if [ ! -d $dest/html/pages/reveal.js ]; then mkdir $dest/html/pages/reveal.js; fi
+cp -rf deck.js-latest/* $dest/html/pages/deck.js-latest/
+cp -f ${filename}-deck.html $dest/html/pages/
+
+
+# add published documents to the repo
 cd $dest; git add .; cd -
-
-
-
+##### ENDOF Publish
