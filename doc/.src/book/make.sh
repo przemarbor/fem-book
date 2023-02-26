@@ -65,10 +65,11 @@ system doconce subst 'frametitlebackgroundcolor=.*?,' 'frametitlebackgroundcolor
 doconce replace 'Released under CC Attr' '\\ Released under CC Attr' $name.tex
 
 
-
+echo "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 rm -rf $name.aux $name.ind $name.idx $name.bbl $name.toc $name.loe
 
 system pdflatex $name
+echo "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
 system bibtex $name
 system makeindex $name
 system pdflatex $name
@@ -83,6 +84,7 @@ system pdflatex $name
 
 # With solutions, password protected
 compile --device=screen
+
 newname=${topicname}-book-4screen-sol
 password="f!e!m"
 pdftk $name.pdf output $newname.pdf owner_pw foo user_pw $password

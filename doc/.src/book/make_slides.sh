@@ -4,6 +4,10 @@
 #
 # But this script is normally run from make.sh to make both
 # chapter and slides.
+
+
+ln -rfs ../newcommands_keep.p.tex ./newcommands_keep.p.tex
+
 set -x
 
 dofile=$1
@@ -39,43 +43,59 @@ system pdflatex $filename
 system pdflatex $filename
 mv -f $filename.pdf ${filename}-plain.pdf
 
+
+
+
 # # HTML
 # preprocess -DFORMAT=html tmp.p.tex > newcommands_keep.tex
 # 
-# # reveal.js HTML5 slides
+# # reveal.js HTML5 slides (LIGHT)
 # html=${filename}-reveal
+# system doconce format html $filename --pygments_html_style=perldoc --keep_pygments_html_bg --html_output=$html
+# doconce replace 'P$d$' 'Pd' ${html}.html
+# system doconce slides_html ${html}.html reveal --html_slide_theme=beige
+# 
+# # reveal.js HTML5 slides (DARK)
+# html=${filename}-reveal-dark
 # system doconce format html $filename --pygments_html_style=native --keep_pygments_html_bg --html_output=$html
 # doconce replace 'P$d$' 'Pd' ${html}.html
 # system doconce slides_html ${html}.html reveal --html_slide_theme=darkgray
 # 
-# html=${filename}-reveal-beige
+# # # # html=${filename}-reveal-dark
+# # # # system doconce format html $filename --pygments_html_style=fruity --keep_pygments_html_bg --html_output=$html
+# # # # doconce replace 'P$d$' 'Pd' ${html}.html
+# # # # system doconce slides_html ${html}.html reveal --html_slide_theme=night
+# 
+# # deck.js HTML5 slides (LIGHT)
+# html=${filename}-deck
 # system doconce format html $filename --pygments_html_style=perldoc --keep_pygments_html_bg --html_output=$html
 # doconce replace 'P$d$' 'Pd' ${html}.html
-# system doconce slides_html ${html}.html reveal --html_slide_theme=beige
+# system doconce slides_html ${html}.html deck --html_slide_theme=sandstone.default
 
-# deck.js HTML5 slides
-html=${filename}-deck
-system doconce format html $filename --pygments_html_style=perldoc --keep_pygme#nts_html_bg --html_output=$html
-doconce replace 'P$d$' 'Pd' ${html}.html
-system doconce slides_html ${html}.html deck --html_slide_theme=sandstone.default
+# # # # # deck.js HTML5 slides (DARK)   -  TODO: cannot get to yield different theme than the default
+# # # # html=${filename}-deck-dark
+# # # # system doconce format html $filename --pygments_html_style=fruity --keep_pygments_html_bg --html_output=$html SLIDE_TYPE=deck SLIDE_THEME=sandstone-aurora
+# # # # doconce replace 'P$d$' 'Pd' ${html}.html
+# # # # system doconce slides_html ${html}.html deck --html_slide_theme=sandstone.aurora
 
-# # Plain HTML with everything in one file
+# 
+# # Plain HTML with everything in one file (LIGHT)
 # html=${filename}-1
 # system doconce format html $filename --html_style=bloodish --html_output=$html -DWITH_TOC
 # doconce replace 'P$d$' 'Pd' ${html}.html
 # doconce replace "<li>" "<p><li>" ${html}.html
 # doconce split_html ${html}.html --method=space8
 # 
-# # HTML with solarized style and one big file
-# html=${filename}-solarized
-# system doconce format html $filename --html_style=solarized3 --html_output=$html --pygments_html_style=perldoc --pygments_html_linenos  -DWITH_TOC
-# doconce replace 'P$d$' 'Pd' ${html}.html
-# doconce replace "<li>" "<p><li>" ${html}.html
-# doconce split_html ${html}.html --method=space8
+# # # # # HTML with solarized style and one big file
+# # # # html=${filename}-solarized
+# # # # system doconce format html $filename --html_style=solarized3 --html_output=$html --pygments_html_style=perldoc --pygments_html_linenos  -DWITH_TOC
+# # # # doconce replace 'P$d$' 'Pd' ${html}.html
+# # # # doconce replace "<li>" "<p><li>" ${html}.html
+# # # # doconce split_html ${html}.html --method=space8
 # 
-# # Drop split HTML files - too much hassle with cranking up the font
-# # for each slide...
-# 
+# # # Drop split HTML files - too much hassle with cranking up the font
+# # # for each slide...
+# # 
 # # LaTeX Beamer
 # rm -f *.aux
 # preprocess -DFORMAT=pdflatex tmp.p.tex > newcommands_keep.tex
@@ -87,60 +107,58 @@ system doconce slides_html ${html}.html deck --html_slide_theme=sandstone.defaul
 # cp ${filename}.pdf ${filename}-beamer.pdf
 # rm -f ${filename}.pdf
 # cp ${filename}.tex ${filename}-beamer.tex  # sometimes nice to look at
+
+# # # # # Handouts
+# # # # system doconce format pdflatex $filename --latex_title_layout=beamer --latex_table_format=footnotesize --latex_admon_title_no_period --latex_code_style=pyg
+# # # # system doconce slides_beamer $filename --beamer_slide_theme=red_shadow --handout
+# # # # system pdflatex -shell-escape $filename
+# # # # pdflatex -shell-escape $filename
+# # # # pdflatex -shell-escape $filename
+# # # # pdfnup --nup 2x3 --frame true --delta "1cm 1cm" --scale 0.9 --outfile ${filename}-beamer-handouts2x3.pdf ${filename}.pdf
+# # # # rm -f ${filename}.pdf
+# # # # 
+# # # # # Ordinary plain LaTeX
+# # # # rm -f *.aux  # important
+# # # # system doconce format pdflatex $filename --latex_admon=paragraph --latex_code_style=lst-yellow2
+# # # # doconce replace 'section{' 'section*{' ${filename}.tex
+# # # # system pdflatex $filename
+# # # # system pdflatex $filename
+# # # # mv -f $filename.pdf ${filename}-plain.pdf
+
+
+# ##### Publish (added by MB)
+# repo=../../../..
+# dest=${repo}/doc/pub/slides
+# if [ ! -d $dest ]; then mkdir $dest; fi
 # 
-# # Handouts
-# system doconce format pdflatex $filename --latex_title_layout=beamer --latex_table_format=footnotesize --latex_admon_title_no_period --latex_code_style=pyg
-# system doconce slides_beamer $filename --beamer_slide_theme=red_shadow --handout
-# system pdflatex -shell-escape $filename
-# pdflatex -shell-escape $filename
-# pdflatex -shell-escape $filename
-# pdfnup --nup 2x3 --frame true --delta "1cm 1cm" --scale 0.9 --outfile ${filename}-beamer-handouts2x3.pdf ${filename}.pdf
-# rm -f ${filename}.pdf
+# # pdf
+# if [ ! -d $dest/pdf ]; then mkdir $dest/pdf; fi
+# cp -f ${filename}-beamer.pdf $dest/pdf
 # 
-# # Ordinary plain LaTeX
-# rm -f *.aux  # important
-# system doconce format pdflatex $filename --latex_admon=paragraph --latex_code_style=lst-yellow2
-# doconce replace 'section{' 'section*{' ${filename}.tex
-# system pdflatex $filename
-# system pdflatex $filename
-# mv -f $filename.pdf ${filename}-plain.pdf
-
-
-##### Publish (added by MB)
-repo=../../../..
-dest=${repo}/doc/pub/slides
-if [ ! -d $dest ]; then mkdir $dest; fi
-
-# pdf
-if [ ! -d $dest/pdf ]; then mkdir $dest/pdf; fi
-cp -f ${filename}-beamer.pdf $dest/pdf
-
-# html and html5-reveal.js
-if [ ! -d $dest/html ]; then mkdir $dest/html; fi
-if [ ! -d $dest/html/fig ]; then mkdir $dest/html/fig; fi
-if [ ! -d $dest/html/figMB ]; then mkdir $dest/html/figMB; fi
-cp -f ../fig/* $dest/html/fig/
-cp -f ../figMB/* $dest/html/figMB/
-if [ ! -d $dest/html/pages ]; then mkdir $dest/html/pages; fi
-
-# # html
-cp -f ${filename}-solarized.html $dest/html/pages/
-cp -f ${filename}-1.html $dest/html/pages/
-
-
-# # html-deckjs
-if [ ! -d $dest/html/pages/deck.js-latest ]; then mkdir $dest/html/pages/deck.js-latest; fi
-cp -rf reveal.js/* $dest/html/pages/reveal.js/
-cp -f ${filename}-solarized.html $dest/html/pages/
-cp -f ${filename}-1.html $dest/html/pages/
-
-# # html-reveal.js
-# if [ ! -d $dest/html/pages/reveal ]; then mkdir $dest/html/reveal; fi
-if [ ! -d $dest/html/pages/reveal.js ]; then mkdir $dest/html/pages/reveal.js; fi
-cp -rf deck.js-latest/* $dest/html/pages/deck.js-latest/
-cp -f ${filename}-deck.html $dest/html/pages/
-
-
-# add published documents to the repo
-cd $dest; git add .; cd -
-##### ENDOF Publish
+# # html and html5-reveal.js
+# if [ ! -d $dest/html ]; then mkdir $dest/html; fi
+# if [ ! -d $dest/html/fig ]; then mkdir $dest/html/fig; fi
+# if [ ! -d $dest/html/figMB ]; then mkdir $dest/html/figMB; fi
+# cp -f ../fig/* $dest/html/fig/
+# cp -f ../figMB/* $dest/html/figMB/
+# if [ ! -d $dest/html/pages ]; then mkdir $dest/html/pages; fi
+# 
+# # # html
+# cp -f ${filename}-1.html $dest/html/pages/
+# 
+# # # html-deckjs
+# if [ ! -d $dest/html/pages/deck.js-latest ]; then mkdir $dest/html/pages/deck.js-latest; fi
+# cp -rf reveal.js/* $dest/html/pages/reveal.js/
+# cp -f ${filename}-solarized.html $dest/html/pages/
+# cp -f ${filename}-1.html $dest/html/pages/
+# 
+# # # html-reveal.js
+# # if [ ! -d $dest/html/pages/reveal ]; then mkdir $dest/html/reveal; fi
+# if [ ! -d $dest/html/pages/reveal.js ]; then mkdir $dest/html/pages/reveal.js; fi
+# cp -rf deck.js-latest/* $dest/html/pages/deck.js-latest/
+# cp -f ${filename}-deck.html $dest/html/pages/
+# 
+# 
+# # add published documents to the repo
+# cd $dest; git add .; cd -
+# ##### ENDOF Publish

@@ -1,6 +1,8 @@
 # 2DO:
 # Less 7= headings (or: ok when approx and varform are split?)
 
+## # #include "mako_code.txt"  # <- DOES NOT WORK ??
+
 !split
 ======= Hans Petter Langtangen =======
 (1962-2016)
@@ -13,13 +15,21 @@
 
  * "Książka (EN)":"http://hplgit.github.io/fem-book/doc/web/index.html"
 
- * Ten wykład w aktualnej wersji:
-   * "PDF":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/pdf/approx-beamer.pdf"
-   * "HTML":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-1.pdf"
-   * "HTML-solarized":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-solarize.pdf"
-   * "reveal-js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal.html"
-   * "reveal-js-beige":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal-beige.html"
-   * "deck.js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-deck.html"
+ * Wykład:
+   * "PDF":"http://marbor.strony.prz.edu.pl/download/FEM/pdf/approx-beamer.pdf"
+   * "HTML":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-1.html"
+   * "HTML-solarized":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-solarized.html"
+   * "reveal-js":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal.html"
+   * "reveal-js-beige":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal-beige.html"
+   * "deck.js":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-deck.html"
+
+
+##   * "PDF":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/pdf/approx-beamer.pdf"
+##   * "HTML":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-1.pdf"
+##   * "HTML-solarized":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-solarize.pdf"
+##   * "reveal-js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal.html"
+##   * "reveal-js-beige":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal-beige.html"
+##   * "deck.js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-deck.html"
 
 !split
 ======= Metoda elementów skończonych - wstęp =======
@@ -35,7 +45,7 @@ FIGURE: [../fig/dolfin_mesh, width=200 frac=1]
 
 !bslidecell 01
 !bpop
- * pozwala rozwiązywać \PDE{} dla obszarów o złożonej geometrii
+ * pozwala rozwiązywać $\PDE$ dla obszarów o złożonej geometrii
  * pozwala ''regulować'' dokładność siatki tam gdzie to potrzebne
  * możliwość użycia aproksymacji wyższego rzędu
  * dobre, matematyczne podstawy - co pozwala na dokładną analizę metody
@@ -49,7 +59,7 @@ FIGURE: [../fig/dolfin_mesh, width=200 frac=1]
 
 
 !split
-===== A dolphin and its flow =====
+===== Delfin =====
 
 !bslidecell 00
 FIGURE: [../fig/dolfin_mesh, width=400 frac=1]
@@ -60,7 +70,7 @@ FIGURE: [../fig/dolfin_flow.gif, width=400 frac=1]
 !eslidecell
 
 !split
-===== Rozwiązywania \PDE{} przy pomocy FEM =====
+===== Rozwiązywanie $\PDE$ przy pomocy FEM =====
 
 !bblock Zagadnienia stacjonarne:
  o Przekształcenie zagadnienia brzegowego do *postaci wariacyjnej*
@@ -73,7 +83,7 @@ FIGURE: [../fig/dolfin_flow.gif, width=400 frac=1]
 
 !bblock Zagadnienia niestacjonarne (zależne od czasu):
  * MES - aproksymacja przestrzeni 
- * FDM/(metoda rozw. ODE) - aproksymacja w czasie
+ * FDM (lub metoda rozw. ODE) - aproksymacja w czasie
 !eblock
 
 # Give a brief example here, 1D or 2D
@@ -82,13 +92,13 @@ FIGURE: [../fig/dolfin_flow.gif, width=400 frac=1]
 ===== Etapy nauki FEM =====
 
 !bblock Jak? 
- o Elementy teoria aproksymacji, a nie rozw. \PDE
+ o Elementy teoria aproksymacji, a nie rozw. $\PDE$
  o Wstęp do aproksymacji elementami skończonymi
- o W końcu zastosowanie powyższego do rozw. \PDE
+ o W końcu zastosowanie powyższego do rozw. $\PDE$
 !eblock
 
 !bblock Dlaczego tak?
-Istnieje wiele wariantów i odmian \FEM.
+Istnieje wiele wariantów i odmian $\FEM$.
 Dzięki proponowanemu podejściu łatwiej się ''połapać''. Unikamy zamieszania
 wielością podejść do tematu, koncepcji i technicznych/implementacyjnych
 szczegółów.
@@ -97,8 +107,8 @@ szczegółów.
 !split
 ======= Aproksymacja w przestrzeniach wektorowych =======
 
-Jak znaleźć wektor pewnej przestrzeni, który aproksymuje wektor przestrzeni
-o większym wymiarze?
+Jak znaleźć wektor pewnej przestrzeni, który aproksymuje
+wektor przestrzeni o większym wymiarze?
 
 FIGURE: [../fig/vecapprox_plane, width=300 frac=0.5]
 
@@ -127,9 +137,9 @@ gdzie
 !split
 ===== Trzy główne sposoby wyznaczania niewiadomych współczynników =====
 
- * Metoda najmniejszych kwadratów (\LSM{} Least Squares Method)
+ * metoda najmniejszych kwadratów (ang. Least Squares Method LSM)
  * metoda Galerkina
- * Metoda kolokacji
+ * metoda kolokacji
 
 
 
@@ -380,7 +390,7 @@ co jest równoważne temu aby $\e$ był ortogonalny do każdego wektora bazowego
 !et
 
 Warunek ortogonalności -- podstawa metody Galerkina.
-Generuje ten sam układ równań liniowych co \LSM.
+Generuje ten sam układ równań liniowych co $\LSM$.
 
 !split
 ======= Aproksymacja funkcji w przestrzeni funkcyjnej =======
@@ -404,7 +414,7 @@ liniową funkcji bazowych:
 !et
 
 !split
-===== Uogólnienie \LSM{} na przestrzenie funkcyjne =====
+===== Uogólnienie $\LSM$ na przestrzenie funkcyjne =====
 label{fem:approx:LS}
 
 Tak jak dla przestrzeni wektorowych, minimalizujemy normę błędu $E$,
@@ -428,7 +438,7 @@ Czym jest iloczyn skalarny jeśli $\baspsi_i$ jest funkcją?
 (iloczyn skalarny funkcji cg jako uogólnienie il. skalarnego funkcji dyskretnych $(\u, \v) = \sum_j u_jv_j$)
 
 !split
-===== Szczegóły \LSM{} =====
+===== Szczegóły $\LSM$ =====
 
 !bt
 \begin{align*}
@@ -478,7 +488,7 @@ label{fem:approx:Galerkin}
 
 Równoważność wzorów jak dla przestrzeni wektorowych.
 
-Równoważność wzorów jak dla wyprowadzenia przy pomocy \LSM.
+Równoważność wzorów jak dla wyprowadzenia przy pomocy $\LSM$.
 
 
 !split
@@ -574,7 +584,7 @@ c_1 \\
 FIGURE: [../fig/parabola_ls_linear, width=550 frac=0.8]
 
 !split
-===== Symboliczna realizacja algorytmu \LSM{} =====
+===== Symboliczna realizacja algorytmu $\LSM$ =====
 label{fem:approx:global:LS:code}
 
 Problem: napisać program/funkcję, który przeprowadzi obliczenia (obliczenie całek
@@ -593,7 +603,7 @@ Niech
 
 
 !split
-===== \LSM{} symbolicznie:  podejście nr 1 =====
+===== $\LSM$ symbolicznie:  podejście nr 1 =====
 
 !bc pycod
 import sympy as sym
@@ -633,7 +643,7 @@ Spostrzeżenie: macierz układu jest symetryczna, dzięki czemu można zoptymali
 
 !split
 ## ===== Improved code if symbolic integration fails =====
-===== \LSM{} symbolicznie:  podejście nr 2 =====
+===== $\LSM$ symbolicznie:  podejście nr 2 =====
 
 !bc pycod
 def least_squares(f, psi, Omega, symbolic=True):
@@ -733,7 +743,7 @@ Rozwiązanie przybliżone $\equiv$ rozwiązanie dokładne, jeśli $f \in V$!
  * Wynik funkcji `least_squares`: dla $i>2$, $c_i=0$
 
 !bblock Wniosek ogólny:
-Jeśli $f\in V$, \LSM{} oraz metoda Galerkina zwrócą $u=f$.
+Jeśli $f\in V$, $\LSM$ oraz metoda Galerkina zwrócą $u=f$.
 !eblock
 
 !split
@@ -931,7 +941,7 @@ c_i = \frac{b_i}{A_{i,i}} = \frac{(f,\baspsi_i)}{(\baspsi_i,\baspsi_i)}
 !et
 
 !split
-===== Implementacja \LSM{} dla ortogonalnych funkcji bazowych =====
+===== Implementacja $\LSM$ dla ortogonalnych funkcji bazowych =====
 
 !bc pycod
 def least_squares_orth(f, psi, Omega):
@@ -950,7 +960,7 @@ def least_squares_orth(f, psi, Omega):
 !ec
 
 !split
-===== Implementacja \LSM{} dla ortogonalnych funkcji bazowych: całkowanie symboliczne i numeryczne =====
+===== Implementacja $\LSM$ dla ortogonalnych funkcji bazowych: całkowanie symboliczne i numeryczne =====
 
 #if FORMAT in ('latex', 'pdflatex')
 \footnotesize
@@ -1089,7 +1099,7 @@ b_i = f(\xno{i})\]
 !et
 
 !split
-===== Rozwiązywanie nadokreślonych URL przy pomocy \LSM =====
+===== Rozwiązywanie nadokreślonych URL przy pomocy $\LSM$ =====
 
  * Jak rozwiązać $Ac=b$ jeśli jest więcej równań niż niewiadomych?
  * Idea: Poszukiwanie rozwiązania minimalizującego $r=b-Ac$
@@ -1214,7 +1224,7 @@ u(x) = \sum_{j\in\If} f(\xno{i})\baspsi_i(x)
 !et
 
  * Wielomiany Lagrange'a w połączeniu z metodą kolokacji są niezwykle wygodne
- * Często stosowane w \FEM
+ * Często stosowane w $\FEM$
 
 !split
 ===== Wielomiany Lagrange'a -- wzór i implementacja =====
@@ -1301,7 +1311,7 @@ Nośnik funkcji: domknięcie zbioru argumentów funkcji, dla których ma ona war
 FIGURE: [../fig/u_example_sin, width=800]
 
 !split
-===== Funkcje bazowe o nośniku ograniczonym -- \FEM{} =====
+===== Funkcje bazowe o nośniku ograniczonym -- $\FEM$ =====
 
  * *Nośnik zwarty* (*Local support*): domknięcie zbioru tych $x$-ów, dla których
    $\baspsi_i(x) \neq 0$
@@ -2388,9 +2398,9 @@ FIGURE: [../fig/fe_p1_p2_x9_248e, width=800 frac=0.9]
 ## 
 ## ##  * Przybliżenie różnicami skończonymi $u_i$ funkcji $f(x)$:
 ## ##    po prostu $u_i = f(x_i)$ (próbkowanie)
-## ##  * W \FEM{} to samo $u\approx\sum_i c_i\basphi_i$ + dodatkowo interpolacja
+## ##  * W $\FEM$ to samo $u\approx\sum_i c_i\basphi_i$ + dodatkowo interpolacja
 ## ##    (następny slajd)
-## ##  * $u\approx\sum_i c_i\basphi_i$ + metoda Galerkina lub \LSM{}:
+## ##  * $u\approx\sum_i c_i\basphi_i$ + metoda Galerkina lub $\LSM$:
 ## ##    must derive and solve a linear system
 ## ##  * What is *really* the difference in the approximation $u$?
 ## 
@@ -2797,7 +2807,7 @@ E = np.sqrt(0.5*np.sum((e2[:-1] + e2[1:])*(x[1:] - x[:-1]))
 !split
 ===== Zależność błędu od $h$ i $d$ =====
 
-Teoria i eksperymenty pokazują, że aplikacja \LSM{} czy metody Galerkina
+Teoria i eksperymenty pokazują, że aplikacja $\LSM$ czy metody Galerkina
 dla elementów skończonych typu P$d$ o tej samej długości $h$ daje błąd:
 
 !bt
@@ -3061,7 +3071,7 @@ Iloczyn skalarny w 2D:
 \]
 !et
 
-Zastosowanie \LSM{} lub metody Galerkina da URL:
+Zastosowanie $\LSM$ lub metody Galerkina da URL:
 
 !bt
 \begin{align*}
@@ -3356,13 +3366,13 @@ u(x,y,z) &= \sum_{p\in\Ix}\sum_{q\in\Iy}\sum_{r\in\Iz} c_{p,q,r}
 !split
 ======= Elementy skończone w 2D i 3D =======
 
-Zalety \FEM{} w zastosowaniach 2D i 3D:
+Zalety $\FEM$ w zastosowaniach 2D i 3D:
 
   * łatwość aproksymowania skomplikowanych geometrii
   * łatwość generowania wielomianów (funkcji bazowych) wyższych rzędów w celu
     zwiększenia dokładności aproksymacji funkcji
 
-\FEM{} w 1D: głównie dla celów dydaktycznych, debugowania
+$\FEM$ w 1D: głównie dla celów dydaktycznych, debugowania
 ## Finite elements in 1D: mostly for learning, insight, debugging
 
 
@@ -3570,7 +3580,7 @@ $\det J=2\Delta$, $\Delta = \hbox{powierzchnia komórki/elementu}$
 ===== Uwaga dot. uogólnienia FEM z 1D do 2D/3D =====
 
 !bblock
-Ogólna idea \FEM{} oraz kroki algorytmu -- takie same niezależnie
+Ogólna idea $\FEM$ oraz kroki algorytmu -- takie same niezależnie
 od wymiarowości geometrii.
 
 Im wyższy wymiar przestrzeni, tym większy nakład obliczeniowy.
