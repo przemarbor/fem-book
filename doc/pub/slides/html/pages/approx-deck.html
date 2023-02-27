@@ -1,0 +1,4983 @@
+<!--File automatically generated using DocOnce (https://github.com/doconce/doconce/):
+doconce format html approx-deck.html approx-deck.html deck --html_slide_theme=sandstone.default-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="DocOnce: https://github.com/doconce/doconce/" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="keywords" content="approximation of general vectors,Galerkin method,projection,approximation of functions,approximation by sines,collocation method (approximation),approximation collocation,Lagrange (interpolating) polynomial,sparse matrices,finite element, definition,dof map,numerical integration Midpoint rule,numerical integration Trapezoidal rule,numerical integration Simpson's rule,Midpoint rule,Trapezoidal rule,Simpson's rule,Gauss-Legendre quadrature,simplex elements,simplices,faces,edges,isoparametric mapping,mapping of reference cells isoparametric mapping">
+<title></title>
+
+<!-- deck.js: https://github.com/imakewebthings/deck.js -->
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no"><!-- Required stylesheet -->
+  <link rel="stylesheet" media="screen" href="deck.js-latest/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" media="screen" href="deck.js-latest/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" media="screen" href="deck.js-latest/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" media="screen" href="deck.js-latest/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" media="screen" href="deck.js-latest/extensions/status/deck.status.css">
+  <link rel="stylesheet" media="screen" href="deck.js-latest/extensions/scale/deck.scale.css">
+
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="deck.js-latest/themes/style/sandstone.default.css">
+
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" media="screen" href="">
+
+  <!-- Basic black and white print styles -->
+  <link rel="stylesheet" media="print" href="deck.js-latest/core/print.css">
+
+  <!-- Required Modernizr file -->
+  <script src="deck.js-latest/modernizr.custom.js"></script>
+
+
+<style type="text/css">
+/* Override h1, h2, ... styles */
+h1 { font-size: 2.8em; }
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.4em; }
+h4 { font-size: 1.3em; }
+h1, h2, h3, h4 { font-weight: bold; line-height: 1.2; }
+body { overflow: auto; } /* vertical scrolling */
+hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+p.caption { width: 80%; font-size: 60%; font-style: italic; text-align: left; }
+hr.figure { border: 0; width: 80%; border-bottom: 0 solid #aaa}
+.slide .alert-text-small   { font-size: 80%;  }
+.slide .alert-text-large   { font-size: 130%; }
+.slide .alert-text-normal  { font-size: 90%;  }
+.slide .alert {
+  padding:8px 35px 8px 14px; margin-bottom:18px;
+  text-shadow:0 1px 0 rgba(255,255,255,0.5);
+  border:5px solid #bababa;
+    -webkit-border-radius:14px; -moz-border-radius:14px;
+  border-radius:14px
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  background-size: 38px;
+  padding-left: 30px; /* 55px; if icon */
+}
+.slide .alert-block {padding-top:14px; padding-bottom:14px}
+.slide .alert-block > p, .alert-block > ul {margin-bottom:0}
+/*.slide .alert li {margin-top: 1em}*/
+.deck .alert-block p+p {margin-top:5px}
+/*.slide .alert-notice { background-image: url(https://hplgit.github.io/doconce/
+bundled/html_images//small_gray_notice.png); }
+.slide .alert-summary  { background-image:url(https://hplgit.github.io/doconce/
+bundled/html_images//small_gray_summary.png); }
+.slide .alert-warning { background-image: url(https://hplgit.github.io/doconce/
+bundled/html_images//small_gray_warning.png); }
+.slide .alert-question {background-image:url(https://hplgit.github.io/doconce/
+bundled/html_images/small_gray_question.png); } */
+.dotable table, .dotable th, .dotable tr, .dotable tr td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  padding: 2px;
+}
+</style>
+
+
+<!-- Styles for table layout of slides -->
+<style type="text/css">
+td.padding {
+  padding-top:20px;
+  padding-bottom:20px;
+  padding-right:50px;
+  padding-left:50px;
+}
+</style>
+
+</head>
+
+<body class="deck-container">
+
+<header>
+<!-- Here goes a potential header -->
+</header>
+
+<!-- do not use the article tag - it gives strange sizings -->
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {
+     equationNumbers: {  autoNumber: "none"  },
+     extensions: ["AMSmath.js", "AMSsymbols.js", "autobold.js", "color.js"]
+  }
+});
+</script>
+<script type="text/javascript" async
+ src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- newcommands_keep.tex -->
+$$
+\newcommand{\half}{\frac{1}{2}}
+\newcommand{\tp}{\thinspace .}
+\newcommand{\x}{\boldsymbol{x}}
+\newcommand{\X}{\boldsymbol{X}}
+\renewcommand{\u}{\boldsymbol{u}}
+\renewcommand{\v}{\boldsymbol{v}}
+\newcommand{\e}{\boldsymbol{e}}
+\newcommand{\f}{\boldsymbol{f}}
+\newcommand{\Ix}{\mathcal{I}_x}
+\newcommand{\Iy}{\mathcal{I}_y}
+\newcommand{\Iz}{\mathcal{I}_z}
+\newcommand{\If}{\mathcal{I}_s}     % for FEM
+\newcommand{\Ifd}{{I_d}}  % for FEM
+\newcommand{\sequencei}[1]{\left\{ {#1}_i \right\}_{i\in\If}}
+\newcommand{\basphi}{\varphi}
+\newcommand{\baspsi}{\psi}
+\newcommand{\refphi}{\tilde\basphi}
+\newcommand{\psib}{\boldsymbol{\psi}}
+\newcommand{\xno}[1]{x_{#1}}
+\newcommand{\Xno}[1]{X_{(#1)}}
+\newcommand{\xdno}[1]{\boldsymbol{x}_{#1}}
+\newcommand{\dX}{\, \mathrm{d}X}
+\newcommand{\dx}{\, \mathrm{d}x}
+\newcommand{\PDE}{\mathrm{RRCz}}
+\newcommand{\FEM}{\mathrm{FEM}}
+\newcommand{\LSM}{\mathrm{MNK}}
+$$
+
+
+
+
+
+<section class="slide">
+<!-- ------------------- main content ---------------------- -->
+<!-- 2DO: -->
+<!-- Less 7= headings (or: ok when approx and varform are split?) -->
+</section>
+
+<section class="slide">
+<h1 id="wst&#281;p">Wst&#281;p </h1>
+<h3 id="ta-prezentacja">Ta prezentacja </h3>
+<ul>
+
+<p><li> <a href="http://marbor.strony.prz.edu.pl/download/FEM/pdf/approx-beamer.pdf" target="_self">PDF</a></li>
+
+<p><li> <a href="http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-1.html" target="_self">HTML (jasny)</a></li>
+
+<p><li> <a href="http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal.html" target="_self">reveal (jasny)</a></li>
+
+<p><li> <a href="http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal-dark.html" target="_self">reveal (ciemny)</a></li>
+
+<p><li> <a href="http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-deck.html" target="_self">deck.js (jasny)</a></li>
+</ul>
+<p>
+<h3 id="kody-pythona">Kody Pythona </h3>
+<a href="https://github.com/przemarbor/fem-book/tree/master/doc/.src/book/src" target="_self">Repozytorium</a>
+<h3 id="hans-petter-langtangen-1962-2016">Hans Petter Langtangen (1962-2016) </h3>
+
+<ul>
+ <p><li> <a href="https://hplgit.github.io/homepage/index.html" target="_self">Strona domowa</a></li>
+ <p><li> <a href="https://github.com/hplgit" target="_self">Github</a></li>
+ <p><li> <a href="https://doconce.github.io" target="_self">DocOnce i ksi&#261;&#380;ki HPL</a></li>
+ <p><li> <a href="http://hplgit.github.io/fem-book/doc/web/index.html" target="_self">Ksi&#261;&#380;ka o FEM (EN)</a></li>
+</ul>
+</section>
+
+<section class="slide">
+<h1 id="metoda-element&#243;w-sko&#324;czonych-wst&#281;p">Metoda element&#243;w sko&#324;czonych - wst&#281;p </h1>
+
+<p>Finite Element Method, FEM, MES</p>
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/dolfin_mesh.png" width="200" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<ul>
+ <p><li class="slide"> pozwala rozwi&#261;zywa&#263; \( \PDE \) dla obszar&#243;w o z&#322;o&#380;onej geometrii</li>
+ <p><li class="slide"> pozwala ''regulowa&#263;'' dok&#322;adno&#347;&#263; siatki tam gdzie to potrzebne</li>
+ <p><li class="slide"> mo&#380;liwo&#347;&#263; u&#380;ycia aproksymacji wy&#380;szego rz&#281;du</li>
+ <p><li class="slide"> dobre, matematyczne podstawy - co pozwala na dok&#322;adn&#261; analiz&#281; metody</li>
+</ul>
+<p>
+</td>
+</tr>
+</table>
+</section>
+
+<section class="slide">
+<h2 id="delfin">Delfin </h2>
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/dolfin_mesh.png" width="400" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/dolfin_flow.gif" width="400" align="bottom"></p>
+</center>
+
+</td>
+</tr>
+</table>
+</section>
+
+<section class="slide">
+<h2 id="rozwi&#261;zywanie-pde-przy-pomocy-fem">Rozwi&#261;zywanie \( \PDE \) przy pomocy FEM </h2>
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Zagadnienia stacjonarne:</b>
+<p>
+<ol>
+<p><li> Przekszta&#322;cenie zagadnienia brzegowego do <em>postaci wariacyjnej</em></li>
+<p><li> Zdefiniowanie funkcji aproksymuj&#261;cych dla <em>element&#243;w sko&#324;czonych</em></li>
+<p><li> Przkszta&#322;cenie zagadnienia ci&#261;g&#322;ego w dyskretne wyra&#380;one <em>uk&#322;adem r&#243;wna&#324; liniowych</em> (URL)</li>
+<p><li> Rozwi&#261;zanie URL</li>
+</ol>
+</div>
+
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Zagadnienia niestacjonarne (zale&#380;ne od czasu):</b>
+<p>
+<ul>
+ <p><li> MES - aproksymacja przestrzeni</li>
+
+<p><li> FDM (lub metoda rozw. ODE) - aproksymacja w czasie</li>
+</ul>
+</div>
+
+
+<!-- Give a brief example here, 1D or 2D -->
+</section>
+
+<section class="slide">
+<h2 id="etapy-nauki-fem">Etapy nauki FEM </h2>
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Jak?</b>
+<p>
+<ol>
+<p><li> Elementy teoria aproksymacji, a nie rozw. \( \PDE \)</li>
+<p><li> Wst&#281;p do aproksymacji elementami sko&#324;czonymi</li>
+<p><li> W ko&#324;cu zastosowanie powy&#380;szego do rozw. \( \PDE \)</li>
+</ol>
+</div>
+
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Dlaczego tak?</b>
+<p>
+<p>Istnieje wiele wariant&#243;w i odmian \( \FEM \).
+Dzi&#281;ki proponowanemu podej&#347;ciu &#322;atwiej si&#281; ''po&#322;apa&#263;''. Unikamy zamieszania
+wielo&#347;ci&#261; podej&#347;&#263; do tematu, koncepcji i technicznych/implementacyjnych
+szczeg&#243;&#322;&#243;w.
+</p>
+</div>
+</section>
+
+<section class="slide">
+<h1 id="aproksymacja-w-przestrzeniach-wektorowych">Aproksymacja w przestrzeniach wektorowych </h1>
+
+<p>Jak znale&#378;&#263; wektor pewnej przestrzeni, kt&#243;ry aproksymuje
+wektor przestrzeni o wi&#281;kszym wymiarze?
+</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/vecapprox_plane.png" width="300" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-jako-kombinacja-liniowa-za&#322;o&#380;onych-funkcji-bazowych">Aproksymacja jako kombinacja liniowa za&#322;o&#380;onych funkcji bazowych </h2>
+
+<p>Og&#243;lna idea poszukiwania elementu (wektora/funkcji) \( u(x) \) pewnej przestrzeni przybli&#380;aj&#261;cego zadany element \( f(x) \):</p>
+
+<p>&nbsp;<br>
+$$
+u(x) = \sum_{i=0}^N c_I \baspsi_i(x)
+$$
+<p>&nbsp;<br>
+
+<p>gdzie</p>
+
+<ul>
+<p><li> \( \baspsi_i(x) \) za&#322;o&#380;one funkcje</li>
+<p><li> \( c_i \), \( i=0,\ldots,N \) nieznane wsp&#243;&#322;czynniki (do wyznaczenia)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="trzy-g&#322;&#243;wne-sposoby-wyznaczania-niewiadomych-wsp&#243;&#322;czynnik&#243;w">Trzy g&#322;&#243;wne sposoby wyznaczania niewiadomych wsp&#243;&#322;czynnik&#243;w </h2>
+
+<ul>
+ <p><li> metoda najmniejszych kwadrat&#243;w (ang. Least Squares Method LSM)</li>
+ <p><li> metoda Galerkina</li>
+ <p><li> metoda kolokacji</li>
+</ul>
+<p>
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold"></b>
+<p>
+<p>Spos&#243;b opisu i notacja zaproponowane w materia&#322;ach wybrane w spos&#243;b u&#322;atwiaj&#261;cy
+zrozumienie open-source'owego pakietu <a href="http://fenicsproject.org" target="_self">FEniCS</a>
+do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
+</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-wektor&#243;w-przyk&#322;ad-ndash-aproksymacja-na-p&#322;aszczyznie">Aproksymacja wektor&#243;w: przyk&#322;ad &ndash; aproksymacja na p&#322;aszczyznie </h2>
+<div id="fem:approx:vec:plane"></div>
+
+<p>Zadanie:</p>
+
+<p>Znajd&#378; przybli&#380;enie wektora \( \f = (3,5) \) wzd&#322;u&#380; zadanego kierunku.</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/vecapprox_plane.png" width="300" align="bottom"></p>
+</center>
+
+<p>analogie: element - punkt - wektor - funkcja</p>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-wektor&#243;w-przestrzenie-wektorowe-ndash-terminologia">Aproksymacja wektor&#243;w: przestrzenie wektorowe &ndash; terminologia </h2>
+
+<p>&nbsp;<br>
+$$ V = \mbox{span}\,\{ \psib_0\} $$
+<p>&nbsp;<br>
+
+
+<ul>
+ <p><li> \( \psib_0 \) wektor bazowy przestrzeni \( V \)</li>
+ <p><li> Znajd&#378; \( \u = c_0\psib_0\in V \)</li>
+ <p><li> Jak wyznaczy&#263; \( c_0 \) tak, aby \( \u \) "najlepiej" przybli&#380;a&#322;o \( \f \)?</li>
+ <p><li> Wizualnie rozwi&#261;zanie narzuca si&#281; samo</li>
+ <p><li> Jak sformu&#322;owa&#263; to og&#243;lnie, w j&#281;zyku matematyki?</li>
+</ul>
+<p>
+<p>Niech</p>
+
+<ul>
+ <p><li> \( \e = \f - \u \) to b&#322;&#261;d</li>
+ <p><li> \( (\u,\v) \) &ndash; iloczyn skalarny wektor&#243;w</li>
+ <p><li> \( ||\e|| = \sqrt{(\e, \e)} \) &ndash; norma b&#322;&#281;du (jaka? (normy \( p \)-te))</li>
+</ul>
+<p>
+<div class="alert alert-block alert-notice alert-text-normal">
+<b style="font-weight: bold">Uwaga:</b>
+<p>
+<p>\( (a,b) \) &ndash; punkt/wektor przestrzeni (dwuwymiarowej)</p>
+
+<p>\( (\u,\v) \) &ndash; iloczyn skalarny dw&#243;ch wektor&#243;w przestrzeni (dowolnie-wymiarowej)</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="metoda-najmniejszych-kwadrat&#243;w-idea">Metoda najmniejszych kwadrat&#243;w - idea </h2>
+
+<ul>
+ <p><li> Idea: znale&#378;&#263; \( c_0 \) takie, aby \( ||\e|| \) by&#322; minimalizowany (jak najmniejszy/najkr&#243;tszy)</li>
+ <p><li> Dla wygody (matematycznej): minimalizujemy \( E=||\e||^2 \)</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+\frac{\partial E}{\partial c_0} = 0
+\end{equation*}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="metoda-najmniejszych-kwadrat&#243;w-obliczenia">Metoda najmniejszych kwadrat&#243;w - obliczenia </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+E(c_0) &= (\e,\e) = (\f - \u, \f - \u) = (\f - c_0\psib_0, \f - c_0\psib_0)\\ 
+       &= (\f,\f) - 2c_0(\f,\psib_0) + c_0^2(\psib_0,\psib_0)
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\begin{equation}
+\frac{\partial E}{\partial c_0} = -2(\f,\psib_0) + 2c_0 (\psib_0,\psib_0) = 0
+\tag{1}
+\end{equation}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+c_0 = \frac{(\f,\psib_0)}{(\psib_0,\psib_0)} = \frac{3a + 5b}{a^2 + b^2}
+$$
+<p>&nbsp;<br>
+
+<p>Spostrze&#380;enie (na p&#243;&#378;niej): warunek znikania pochodnej <a href="#mjx-eqn-1">(1)</a>
+mo&#380;na r&#243;wnowa&#380;nie zapisa&#263; jako:
+</p>
+<p>&nbsp;<br>
+$$ (\e, \psib_0) = 0 $$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+(\e, \psib_0) = (\f - \u, \psib_0) = (\f, \psib_0) - (\u, \psib_0) ....
+\quad\quad (*-2 ...)
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+[\f-\u] \cdot
+\left[
+\begin{array}{c}
+ \\ 
+\psib_0 \\ 
+ \\ 
+\end{array}
+\right]
+=
+[\quad\quad \f \quad\quad] \cdot
+\left[
+\begin{array}{c}
+ \\ 
+\psib_0 \\ 
+ \\ 
+\end{array}
+\right]
+-
+[\quad\quad \u \quad\quad] \cdot
+\left[
+\begin{array}{c}
+ \\ 
+\psib_0 \\ 
+ \\ 
+\end{array}
+\right]
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="metoda-galerkina">Metoda Galerkina </h2>
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../figMB/orthopro.png" width="300" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<ul>
+ <p><li class="slide"> \( \min E \) $\rightarrow$ to samo co:  \( (\e, \psib_0)=0 \) (rysunek)</li>
+ <p><li class="slide"> \( (\e, \psib_0)=0 \) $\Rightarrow$ \( (\e, \v)=0 \) dla <em>dowolnego</em> \( \v\in V \) (rysunek)</li>
+ <p><li class="slide"> Czyli: zamiast korzysta&#263; z aproksymacji &#347;redniokwadratowej, mo&#380;na wymusi&#263;, aby \( \e \) by&#322;o ortogonalne (prostopad&#322;e) dla dowolnego \( \v\in V \) &ndash; oczywiste na rysunku a...</li>
+ <p><li class="slide"> W j&#281;zyku matematyki: znajd&#378; takie \( c_0 \) aby \( (\e, \v) = 0,\quad\forall\v\in V \)</li>
+ <p><li class="slide"> R&#243;wnowa&#380;nie: znajd&#378; takie \( c_0 \) aby \( (\e, \psib_0)=0 \)</li>
+ <p><li class="slide"> Podstawmy: \( \e = \f - c_0\psib_0 \) i rozwi&#261;&#380;my ze wzgl&#281;du na \( c_0 \)</li>
+ <p><li class="slide"> Ostatecznie: to samo r&#243;wnanie (a wi&#281;c i to samo rozwi&#261;zanie) co w metodzie najmniejszych kwadrat&#243;w</li>
+</ul>
+<p>
+</td>
+</tr>
+</table>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:vec:Np1dim">Aproksymacja wektora przestrzeni dowolniewymiarowej</h2>
+
+<p>Dla danego wektora \( \f \), znajd&#378; przybli&#380;enie \( \u\in V \):</p>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+V = \hbox{span}\,\{\psib_0,\ldots,\psib_N\}
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>(\( \hbox{span} \) czyt. przestrze&#324; rozpi&#281;ta na wektorach...)</p>
+
+<p>Maj&#261;c dany zbi&#243;r wektor&#243;w niezale&#380;nych liniowo 
+\( \psib_0,\ldots,\psib_N \),
+dowolny wektor \( \u\in V \) mo&#380;na zapisa&#263; jako:
+</p>
+
+<p>&nbsp;<br>
+$$ \u = \sum_{j=0}^Nc_j\psib_j$$
+<p>&nbsp;<br>
+
+
+<div class="alert alert-block alert-notice alert-text-normal">
+<b style="font-weight: bold">Przyk&#322;ad</b>
+<p>
+<p>TODO</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="metoda-najmniejszych-kwadrat&#243;w">Metoda najmniejszych kwadrat&#243;w </h2>
+
+<p>Idea: znale&#378;&#263; takie \( c_0,\ldots,c_N \), aby \( E= ||\e||^2 \) by&#322; minimalizowany, \( \e=\f-\u \).</p>
+<p>&nbsp;<br>
+$$
+\begin{align*}
+E(c_0,\ldots,c_N) &= (\e,\e) = (\f -\sum_jc_j\psib_j,\f -\sum_jc_j\psib_j)
+\nonumber\\ 
+&= (\f,\f) - 2\sum_{j=0}^Nc_j(\f,\psib_j) +
+\sum_{p=0}^N\sum_{q=0}^N c_pc_q(\psib_p,\psib_q)
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+\frac{\partial E}{\partial c_i} = 0,\quad i=0,\ldots,N
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>Po odrobinie oblicze&#324; otrzymuje si&#281; <em>uk&#322;ad r&#243;wna&#324; liniowych</em>:</p>
+<p>&nbsp;<br>
+$$
+\begin{align}
+\sum_{j=0}^N A_{i,j}c_j &= b_i,\quad i=0,\ldots,N
+\tag{2}\\ 
+A_{i,j} &= (\psib_i,\psib_j)
+\tag{3}\\ 
+b_i &= (\psib_i, \f)
+\tag{4}
+\end{align}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="metoda-galerkina">Metoda Galerkina </h2>
+
+<p>Mo&#380;na pokaza&#263;, &#380;e poszukiwanie minimalnego \( ||\e|| \)
+jest r&#243;wnowa&#380;ne poszukiwaniu \( \e \) ortogonalnego do wszystkich \( \v\in V \):
+</p>
+
+<p>&nbsp;<br>
+$$
+(\e,\v)=0,\quad \forall\v\in V
+$$
+<p>&nbsp;<br>
+
+<p>co jest r&#243;wnowa&#380;ne temu aby \( \e \) by&#322; ortogonalny do ka&#380;dego wektora bazowego:</p>
+
+<p>&nbsp;<br>
+$$ (\e,\psib_i)=0,\quad i=0,\ldots,N $$
+<p>&nbsp;<br>
+
+<p>Warunek ortogonalno&#347;ci &ndash; podstawa metody Galerkina.
+Generuje ten sam uk&#322;ad r&#243;wna&#324; liniowych co \( \LSM \).
+</p>
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:global">Aproksymacja funkcji w przestrzeni funkcyjnej</h1>
+
+<p>Niech \( V \) b&#281;dzie <em>przestrzeni&#261; funkcyjn&#261;</em> rozpi&#281;t&#261; na zbiorze <em>funkcji bazowych</em>
+\( \baspsi_0,\ldots,\baspsi_N \),
+</p>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+V = \hbox{span}\,\{\baspsi_0,\ldots,\baspsi_N\}
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>Dowoln&#261; funkcj&#281; tej przestrzeni \( u\in V \) mo&#380;na przedstawi&#263; jako kombinacj&#281;
+liniow&#261; funkcji bazowych:
+</p>
+
+<p>&nbsp;<br>
+$$ u = \sum_{j\in\If} c_j\baspsi_j,\quad\If = \{0,1,\ldots,N\} $$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:LS">Uog&#243;lnienie \( \LSM \) na przestrzenie funkcyjne</h2>
+
+<p>Tak jak dla przestrzeni wektorowych, minimalizujemy norm&#281; b&#322;&#281;du \( E \),
+ze wzgl&#281;du na wsp&#243;&#322;czynniki \( c_j \), \( j\in\If \):
+</p>
+
+<p>&nbsp;<br>
+$$
+E = (e,e) = (f-u,f-u) = \left(f(x)-\sum_{j\in\If} c_j\baspsi_j(x), f(x)-\sum_{j\in\If} c_j\baspsi_j(x)\right)
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$ \frac{\partial E}{\partial c_i} = 0,\quad i=\in\If $$
+<p>&nbsp;<br>
+
+<p>Czym jest iloczyn skalarny je&#347;li \( \baspsi_i \) jest funkcj&#261;?</p>
+
+<p>&nbsp;<br>
+$$(f,g) = \int_\Omega f(x)g(x)\, dx$$
+<p>&nbsp;<br>
+
+<p>(iloczyn skalarny funkcji cg jako uog&#243;lnienie il. skalarnego funkcji dyskretnych \( (\u, \v) = \sum_j u_jv_j \))</p>
+</section>
+
+<section class="slide">
+<h2 id="szczeg&#243;&#322;y-lsm">Szczeg&#243;&#322;y \( \LSM \) </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+E(c_0,\ldots,c_N) &= (e,e) = (f-u,f-u) \\ 
+ &= (f,f) -2\sum_{j\in\If} c_j(f,\baspsi_i)
++ \sum_{p\in\If}\sum_{q\in\If} c_pc_q(\baspsi_p,\baspsi_q)
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$ \frac{\partial E}{\partial c_i} = 0,\quad i=\in\If $$
+<p>&nbsp;<br>
+
+<p>Obliczenia identyczne jak dla przypadku wektorowego
+->
+w rezultacie otrzymujemy uk&#322;ad r&#243;wna&#324; liniowych
+</p>
+
+<p>&nbsp;<br>
+$$
+\sum_{j\in\If}^N A_{i,j}c_j = b_i,\ i\in\If,\quad
+A_{i,j} = (\baspsi_i,\baspsi_j),\ 
+b_i = (f,\baspsi_i)
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="metoda-galerkina">Metoda Galerkina </h2>
+
+<p>Jak poprzednio minimalizacja \( (e,e) \) jest r&#243;wnowa&#380;na</p>
+
+<p>&nbsp;<br>
+$$
+(e,\baspsi_i)=0,\quad i\in\If
+\tag{5}
+$$
+<p>&nbsp;<br>
+
+<p>co z kolei jest r&#243;wnowa&#380;ne</p>
+
+<p>&nbsp;<br>
+$$
+(e,v)=0,\quad\forall v\in V
+\tag{6}
+$$
+<p>&nbsp;<br>
+
+<p>R&#243;wnowa&#380;no&#347;&#263; wzor&#243;w jak dla przestrzeni wektorowych.</p>
+
+<p>R&#243;wnowa&#380;no&#347;&#263; wzor&#243;w jak dla wyprowadzenia przy pomocy \( \LSM \).</p>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:linear">Przyk&#322;ad: aproksymacja paraboli funkcj&#261; liniow&#261;</h2>
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Problem</b>
+<p>
+<p>Dla zadanej funkcji \( f(x) = 10(x-1)^2 - 1 \) znale&#378;&#263; jej przybli&#380;enie
+funkcj&#261; liniow&#261;.
+</p>
+</div>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*} V = \hbox{span}\,\{1, x\}  \end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>czyli \( \baspsi_0(x)=1 \), \( \baspsi_1(x)=x \) oraz \( N=1 \).
+Szukane
+</p>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+u=c_0\baspsi_0(x) + c_1\baspsi_1(x) = c_0 + c_1x
+\end{equation*}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-aproksymacja-paraboli-funkcj&#261;-liniow&#261;">Przyk&#322;ad: aproksymacja paraboli funkcj&#261; liniow&#261; </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+A_{0,0} &= (\baspsi_0,\baspsi_0) = \int_1^21\cdot 1\, dx = 1\\ 
+A_{0,1} &= (\baspsi_0,\baspsi_1) = \int_1^2 1\cdot x\, dx = 3/2\\ 
+A_{1,0} &= A_{0,1} = 3/2\\ 
+A_{1,1} &= (\baspsi_1,\baspsi_1) = \int_1^2 x\cdot x\,dx = 7/3\\ 
+b_1 &= (f,\baspsi_0) = \int_1^2 (10(x-1)^2 - 1)\cdot 1 \, dx = 7/3\\ 
+b_2 &= (f,\baspsi_1) = \int_1^2 (10(x-1)^2 - 1)\cdot x\, dx = 13/3
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+<p>Rozwi&#261;zanie uk&#322;adu r&#243;wna&#324; 2x2:</p>
+
+<p>&nbsp;<br>
+$$ c_0 = -38/3,\quad c_1 = 10,\quad u(x) = 10x - \frac{38}{3} $$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-aproksymacja-paraboli-funkcj&#261;-liniow&#261;">Przyk&#322;ad: aproksymacja paraboli funkcj&#261; liniow&#261; </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+\left[
+\begin{array}{cc}
+     1      & \frac{3}{2} \\ 
+\frac{3}{2} & \frac{7}{3} \\ 
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+c_0 \\ 
+c_1 \\ 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+\frac{7}{3} \\ 
+\frac{13}{3} \\ 
+\end{array}
+\right]
+\quad
+\rightarrow
+\quad
+\left[
+\begin{array}{c}
+c_0 \\ 
+c_1 \\ 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+-38/3 \\ 
+10 \\ 
+\end{array}
+\right]
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$ u(x) = 10x - 12 \frac{2}{3} $$
+<p>&nbsp;<br>
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_ls_linear.png" width="550" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:LS:code">Symboliczna realizacja algorytmu \( \LSM \)</h2>
+
+<p>Problem: napisa&#263; program/funkcj&#281;, kt&#243;ry przeprowadzi obliczenia (obliczenie ca&#322;ek
+i rozwi&#261;zanie uk&#322;adu r&#243;wna&#324; liniowych) i zwr&#243;ci
+rozwi&#261;zanie postaci n \( u(x)=\sum_jc_j\baspsi_j(x) \).
+</p>
+
+<p>Niech </p>
+<ul>
+ <p><li> \( f(x) \) b&#281;dzie dane przez funkcj&#281; <code>sympy</code> oznaczon&#261; symbolem <code>f</code> (funkcj&#281; zmiennej (symbolu) <code>x</code>)</li>
+ <p><li> <code>psi</code> b&#281;dzie list&#261; funkcji \( \sequencei{\baspsi} \),</li>
+ <p><li> <code>Omega</code> b&#281;dzie dwuelementow&#261; krotk&#261;/list&#261; zawieraj&#261;c&#261; pocz&#261;tek i koniec przedzia&#322;u \( \Omega \)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="lsm-symbolicznie-podej&#347;cie-nr-1">\( \LSM \) symbolicznie:  podej&#347;cie nr 1 </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">sym</span>
+
+<span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">least_squares</span>(f, psi, Omega):
+    N = <span style="color: #658b00">len</span>(psi) - <span style="color: #B452CD">1</span>
+    A = sym.zeros((N+<span style="color: #B452CD">1</span>, N+<span style="color: #B452CD">1</span>))
+    b = sym.zeros((N+<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+    x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+        <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(i, N+<span style="color: #B452CD">1</span>):
+            A[i,j] = sym.integrate(psi[i]*psi[j],
+                                  (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+            A[j,i] = A[i,j]
+        b[i,<span style="color: #B452CD">0</span>] = sym.integrate(psi[i]*f, (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+    c = A.LUsolve(b)
+    u = <span style="color: #B452CD">0</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(psi)):
+        u += c[i,<span style="color: #B452CD">0</span>]*psi[i]
+    <span style="color: #8B008B; font-weight: bold">return</span> u, c
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Spostrze&#380;enie: macierz uk&#322;adu jest symetryczna, dzi&#281;ki czemu mo&#380;na zoptymalizowa&#263; proces wyznaczania jej element&#243;w</p>
+
+<ul>
+ <p><li> Mo&#380;e si&#281; zda&#380;y&#263;, &#380;e obliczanie ca&#322;ki si&#281; nie powiedzie (skomplikowana funkcja <code>f</code>) , <code>sym.integrate</code> zwr&#243;ci wtedy obiekt typu <code>sym.Integral</code>. Ulepszenie kodu: sprawdzenie czy takie zdarzenie wyst&#261;pi&#322;o i ew. obliczenia numeryczne.</li>
+ <p><li> Ulepszenie 2: Dodatkowa flaga przy pomocy, kt&#243;rej u&#380;ytkownik mo&#380;e zdecydowa&#263; bezpo&#347;rednio jaki rodzaj ca&#322;kowania (symboliczny czy numeryczny) ma zosta&#263; wykorzystany.</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="lsm-symbolicznie-podej&#347;cie-nr-2">\( \LSM \) symbolicznie:  podej&#347;cie nr 2 </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">least_squares</span>(f, psi, Omega, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>):
+    ...
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+        <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(i, N+<span style="color: #B452CD">1</span>):
+            integrand = psi[i]*psi[j]
+            <span style="color: #8B008B; font-weight: bold">if</span> symbolic:
+                I = sym.integrate(integrand, (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+            <span style="color: #8B008B; font-weight: bold">if</span> <span style="color: #8B008B">not</span> symbolic <span style="color: #8B008B">or</span> <span style="color: #658b00">isinstance</span>(I, sym.Integral):
+                <span style="color: #228B22"># Could not integrate symbolically,</span>
+                <span style="color: #228B22"># fall back on numerical integration</span>
+                integrand = sym.lambdify([x], integrand)
+                I = sym.mpmath.quad(integrand, [Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]])
+            A[i,j] = A[j,i] = I
+
+        integrand = psi[i]*f
+        <span style="color: #8B008B; font-weight: bold">if</span> symbolic:
+            I = sym.integrate(integrand, (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+        <span style="color: #8B008B; font-weight: bold">if</span> <span style="color: #8B008B">not</span> symbolic <span style="color: #8B008B">or</span> <span style="color: #658b00">isinstance</span>(I, sym.Integral):
+            integrand = sym.lambdify([x], integrand)
+            I = sym.mpmath.quad(integrand, [Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]])
+        b[i,<span style="color: #B452CD">0</span>] = I
+    ...
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="prezentacja-rozwi&#261;zania">Prezentacja rozwi&#261;zania </h2>
+
+<p>Graficzne por&#243;wnanie \( f \) i \( u \):</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">comparison_plot</span>(f, u, Omega, filename=<span style="color: #CD5555">&#39;tmp.pdf&#39;</span>):
+    x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+    <span style="color: #228B22"># Turn f and u to ordinary Python functions</span>
+    f = sym.lambdify([x], f, modules=<span style="color: #CD5555">&quot;numpy&quot;</span>)
+    u = sym.lambdify([x], u, modules=<span style="color: #CD5555">&quot;numpy&quot;</span>)
+    resolution = <span style="color: #B452CD">401</span>  <span style="color: #228B22"># no of points in plot</span>
+    xcoor  = linspace(Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>], resolution)
+    exact  = f(xcoor)
+    approx = u(xcoor)
+    plot(xcoor, approx)
+    hold(<span style="color: #CD5555">&#39;on&#39;</span>)
+    plot(xcoor, exact)
+    legend([<span style="color: #CD5555">&#39;approximation&#39;</span>, <span style="color: #CD5555">&#39;exact&#39;</span>])
+    savefig(filename)
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="zastosowanie-kodu">Zastosowanie kodu </h2>
+<!-- ===== Application of the software: fit a parabola by a straight line ===== -->
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; <span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">approx1D</span> <span style="color: #8B008B; font-weight: bold">import</span> *
+&gt;&gt;&gt; x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+&gt;&gt;&gt; f = <span style="color: #B452CD">10</span>*(x-<span style="color: #B452CD">1</span>)**<span style="color: #B452CD">2</span>-<span style="color: #B452CD">1</span>
+&gt;&gt;&gt; u, c = least_squares(f=f, psi=[<span style="color: #B452CD">1</span>, x], Omega=[<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>])
+&gt;&gt;&gt; comparison_plot(f, u, Omega=[<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>])
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_ls_linear.png" width="600" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:exact">Przypadek aproksymacji funkcji \( f\in V \)</h2>
+
+<ul>
+ <p><li> Rozszerzmy zbi&#243;r funkcji bazowych przestrezni \( V \) o funkcj&#281; \( \baspsi_2=x^2 \), wci&#261;&#380; poszukuj&#261;c przybli&#380;enia dla funkcji \( f=10(x-1)^2-1 \) w przestrzeni \( V \)</li>
+ <p><li> -> przybli&#380;enie paraboli pewn&#261; parabol&#261; \ldots</li>
+ <p><li> Rozwi&#261;zanie odwzoruje \( f \) &#347;ci&#347;le!</li> 
+</ul>
+<p>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; <span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">approx1D</span> <span style="color: #8B008B; font-weight: bold">import</span> *
+&gt;&gt;&gt; x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+&gt;&gt;&gt; f = <span style="color: #B452CD">10</span>*(x-<span style="color: #B452CD">1</span>)**<span style="color: #B452CD">2</span>-<span style="color: #B452CD">1</span>
+&gt;&gt;&gt; u, c = least_squares(f=f, psi=[<span style="color: #B452CD">1</span>, x, x**<span style="color: #B452CD">2</span>], Omega=[<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>])
+&gt;&gt;&gt; <span style="color: #658b00">print</span> u
+<span style="color: #B452CD">10</span>*x**<span style="color: #B452CD">2</span> - <span style="color: #B452CD">20</span>*x + <span style="color: #B452CD">9</span>
+&gt;&gt;&gt; <span style="color: #658b00">print</span> sym.expand(f)
+<span style="color: #B452CD">10</span>*x**<span style="color: #B452CD">2</span> - <span style="color: #B452CD">20</span>*x + <span style="color: #B452CD">9</span>
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Rozwi&#261;zanie przybli&#380;one \( \equiv \) rozwi&#261;zanie dok&#322;adne, je&#347;li \( f \in V \)!</p>
+</section>
+
+<section class="slide">
+<h2 id="uog&#243;lnienie-przypadek-aproksymacji-funkcji-f-in-v">Uog&#243;lnienie: Przypadek aproksymacji funkcji \( f\in V \) </h2>
+
+<ul>
+ <p><li> A co je&#347;li baza to \( \psi_i(x)=x^i \) dla \( i=0,\ldots,N=40 \)?</li>
+ <p><li> Wynik funkcji <code>least_squares</code>: dla \( i>2 \), \( c_i=0 \)</li>
+</ul>
+<p>
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Wniosek og&#243;lny:</b>
+<p>
+<p>Je&#347;li \( f\in V \), \( \LSM \) oraz metoda Galerkina zwr&#243;c&#261; \( u=f \).</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="dlaczego-dla-f-in-v-aproksymacja-jest-bezb&#322;&#281;dna-dow&#243;d">Dlaczego dla \( f\in V \) aproksymacja jest bezb&#322;&#281;dna? Dow&#243;d: </h2>
+
+<p>Je&#347;li \( f\in V \),
+wtedy \( f=\sum_{j\in\If}d_j\baspsi_j \), dla pewnego \( \sequencei{d} \).
+Wtedy
+</p>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+b_i = (f,\baspsi_i) = \sum_{j\in\If}d_j(\baspsi_j, \baspsi_i)
+= \sum_{j\in\If} d_jA_{i,j}
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>a URL \( \sum_j A_{i,j}c_j = b_i \), \( i\in\If \), przedstawia sie:</p>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+\sum_{j\in\If}c_jA_{i,j} = \sum_{j\in\If}d_jA_{i,j},\quad i\in\If
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>co oznacza, &#380;e \( c_i=d_i \) dla \( i\in\If \), czyli \( u \) jest to&#380;same z \( f \).</p>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:illconditioning">Sko&#324;czona precyzja oblicze&#324; numerycznych</h2>
+
+<p>Poprzednie wnioski -> teoria i obliczenia symboliczne \ldots</p>
+
+<p>Co w przypadku oblicze&#324; numerycznych? -> (rozwi&#261;zanie URL macierzami
+liczb zmiennoprzecinkowych)
+</p>
+
+<p>\( f \) to wci&#261;&#380; funkcja kwadratowa przybli&#380;ana przez</p>
+
+<p>&nbsp;<br>
+$$ u(x) = c_0 + c_1x + c_2x^2 + c_3x^3 +\cdots + c_Nx^N $$
+<p>&nbsp;<br>
+
+<p>Oczekiwane: \( c_2=c_3=\cdots=c_N=0 \), skoro \( f\in V \) oznacza \( u=f \).</p>
+
+<p>A naprawd&#281;?</p>
+</section>
+
+<section class="slide">
+<h2 id="sko&#324;czona-prezycja-oblicze&#324;-numerycznych-ndash-wyniki">Sko&#324;czona prezycja oblicze&#324; numerycznych &ndash; wyniki </h2>
+
+<table class="dotable" border="1">
+<thead>
+<tr><th align="center">teoria</th> <td align="center"><code>sympy</code></td> <td align="center"><code>numpy32</code></td> <td align="center"><code>numpy64</code></td> </tr>
+</thead>
+<tbody>
+<tr><td align="right">   9         </td> <td align="right">   9.62                  </td> <td align="right">   5.57                    </td> <td align="right">   8.98                    </td> </tr>
+<tr><td align="right">   -20       </td> <td align="right">   -23.39                </td> <td align="right">   -7.65                   </td> <td align="right">   -19.93                  </td> </tr>
+<tr><td align="right">   10        </td> <td align="right">   17.74                 </td> <td align="right">   -4.50                   </td> <td align="right">   9.96                    </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   -9.19                 </td> <td align="right">   4.13                    </td> <td align="right">   -0.26                   </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   5.25                  </td> <td align="right">   2.99                    </td> <td align="right">   0.72                    </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   0.18                  </td> <td align="right">   -1.21                   </td> <td align="right">   -0.93                   </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   -2.48                 </td> <td align="right">   -0.41                   </td> <td align="right">   0.73                    </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   1.81                  </td> <td align="right">   -0.013                  </td> <td align="right">   -0.36                   </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   -0.66                 </td> <td align="right">   0.08                    </td> <td align="right">   0.11                    </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   0.12                  </td> <td align="right">   0.04                    </td> <td align="right">   -0.02                   </td> </tr>
+<tr><td align="right">   0         </td> <td align="right">   -0.001                </td> <td align="right">   -0.02                   </td> <td align="right">   0.002                   </td> </tr>
+</tbody>
+</table>
+
+<ul>
+
+<p><li> Kolumna 2: <code>matrix</code> oraz <code>lu_solve</code> z biblioteki <code>sympy.mpmath.fp</code></li>
+
+<p><li> Kolumna 3: <code>numpy</code> 4B liczby zmiennoprzecinkowe</li>
+
+<p><li> Kolumna 4: <code>numpy</code> 8B liczby zmiennoprzecinkowe</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="z&#322;e-uwarunkowanie-url-liniowa-zale&#380;no&#347;&#263;-w-bazie">Z&#322;e uwarunkowanie URL - ''liniowa zale&#380;no&#347;&#263;'' w bazie </h2>
+
+<ul>
+ <p><li> Znaczne b&#322;&#281;dy zaokr&#261;gle&#324; rozwi&#261;zania numerycznego (!)</li>
+ <p><li> Jednocze&#347;nie ''na oko'' (graficzne) rozwi&#261;zanie wygl&#261;da w porz&#261;dku (!)</li>
+</ul>
+<p>
+<p>&#377;r&#243;d&#322;o k&#322;opot&#243;w: funkcje \( x^i \) dla bardzo du&#380;ych \( i \) staj&#261; si&#281; praktycznie
+liniowo zale&#380;ne 
+</p>
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<p>4 rozwi&#261;zania zadania przybli&#380;enia paraboli</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../figMB/comparison_parabola_err.png" width="500" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<p>Wykresy funkcji \( x^i \) dla \( i=0 \ldots 14 \)</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/ill_conditioning.png" width="500" align="bottom"></p>
+</center>
+
+</td>
+</tr>
+</table>
+</section>
+
+<section class="slide">
+<h2 id="z&#322;e-uwarunkowanie-url-wnioski">Z&#322;e uwarunkowanie URL: wnioski </h2>
+
+<ul>
+ <p><li> Prawie liniowa zale&#380;no&#347;&#263; funkcji bazowych skutkuje bliskoosobliwymi macierzami</li>
+ <p><li> macierz prawie osobliwa \( \equiv \) <em>macierz &#378;le uwarunkowana</em> -> problemy w trakcie m.elim. Gaussa</li>
+ <p><li> Baza wielomian&#243;w \( 1, x, x^2, x^3, x^4, \ldots \) to ''nienajszcz&#281;&#347;liwszy'' wyb&#243;r</li>
+ <p><li> Istniej&#261; lepsze bazy (nawet wielomianowe), ale im bardziej ortogonalne te bazy s&#261;, tym lepiej (\( (\baspsi_i,\baspsi_j)\approx 0 \))</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:Fourier">Aproksymacja szeregami Fouriera; problem and code</h2>
+
+<p>Aproksymacja funkcji \( f \) szeregiem Fouriera</p>
+
+<p>&nbsp;<br>
+$$ u(x) = \sum_i a_i\sin i\pi x = \sum_{j=0}^Nc_j\sin((j+1)\pi x) $$
+<p>&nbsp;<br>
+
+<p>to tylko ''zmiana bazy'':</p>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+V = \hbox{span}\,\{ \sin \pi x, \sin 2\pi x,\ldots,\sin (N+1)\pi x\}
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>Obliczenia z wykorzystaniem funkcji <code>least_squares</code>:</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">N = <span style="color: #B452CD">3</span>
+<span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">import</span> sin, pi
+psi = [sin(pi*(i+<span style="color: #B452CD">1</span>)*x) <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>)]
+f = <span style="color: #B452CD">10</span>*(x-<span style="color: #B452CD">1</span>)**<span style="color: #B452CD">2</span> - <span style="color: #B452CD">1</span>
+Omega = [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>]
+u, c = least_squares(f, psi, Omega)
+comparison_plot(f, u, Omega)
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-szeregami-fouriera-wykres">Aproksymacja szeregami Fouriera; wykres </h2>
+
+<p>L: \( N=3 \), P: \( N=11 \):</p>
+<br />
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_ls_sines4_12.png" width="900" align="bottom"></p>
+</center>
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Problem:</b>
+<p>
+<p>Dla ka&#380;dej f.bazowej jest \( \baspsi_i(0)=0 \) przez co \( u(0)=0 \neq f(0)=9 \).
+Podobna sytuacja dla \( x=1 \).
+Warto&#347;ci \( u \) na brzegach b&#281;d&#261; zawsze niepoprawne!
+</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-szeregami-fouriera-ulepszenie">Aproksymacja szeregami Fouriera; ulepszenie </h2>
+
+<ul>
+ <p><li> Znaczna poprawa aproksymacja dla \( N=11 \) wyraz&#243;w, pomimo niepo&#380;&#261;danych rozbie&#380;no&#347;ci w \( x=0 \) i \( x=1 \)</li>
+ <p><li> Mo&#380;liwe rozwi&#261;zanie: doda&#263; sk&#322;adow&#261;, kt&#243;ra pozwoli na odwzorowanie w&#322;a&#347;ciwych warto&#347;ci na brzegu</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$ u(x) = {\color{red}f(0)(1-x) + xf(1)} + \sum_{j\in\If} c_j\baspsi_j(x) $$
+<p>&nbsp;<br>
+
+<p>Dodatkowy wyraz nie tylko zapewnia \( u(0)=f(0) \) oraz \( u(1)=f(1) \),
+ale tak&#380;e zaskakuj&#261;co dobrze poprawia jako&#347;&#263; aproksymacji!
+</p>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-szeregami-fouriera-wyniki">Aproksymacja szeregami Fouriera; wyniki  </h2>
+
+<p>\( N=3 \) vs \( N=11 \):</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_ls_sines4_12_wfterm.png" width="900" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="bazy-funkcji-ortogonalnych">Bazy funkcji ortogonalnych </h2>
+
+<p>Zalety wyboru funkcji sinus jako funkcji bazowych:</p>
+
+<ul>
+ <p><li> funkcje bazowe s&#261; parami ortogonalne: \( (\baspsi_i,\baspsi_j)=0 \) (jedynie  \( (\baspsi_i,\baspsi_j) \neq 0 \))) dzi&#281;ki czemu</li>
+ <p><li> macierz \( A_{i,j} \) jest diagonalna, dzi&#281;ki czemu</li>
+ <p><li> nie ma potrzeby rozwi&#261;zywa&#263; URL! Rozwi&#261;zanie sprowadza si&#281; do obliczenia: \( c_i = 2\int_0^1 f(x)\sin ((i+1)\pi x) dx \)</li>
+
+<p><li> wynik: rozwini&#281;cie funkcji \( f \) w szereg Fouriera</li>
+</ul>
+<p>
+<p><em>W og&#243;lnym przypadku</em>, dla baz ortogonalnych,
+\( A_{i,j} \) jest macierz&#261; diagonaln&#261;, a nieznane wsp&#243;&#322;czynniki \( c_i \)
+mo&#380;na &#322;atwo obliczy&#263;:
+</p>
+
+<p>&nbsp;<br>
+$$
+c_i = \frac{b_i}{A_{i,i}} = \frac{(f,\baspsi_i)}{(\baspsi_i,\baspsi_i)}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="implementacja-lsm-dla-ortogonalnych-funkcji-bazowych">Implementacja \( \LSM \) dla ortogonalnych funkcji bazowych </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">least_squares_orth</span>(f, psi, Omega):
+    N = <span style="color: #658b00">len</span>(psi) - <span style="color: #B452CD">1</span>
+    A = [<span style="color: #B452CD">0</span>]*(N+<span style="color: #B452CD">1</span>)
+    b = [<span style="color: #B452CD">0</span>]*(N+<span style="color: #B452CD">1</span>)
+    x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+        A[i] = sym.integrate(psi[i]**<span style="color: #B452CD">2</span>, (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+        b[i] = sym.integrate(psi[i]*f,  (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+    c = [b[i]/A[i] <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(b))]
+    u = <span style="color: #B452CD">0</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(psi)):
+        u += c[i]*psi[i]
+    <span style="color: #8B008B; font-weight: bold">return</span> u, c
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="implementacja-lsm-dla-ortogonalnych-funkcji-bazowych-ca&#322;kowanie-symboliczne-i-numeryczne">Implementacja \( \LSM \) dla ortogonalnych funkcji bazowych: ca&#322;kowanie symboliczne i numeryczne </h2>
+
+<ul>
+ <p><li> Uwzgl&#281;dnienie parametru steruj&#261;cego wyborem rodzaju ca&#322;kowania (argument <code>symbolic</code>).</li>
+ <p><li> W przypadku gdy ca&#322;kowanie symboliczne zawiedzie (<code>sym.integrate</code> zwraca <code>sym.Integral</code>), obliczenia wykonywane numerycznie (w przypadku funkcji sinus nie powinno by&#263; problem&#243;w z symbolicznym obliczeniem \( \int_\Omega\basphi_i^2dx \))</li>
+</ul>
+<p>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">least_squares_orth</span>(f, psi, Omega, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>):
+    ...
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+        <span style="color: #228B22"># Diagonal matrix term</span>
+        A[i] = sym.integrate(psi[i]**<span style="color: #B452CD">2</span>, (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+
+        <span style="color: #228B22"># Right-hand side term</span>
+        integrand = psi[i]*f
+        <span style="color: #8B008B; font-weight: bold">if</span> symbolic:
+            I = sym.integrate(integrand,  (x, Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]))
+        <span style="color: #8B008B; font-weight: bold">if</span> <span style="color: #8B008B">not</span> symbolic <span style="color: #8B008B">or</span> <span style="color: #658b00">isinstance</span>(I, sym.Integral):
+            <span style="color: #658b00">print</span> <span style="color: #CD5555">&#39;numerical integration of&#39;</span>, integrand
+            integrand = sym.lambdify([x], integrand)
+            I = sym.mpmath.quad(integrand, [Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>]])
+        b[i] = I
+    ...
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:interp">Metoda kolokacji (interpolacji); idea i teoria</h2>
+
+<p>Inny spos&#243;b znalezienia przybli&#380;enia \( f(x) \) przez \( u(x)=\sum_jc_j\baspsi_j \):</p>
+
+<ul>
+ <p><li> Wymuszamy \( u(\xno{i}) = f(\xno{i}) \) w pewnych wybranych punktach  \( \sequencei{x} \) (punktach <em>kolokacji</em>)</li>
+ <p><li> \( u \) <em>interpoluje</em> \( f \)</li>
+ <p><li> metoda znana jako metoda <em>kolokacji</em> (<em>interpolacji</em>)</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$ u(\xno{i}) = \sum_{j\in\If} c_j \baspsi_j(\xno{i}) = f(\xno{i})
+\quad i\in\If,N
+$$
+<p>&nbsp;<br>
+
+<p>Wsp&#243;&#322;czynniki wygenerowanego uk&#322;adu r&#243;wna&#324; to po prostu warto&#347;ci funkcji,
+nie ma potrzeby ca&#322;kowania!
+</p>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\sum_{j\in\If} A_{i,j}c_j &= b_i,\quad i\in\If
+\tag{7}\\ 
+A_{i,j} &= \baspsi_j(\xno{i})
+\tag{8}\\ 
+b_i &= f(\xno{i})
+\tag{9}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>W og&#243;lnym przypadku macierz wynikowa niesymetryczna: \( \baspsi_j(\xno{i})\neq \baspsi_i(\xno{j}) \) </p>
+</section>
+
+<section class="slide">
+<h2 id="metoda-kolokacji-ndash-implementacja">Metoda kolokacji &ndash; implementacja </h2>
+
+<p>Zmienna <code>points</code> przechowuje punkty kolokacji</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">interpolation</span>(f, psi, points):
+    N = <span style="color: #658b00">len</span>(psi) - <span style="color: #B452CD">1</span>
+    A = sym.zeros((N+<span style="color: #B452CD">1</span>, N+<span style="color: #B452CD">1</span>))
+    b = sym.zeros((N+<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+    x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+    <span style="color: #228B22"># Turn psi and f into Python functions</span>
+    psi = [sym.lambdify([x], psi[i]) <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>)]
+    f = sym.lambdify([x], f)
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+        <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+            A[i,j] = psi[j](points[i])
+        b[i,<span style="color: #B452CD">0</span>] = f(points[i])
+    c = A.LUsolve(b)
+    u = <span style="color: #B452CD">0</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(psi)):
+        u += c[i,<span style="color: #B452CD">0</span>]*psi[i](x)
+    <span style="color: #8B008B; font-weight: bold">return</span> u
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="metoda-kolokacji-przybli&#380;enie-paraboli-funkcj&#261;-liniow&#261;">Metoda kolokacji: przybli&#380;enie paraboli funkcj&#261; liniow&#261; </h2>
+
+<ul>
+ <p><li> Problem: jak wybra&#263; \( \xno{i} \)?</li>
+ <p><li> Wynik zale&#380;y od po&#322;o&#380;enia punkt&#243;w kolokacji!</li>
+</ul>
+<p>
+<p>\( (4/3,5/3) \) vs \( (1,2) \):</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_inter.png" width="700" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:regression">Regresja</h2>
+
+<ul>
+ <p><li> Idea: metoda kolokacji dla \( m \gg N+1 \) punkt&#243;w</li>
+ <p><li> Problem: Wi&#281;cej r&#243;wna&#324; ni&#380; niewiadomych</li>
+ <p><li> Znana np. ze statystyki <em>regresja</em></li>
+</ul>
+<p>
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_by_regression.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="regresja-ndash-nadokre&#347;lone-url">Regresja &ndash; nadokre&#347;lone URL </h2>
+
+<p>&nbsp;<br>
+$$
+u(\xno{i}) = \sum_{j\in\If} c_j \baspsi_j(\xno{i}) = f(\xno{i}),
+\quad i=0,1,\ldots,m
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$ \sum_{j\in\If} A_{i,j}c_j = b_i,\quad i=0,1,\ldots,m $$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$ A_{i,j} = \baspsi_j(\xno{i}),\quad
+b_i = f(\xno{i})$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="rozwi&#261;zywanie-nadokre&#347;lonych-url-przy-pomocy-lsm">Rozwi&#261;zywanie nadokre&#347;lonych URL przy pomocy \( \LSM \) </h2>
+
+<ul>
+ <p><li> Jak rozwi&#261;za&#263; \( Ac=b \) je&#347;li jest wi&#281;cej r&#243;wna&#324; ni&#380; niewiadomych?</li>
+ <p><li> Idea: Poszukiwanie rozwi&#261;zania minimalizuj&#261;cego \( r=b-Ac \)</li>
+ <p><li> Rezultat: uk&#322;ad r&#243;wna&#324; normalnych \( A^TAc=A^Tb \)</li>
+ <p><li> Zapiszmy uk&#322;ad w postaci \( Bc=d \)</li>
+ <p><li> \( B = A^TA \) ju&#380; kwadratowe: uk&#322;ad r&#243;wna&#324; o rozmiarach \( (N+1)\times(N+1) \)</li> 
+</ul>
+<p>
+<p>&nbsp;<br>
+$$
+\begin{align*}
+B_{i,j} &= \sum_k A^T{i,k}A_{k,j} = \sum_k A{k,i}A_{k,j}
+=\sum_{k=0}^m\baspsi_i(\xno{k}) \baspsi_j(\xno{k})
+\\ 
+d_i &=\sum_k A^T_{i,k}b_k = \sum_k A_{k,i}b_k =\sum_{k=0}^m
+\baspsi_i(\xno{k})f(\xno{k})
+\end{align*}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="implementacja">Implementacja </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">regression</span>(f, psi, points):
+    N = <span style="color: #658b00">len</span>(psi) - <span style="color: #B452CD">1</span>
+    m = <span style="color: #658b00">len</span>(points)
+    <span style="color: #228B22"># Use numpy arrays and numerical computing</span>
+    B = np.zeros((N+<span style="color: #B452CD">1</span>, N+<span style="color: #B452CD">1</span>))
+    d = np.zeros(N+<span style="color: #B452CD">1</span>)
+    <span style="color: #228B22"># Wrap psi and f in Python functions rather than expressions</span>
+    <span style="color: #228B22"># so that we can evaluate psi at points[i]</span>
+    x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+    psi_sym = psi  <span style="color: #228B22"># save symbolic expression</span>
+    psi = [sym.lambdify([x], psi[i]) <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>)]
+    f = sym.lambdify([x], f)
+    <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+        <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>):
+            B[i,j] = <span style="color: #B452CD">0</span>
+            <span style="color: #8B008B; font-weight: bold">for</span> k <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(m+<span style="color: #B452CD">1</span>):
+                B[i,j] += psi[i](points[k])*psi[j](points[k])
+        d[i] = <span style="color: #B452CD">0</span>
+        <span style="color: #8B008B; font-weight: bold">for</span> k <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(m+<span style="color: #B452CD">1</span>):
+            d[i] += psi[i](points[k])*f(points[k])
+    c = np.linalg.solve(B, d)
+    u = <span style="color: #658b00">sum</span>(c[i]*psi_sym[i] <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N+<span style="color: #B452CD">1</span>))
+    <span style="color: #8B008B; font-weight: bold">return</span> u, c
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-zastosowania-ndash-kod">Przyk&#322;ad zastosowania &ndash; kod </h2>
+
+<ul>
+ <p><li> Zadanie: Dokona&#263; aproksymacji funkcji \( f(x)=10(x-1)^2-1 \) na przedziale \( \Omega=[1,2] \) przy pomocy funkcji liniowej.</li> 
+</ul>
+<p>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">sym</span>
+x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+f = <span style="color: #B452CD">10</span>*(x-<span style="color: #B452CD">1</span>)**<span style="color: #B452CD">2</span> - <span style="color: #B452CD">1</span>
+psi = [<span style="color: #B452CD">1</span>, x]
+Omega = [<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>]
+m_values = [<span style="color: #B452CD">2</span>-<span style="color: #B452CD">1</span>, <span style="color: #B452CD">8</span>-<span style="color: #B452CD">1</span>, <span style="color: #B452CD">64</span>-<span style="color: #B452CD">1</span>]
+<span style="color: #228B22"># Create m+3 points and use the inner m+1 points</span>
+<span style="color: #8B008B; font-weight: bold">for</span> m <span style="color: #8B008B">in</span> m_values:
+    points = np.linspace(Omega[<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>], m+<span style="color: #B452CD">3</span>)[<span style="color: #B452CD">1</span>:-<span style="color: #B452CD">1</span>]
+    u, c = regression(f, psi, points)
+    comparison_plot(f, u, Omega, points=points,
+        points_legend=<span style="color: #CD5555">&#39;%d interpolation points&#39;</span> % (m+<span style="color: #B452CD">1</span>))
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-zastosowania-ndash-wyniki">Przyk&#322;ad zastosowania &ndash; wyniki </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+u(x) &= 10x - 13.2,\quad 2\hbox{ punkty}\\ 
+u(x) &= 10x - 12.7,\quad 8\hbox{ punktów}\\ 
+u(x) &= 10x - 12.7,\quad 64\hbox{ punkty}
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/parabola_by_regression.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:global:Lagrange">Wielomiany Lagrange'a</h2>
+
+<p>Motywacja::</p>
+
+<ul>
+ <p><li> Metoda kolokacji pozwala unikn&#261;&#263; ca&#322;kowania</li>
+ <p><li> Dla macierzy diagonalnej \( A_{i,j} = \baspsi_j(\xno{i}) \) rozwi&#261;zanie URL jest banalnie proste</li>
+</ul>
+<p>
+<p>W&#322;asno&#347;&#263; <em>wielomian&#243;w Lagrange'a</em> \( \baspsi_j \):</p>
+
+<p>&nbsp;<br>
+$$ \baspsi_i(\xno{j}) =\delta_{ij},\quad \delta_{ij} =
+\left\lbrace\begin{array}{ll}
+1, & i=j\\ 
+0, & i\neq j
+\end{array}\right.
+$$
+<p>&nbsp;<br>
+
+<p>Zatem, \( c_i = f(x_i) \) and</p>
+
+<p>&nbsp;<br>
+$$
+u(x) = \sum_{j\in\If} f(\xno{i})\baspsi_i(x)
+$$
+<p>&nbsp;<br>
+
+
+<ul>
+ <p><li> Wielomiany Lagrange'a w po&#322;&#261;czeniu z metod&#261; kolokacji s&#261; niezwykle wygodne</li>
+ <p><li> Cz&#281;sto stosowane w \( \FEM \)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-ndash-wz&#243;r-i-implementacja">Wielomiany Lagrange'a &ndash; wz&#243;r i implementacja </h2>
+
+<p>&nbsp;<br>
+$$
+\baspsi_i(x) =
+\prod_{j=0,j\neq i}^N
+\frac{x-\xno{j}}{\xno{i}-\xno{j}}
+= \frac{x-x_0}{\xno{i}-x_0}\cdots\frac{x-\xno{i-1}}{\xno{i}-\xno{i-1}}\frac{x-\xno{i+1}}{\xno{i}-\xno{i+1}}
+\cdots\frac{x-x_N}{\xno{i}-x_N}
+$$
+<p>&nbsp;<br>
+
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">Lagrange_polynomial</span>(x, i, points):
+    p = <span style="color: #B452CD">1</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> k <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(points)):
+        <span style="color: #8B008B; font-weight: bold">if</span> k != i:
+            p *= (x - points[k])/(points[i] - points[k])
+    <span style="color: #8B008B; font-weight: bold">return</span> p
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-ndash-zach&#281;caj&#261;cy-przyk&#322;ad-zastosowania">Wielomiany Lagrange'a &ndash; zach&#281;caj&#261;cy przyk&#322;ad zastosowania </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/Lagrange_ls_interp_sin_4.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-ndash-mniej-zach&#281;caj&#261;cy-przyk&#322;ad-zastosowania">Wielomiany Lagrange'a &ndash; mniej zach&#281;caj&#261;cy przyk&#322;ad zastosowania </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/Lagrange_interp_abs_8_15.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-ndash-efekt-runge-go">Wielomiany Lagrange'a &ndash; efekt Runge'go </h2>
+
+<p>12 punkt&#243;w, dwa wielomiany stopnia 11
+(Uwaga!: \( \psi_2(x_2) \neq 0 \) i  \( \psi_7(x_7) \neq 0 \)
+</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/Lagrange_basis_12.png" width="500" align="bottom"></p>
+</center>
+
+<p>Problem: oscylacje w okolicach kra&#324;c&#243;w przedzia&#322;&#243;w dla wi&#281;kszych \( N \).</p>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-jak-zapobiec-oscylacjom">Wielomiany Lagrange'a: jak zapobiec oscylacjom? </h2>
+
+<p>Odpowiedni dob&#243;r w&#281;z&#322;&#243;w interpolacji &ndash; <em>w&#281;z&#322;y Czebyszewa</em>:</p>
+
+<p>&nbsp;<br>
+$$
+\xno{i} = \half (a+b) + \half(b-a)\cos\left( \frac{2i+1}{2(N+1)}\pi\right),\quad i=0\ldots,N
+$$
+<p>&nbsp;<br>
+
+<p>na przedziale \( [a,b] \).</p>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-w&#281;z&#322;y-czebyszewa">Wielomiany Lagrange'a + w&#281;z&#322;y Czebyszewa </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/Lagrange_interp_abs_Cheb_8_15.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="wielomiany-lagrange-a-w&#281;z&#322;y-czebyszewa">Wielomiany Lagrange'a + w&#281;z&#322;y Czebyszewa </h2>
+
+<p>12 punkt&#243;w, dwa wielomiany stopnia 11.</p>
+
+<p>Uwaga!: Tym razem w&#281;z&#322;y s&#261; inaczej rozmieszczone!</p>
+
+<p>Mniej oscylacyjny charakter wielomian&#243;w w por&#243;wnaniu do w&#281;z&#322;&#243;w
+r&#243;wnomiernie rozmieszczonych.
+</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/Lagrange_basis_Cheb_12.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:fe">Funkcje bazowe element&#243;w sko&#324;czonych</h1>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_2_3.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="funkcje-bazowe-o-no&#347;niku-nieograniczonym-baspsi-i-x-neq-0-prawie-w-ca&#322;ym-przedziale-okre&#347;lono&#347;ci">Funkcje bazowe o no&#347;niku nieograniczonym: \( \baspsi_i(x) \neq 0 \) prawie w ca&#322;ym przedziale okre&#347;lono&#347;ci </h2>
+
+<p>No&#347;nik funkcji: domkni&#281;cie zbioru argument&#243;w funkcji, dla kt&#243;rych ma ona warto&#347;&#263; r&#243;&#380;n&#261; od zera (takie iksy dla kt&#243;rych \( f(x) \neq 0 \))</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/u_example_sin.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="funkcje-bazowe-o-no&#347;niku-ograniczonym-ndash-fem">Funkcje bazowe o no&#347;niku ograniczonym &ndash; \( \FEM \) </h2>
+
+<ul>
+ <p><li> <em>No&#347;nik zwarty</em> (<em>Local support</em>): domkni&#281;cie zbioru tych \( x \)-&#243;w, dla kt&#243;rych \( \baspsi_i(x) \neq 0 \)</li>
+ <p><li> Typowe dla 1D - funkcje tr&#243;jk&#261;tne (hat-shaped)</li>
+ <p><li> \( u(x) \) zbudowana przy pomocy takich funkcji \( \baspsi_i \) b&#281;dzie funkcj&#261; przedzia&#322;ami liniow&#261;</li>
+
+<p><li> Niech symbol \( \basphi_i \) oznacza odt&#261;d tego typu funkcj&#281; tr&#243;jk&#261;tn&#261; (przyjmijmy r&#243;wnie&#380; \( \baspsi_i=\basphi_i \))</li>
+</ul>
+<p>
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_2_3.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="kombinacja-liniowa-funkcji-tr&#243;jk&#261;tnych">Kombinacja liniowa funkcji tr&#243;jk&#261;tnych </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/u_example_fe2.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:def:elements:nodes">Elementy i w&#281;z&#322;y</h2>
+
+<p>Podzielmy \( \Omega \) na \( N_e \) rozdzielnych podobszar&#243;w podobszar&#243;w &ndash; <em>element&#243;w</em>:</p>
+
+<p>&nbsp;<br>
+$$
+\Omega = \Omega^{(0)}\cup \cdots \cup \Omega^{(N_e)}
+$$
+<p>&nbsp;<br>
+
+<p>Na ka&#380;dym elemencie wprowadzamy \( N_n \) <em>wez&#322;&#243;w</em>
+(punkt&#243;w): \( \xno{0},\ldots,\xno{N_n-1} \)
+</p>
+
+<ul>
+ <p><li> \( \basphi_i(x) \) &ndash; \( i \)-ta funkcja bazowa</li>
+
+<p><li> \( \basphi_i=1 \) w w&#281;&#378;le \( i \) i \( \basphi_i=0 \) w pozosta&#322;ych w&#281;z&#322;ach</li>
+ <p><li> \( \basphi_i \) to wielomian Lagrange'a na ka&#380;dym elemencie</li>
+ <p><li> Dla w&#281;z&#322;&#243;w granicznych, le&#380;&#261;cych w punktach &#322;&#261;cz&#261;cych dwa elementy funkcja \( \basphi_i \) jest zbudowane z wielomian&#243;w Lagrange'a na obu elementach</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-obszar-podzielony-na-elementy-dwuw&#281;z&#322;owe-elementy-typu-p1">Przyk&#322;ad: obszar podzielony na elementy dwuw&#281;z&#322;owe (elementy typu P1) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_P1.png" width="500" align="bottom"></p>
+</center>
+
+<p>Struktura <code>nodes</code> &ndash; wsp&#243;&#322;rz&#281;dne w&#281;z&#322;&#243;w.</p>
+
+<p>Struktura <code>elements</code> &ndash;  numery (globalne) w&#281;z&#322;&#243;w tworz&#261;cych
+odpowiedni element.
+</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">nodes = [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1.2</span>, <span style="color: #B452CD">2.4</span>, <span style="color: #B452CD">3.6</span>, <span style="color: #B452CD">4.8</span>, <span style="color: #B452CD">5</span>]
+elements = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>], [<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>], [<span style="color: #B452CD">2</span>, <span style="color: #B452CD">3</span>], [<span style="color: #B452CD">3</span>, <span style="color: #B452CD">4</span>], [<span style="color: #B452CD">4</span>, <span style="color: #B452CD">5</span>]]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-dwie-funkcje-bazowe-na-siatce">Przyk&#322;ad: dwie funkcje bazowe na siatce </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_2_3.png" width="600" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-elementy-niejednorodne-o-trzech-w&#281;z&#322;ach-elementy-typu-p2">Przyk&#322;ad: elementy niejednorodne o trzech w&#281;z&#322;ach (elementy typu P2) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_P2.png" width="500" align="bottom"></p>
+</center>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">nodes = [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">0.125</span>, <span style="color: #B452CD">0.25</span>, <span style="color: #B452CD">0.375</span>, <span style="color: #B452CD">0.5</span>, <span style="color: #B452CD">0.625</span>, <span style="color: #B452CD">0.75</span>, <span style="color: #B452CD">0.875</span>, <span style="color: #B452CD">1.0</span>]
+elements = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>], [<span style="color: #B452CD">2</span>, <span style="color: #B452CD">3</span>, <span style="color: #B452CD">4</span>], [<span style="color: #B452CD">4</span>, <span style="color: #B452CD">5</span>, <span style="color: #B452CD">6</span>], [<span style="color: #B452CD">6</span>, <span style="color: #B452CD">7</span>, <span style="color: #B452CD">8</span>]]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-funkcje-bazowe-na-siatce-elementy-typu-p2">Przyk&#322;ad: funkcje bazowe na siatce (elementy typu P2) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/phi/mpl_fe_basis_p2_4e.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-elementy-typu-p3-o-czterech-w&#281;z&#322;ach-interpolacji">Przyk&#322;ad: elementy typu P3 (o czterech w&#281;z&#322;ach interpolacji) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_d4_stretched.png" width="500" align="bottom"></p>
+</center>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">d = <span style="color: #B452CD">3</span>  <span style="color: #228B22"># d+1 nodes per element</span>
+num_elements = <span style="color: #B452CD">4</span>
+num_nodes = num_elements*d + <span style="color: #B452CD">1</span>
+nodes = [i*<span style="color: #B452CD">0.5</span> <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(num_nodes)]
+elements = [[i*d+j <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(d+<span style="color: #B452CD">1</span>)] <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(num_elements)]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-funkcje-bazowe-na-siatce-elementy-typu-p3">Przyk&#322;ad: funkcje bazowe na siatce (elementy typu P3) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/phi/mpl_fe_basis_p3_4e.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="indeksacja-nieregularna">Indeksacja nieregularna </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_random_numbering.png" width="500" align="bottom"></p>
+</center>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">nodes = [<span style="color: #B452CD">1.5</span>, <span style="color: #B452CD">5.5</span>, <span style="color: #B452CD">4.2</span>, <span style="color: #B452CD">0.3</span>, <span style="color: #B452CD">2.2</span>, <span style="color: #B452CD">3.1</span>]
+elements = [[<span style="color: #B452CD">2</span>, <span style="color: #B452CD">1</span>], [<span style="color: #B452CD">4</span>, <span style="color: #B452CD">5</span>], [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">4</span>], [<span style="color: #B452CD">3</span>, <span style="color: #B452CD">0</span>], [<span style="color: #B452CD">5</span>, <span style="color: #B452CD">2</span>]]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="wsp&#243;&#322;czynniki-c-i-ndash-interpretacja">Wsp&#243;&#322;czynniki \( c_i \) &ndash; interpretacja </h2>
+
+<p>Wa&#380;na w&#322;asno&#347;&#263;: \( c_i \)
+to warto&#347;&#263; funkcji \( u \) w w&#281;&#378;le \( i \), \( \xno{i} \):
+</p>
+
+<p>&nbsp;<br>
+$$
+u(\xno{i}) = \sum_{j\in\If} c_j\basphi_j(\xno{i}) =
+c_i\basphi_i(\xno{i}) = c_i
+$$
+<p>&nbsp;<br>
+
+<p>Pow&#243;d: \( \basphi_j(\xno{i}) =0 \) je&#347;li \( i\neq j \) i \( \basphi_i(\xno{i}) =1 \)</p>
+</section>
+
+<section class="slide">
+<h2 id="w&#322;asno&#347;ci-funkcji-bazowych">W&#322;asno&#347;ci funkcji bazowych </h2>
+
+<ul>
+ <p><li> \( \basphi_i(x) \neq 0 \) jedynie na tych elementach, kt&#243;re zawieraj&#261; w&#281;ze&#322;
+<ol type="a"></li>
+
+<p><li> globalnym indeksie \( i \)</li>
+</ol>
+<p>
+ <p><li> \( \basphi_i(x)\basphi_j(x) \neq 0 \) wtedy i tylko wtedy gdy w&#281;zly \( i \) oraz \( j \) le&#380;&#261; na tym samym elemencie</li>
+</ul>
+<p>
+<p>Poniewa&#380; \( A_{i,j}=\int\basphi_i\basphi_j\dx \),
+<em>wi&#281;kszo&#347;&#263; wsp&#243;&#322;czynnik&#243;w macierzy b&#281;dzie r&#243;wna zero</em>
+-> macierze rzadkie
+</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_i_im1.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="konstrukcja-kwadratowych-basphi-i-elementy-typu-p2">Konstrukcja kwadratowych \( \basphi_i \) (elementy typu P2) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/phi/mpl_fe_basis_p2_4e.png" width="500" align="bottom"></p>
+</center>
+
+<ol>
+<p><li> ka&#380;dy w&#281;ze&#322; elementu ma przypisany wielomian Lagrange'a</li>
+<p><li> Wielomian o warto&#347;ci 1 na brzegu elementu nale&#380;y ''po&#322;&#261;czy&#263;'' z wielomianem z s&#261;siedniego elementu, kt&#243;ry ma warto&#347;&#263; 1 w tym samym punkcie</li>
+</ol>
+</section>
+
+<section class="slide">
+<h2 id="liniowe-basphi-i-elementy-typu-p1">Liniowe \( \basphi_i \) (elementy typu P1) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/phi/mpl_fe_basis_p1_4e.png" width="500" align="bottom"></p>
+</center>
+
+<p>&nbsp;<br>
+$$
+\basphi_i(x) = \left\lbrace\begin{array}{ll}
+0, & x < \xno{i-1}\\ 
+(x - \xno{i-1})/h
+& \xno{i-1} \leq x < \xno{i}\\ 
+1 -
+(x - x_{i})/h,
+& \xno{i} \leq x < \xno{i+1}\\ 
+0, & x\geq \xno{i+1}
+\end{array}
+\right.
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="sze&#347;cienne-basphi-i-elementy-typu-p3">Sze&#347;cienne \( \basphi_i \) (elementy typu P3) </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/phi/mpl_fe_basis_p3_4e.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:global:linearsystem">Generowanie URL</h1>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/sparsity_pattern_1D_30unif.png" width="600" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-1-obliczenie-warto&#347;ci-niediagonalnego-elementu-macierzy">Przyk&#322;ad 1: Obliczenie warto&#347;ci (niediagonalnego) elementu macierzy </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_2_3.png" width="300" align="bottom"></p>
+</center>
+
+<p>Uproszczenie: elementy jednakowej d&#322;ugo&#347;ci.</p>
+
+<p>\( A_{2,3}=\int_\Omega\basphi_2\basphi_3 dx \): \( \basphi_2\basphi_3\neq 0 \)
+jedynie na elemencie 2. Dla tego elementu:
+</p>
+
+<p>&nbsp;<br>
+$$ \basphi_3(x) = (x-x_2)/h,\quad \basphi_2(x) = 1- (x-x_2)/h$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+A_{2,3} = \int_\Omega \basphi_2\basphi_{3}\dx =
+\int_{\xno{2}}^{\xno{3}}
+\left(1 - \frac{x - \xno{2}}{h}\right) \frac{x - x_{2}}{h}
+ \dx = \frac{h}{6}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-2-obliczenie-warto&#347;ci-diagonalnego-elementu-macierzy">Przyk&#322;ad 2: Obliczenie warto&#347;ci (diagonalnego) elementu macierzy </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_2_3.png" width="500" align="bottom"></p>
+</center>
+
+<p>&nbsp;<br>
+$$ A_{2,2} =
+\int_{\xno{1}}^{\xno{2}}
+\left(\frac{x - \xno{1}}{h}\right)^2\dx +
+\int_{\xno{2}}^{\xno{3}}
+\left(1 - \frac{x - \xno{2}}{h}\right)^2\dx
+= \frac{2h}{3}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="og&#243;lna-posta&#263;-wzoru-na-warto&#347;&#263;-elementu-a-ij-rysunek">Og&#243;lna posta&#263; wzoru na warto&#347;&#263; elementu \( A_{ij} \) - rysunek </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_i_im1.png" width="500" align="bottom"></p>
+</center>
+
+<p>&nbsp;<br>
+$$ A_{i,i-1} = \int_\Omega \basphi_i\basphi_{i-1}\dx = \hbox{?}$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="og&#243;lna-posta&#263;-wzoru-na-warto&#347;&#263;-elementu-a-ij-obliczenia">Og&#243;lna posta&#263; wzoru na warto&#347;&#263; elementu \( A_{ij} \) - obliczenia </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+A_{i,i-1} &= \int_\Omega \basphi_i\basphi_{i-1}\dx\\ 
+&=
+\underbrace{\int_{\xno{i-2}}^{\xno{i-1}} \basphi_i\basphi_{i-1}\dx}_{\basphi_i=0} +
+\int_{\xno{i-1}}^{\xno{i}} \basphi_i\basphi_{i-1}\dx +
+\underbrace{\int_{\xno{i}}^{\xno{i+1}} \basphi_i\basphi_{i-1}\dx}_{\basphi_{i-1}=0}\\ 
+&= \int_{\xno{i-1}}^{\xno{i}}
+\underbrace{\left(\frac{x - x_{i}}{h}\right)}_{\basphi_i(x)}
+\underbrace{\left(1 - \frac{x - \xno{i-1}}{h}\right)}_{\basphi_{i-1}(x)} \dx =
+\frac{h}{6}
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+
+<ul>
+ <p><li> \( A_{i,i+1}=A_{i,i-1} \) ze wzgl&#281;du na symetri&#281;</li>
+ <p><li> \( A_{i,i}=2h/3 \) (obliczenia jak w przypadku \( A_{2,2} \)), z wyj&#261;tkiem:</li>
+ <p><li> \( A_{0,0}=A_{N,N}=h/3 \) (ca&#322;ka tylko na jednym elemencie)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="obliczenia-dla-prawej-strony-r&#243;wnania">Obliczenia dla prawej strony r&#243;wnania </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_i_f.png" width="500" align="bottom"></p>
+</center>
+
+<p>&nbsp;<br>
+$$
+b_i = \int_\Omega\basphi_i(x)f(x)\dx
+= \int_{\xno{i-1}}^{\xno{i}} \frac{x - \xno{i-1}}{h} f(x)\dx
++ \int_{x_{i}}^{\xno{i+1}} \left(1 - \frac{x - x_{i}}{h}\right) f(x)
+\dx
+$$
+<p>&nbsp;<br>
+
+<p>Do dalszych oblicze&#324; potrzebna konkretna posta&#263; \( f(x) \) ...</p>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-rozwi&#261;zanie-dla-obszaru-dwu-elementowego-ndash-url-i-rozwi&#261;zanie">Przyk&#322;ad: rozwi&#261;zanie dla obszaru dwu-elementowego &ndash; URL i rozwi&#261;zanie </h2>
+
+<ul>
+ <p><li> \( f(x)=x(1-x) \) na \( \Omega=[0,1] \)</li>
+ <p><li> Dwa elementy o jednakowej d&#322;ugo&#347;ci: \( [0,0.5] \) oraz \( [0.5,1] \)</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$
+\begin{equation*}
+A = \frac{h}{6}\left(\begin{array}{ccc}
+2 & 1 & 0\\ 
+1 & 4 & 1\\ 
+0 & 1 & 2
+\end{array}\right),\quad
+b = \frac{h^2}{12}\left(\begin{array}{c}
+2 - 3h\\ 
+12 - 14h\\ 
+10 -17h
+\end{array}\right)
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\begin{equation*} c_0 = \frac{h^2}{6},\quad c_1 = h - \frac{5}{6}h^2,\quad
+c_2 = 2h - \frac{23}{6}h^2
+\end{equation*}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-rozwi&#261;zanie-dla-obszaru-dwu-elementowego-ndash-rozwi&#261;zanie-rysunek">Przyk&#322;ad: rozwi&#261;zanie dla obszaru dwu-elementowego &ndash; rozwi&#261;zanie-rysunek </h2>
+<p>&nbsp;<br>
+$$
+\begin{equation*} u(x)=c_0\basphi_0(x) + c_1\basphi_1(x) + c_2\basphi_2(x)\end{equation*}
+$$
+<p>&nbsp;<br>
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_p1_x2_2e.png" width="600" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-rozwi&#261;zanie-dla-obszaru-4-elementowego-ndash-rozwi&#261;zanie-rysunek">Przyk&#322;ad: Rozwi&#261;zanie dla obszaru 4-elementowego &ndash; rozwi&#261;zanie-rysunek </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_p1_x2_2e_4e.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-elementy-typu-p2">Przyk&#322;ad: elementy typu P2 </h2>
+
+
+<!-- begin box -->
+<div style="width:95%; padding:10px; border:1px solid #000; border-radius:4px; ">
+<p>Przypomnienie: je&#347;li \( f\in V \), \( u \) odtworzy rozwi&#261;zanie bezb&#322;&#281;dnie.
+Je&#347;li \( f \) to parabola, dowolna siatka element&#243;w typu P2 (1 lub wiele element&#243;w)
+sprawi wygeneruje \( u=f \).
+To samo dotyczy&#263; b&#281;dzie element&#243;w typu P3, P4, itd., poniewa&#380; one wszystkie
+potrafi&#261; odtworzy&#263; wielomian 2. stopnia bezb&#322;&#281;dnie.
+</p>
+</div>
+<!-- end box -->
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:fe:elementwise">Generowanie macierzy globalnej - logika oblicze&#324;</h1>
+
+<p>(ang. assemble - gromadzi&#263;, sk&#322;ada&#263;, zbiera&#263;)</p>
+
+<p>assembling, assemblacja?</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../mov/fe_assembly_irregular/fe_assembly_irregular.png" width="300" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="ca&#322;kowanie-z-perspektywy-elementu">Ca&#322;kowanie z perspektywy elementu </h2>
+
+<p>&nbsp;<br>
+$$
+A_{i,j} = \int_\Omega\basphi_i\basphi_jdx =
+\sum_{e} \int_{\Omega^{(e)}} \basphi_i\basphi_jdx,\quad
+A^{(e)}_{i,j}=\int_{\Omega^{(e)}} \basphi_i\basphi_jdx
+$$
+<p>&nbsp;<br>
+
+<p>Wa&#380;ne spostrze&#380;enia:</p>
+
+<ul>
+ <p><li> \( A^{(e)}_{i,j}\neq 0 \) wtedy i tylko wtedy gdy w&#281;ze&#322;y \( i \) oraz \( j \) le&#380;&#261; na tym samym elemencie \( e \) (w przeciwnym wypadku no&#347;niki funkcji to zbiory roz&#322;&#261;czne)</li>
+ <p><li> Wszystkie niezerowe wsp&#243;&#322;czynniki danego elementu \( A^{(e)}_{i,j} \) tworz&#261; lokaln&#261; macierz dla danego elementu (<em>element matrix</em>)</li>
+ <p><li> ''Wk&#322;ad'' w macierz lokaln&#261; elementu  maj&#261; wy&#322;&#261;cznie funkcje bazowe zwi&#261;zane z w&#281;z&#322;ami le&#380;&#261;cymi na tym elemencie</li>
+ <p><li> Wygodne rozwi&#261;zanie: wprowadzenie <em>indeksacji lokalnej</em> w&#281;z&#322;&#243;w le&#380;&#261;cych na danym elemencie: \( 0,1,\ldots,d \)</li>
+</ul>
+<p>
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_i_im1.png" width="300" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="macierz-element&#243;w-indeksacja-lokalna-indeksacja-globalna">Macierz element&#243;w: indeksacja lokalna/indeksacja globalna </h2>
+
+<p>&nbsp;<br>
+$$
+\tilde A^{(e)} = \{ \tilde A^{(e)}_{r,s}\},\quad
+\tilde A^{(e)}_{r,s} =
+\int_{\Omega^{(e)}}\basphi_{q(e,r)}\basphi_{q(e,s)}dx,
+\quad r,s\in\Ifd=\{0,\ldots,d\}
+$$
+<p>&nbsp;<br>
+
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<ul>
+ <p><li> \( r,s \) <em>lokalne indeksy w&#281;z&#322;&#243;w</em> na elemencie: \( 0, 1,\ldots, d \)</li>
+ <p><li> \( i,j \) <em>globalne indeksy w&#281;z&#322;&#243;w</em> \( i,j\in\If = \{0,1,\ldots,N\} \)</li>
+ <p><li> \( i=q(e,r) \): transformacja lokalnej indeksacji w globaln&#261;  (matematyczny zapis pythonowskiego <code>i=elements[e][r]</code>) gdzie:  <code>elements = [[1, 2],[2,3],[3,4], ..., [7,8],[8,9,10], ...]</code></li>
+ <p><li> Uwzgl&#281;dnienie macierzy lokalnej \( \tilde A^{(e)}_{r,s} \) w macierzy globalnej \( A_{i,j} \) (<em>assembly</em>)</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$
+ A_{q(e,r),q(e,s)} := A_{q(e,r),q(e,s)} + \tilde A^{(e)}_{r,s},\quad
+r,s\in\Ifd
+$$
+<p>&nbsp;<br>
+
+
+</td>
+<td class="padding">
+<table class="dotable" border="1">
+<thead>
+<tr><th align="center">     i      </th> <th align="center">     e      </th> <th align="center">     r      </th> </tr>
+</thead>
+<tbody>
+<tr><td align="right">   1               </td> <td align="right">   1               </td> <td align="right">   1               </td> </tr>
+<tr><td align="right">   2               </td> <td align="right">   1               </td> <td align="right">   2               </td> </tr>
+<tr><td align="right">   2               </td> <td align="right">   2               </td> <td align="right">   1               </td> </tr>
+<tr><td align="right">   3               </td> <td align="right">   2               </td> <td align="right">   2               </td> </tr>
+<tr><td align="right">   \( \vdots \)    </td> <td align="right">   \( \vdots \)    </td> <td align="right">   \( \vdots \)    </td> </tr>
+<tr><td align="right">   8               </td> <td align="right">   7               </td> <td align="right">   2               </td> </tr>
+<tr><td align="right">   8               </td> <td align="right">   8               </td> <td align="right">   1               </td> </tr>
+<tr><td align="right">   9               </td> <td align="right">   8               </td> <td align="right">   2               </td> </tr>
+<tr><td align="right">   10              </td> <td align="right">   8               </td> <td align="right">   3               </td> </tr>
+<tr><td align="right">   10              </td> <td align="right">   9               </td> <td align="right">   1               </td> </tr>
+<tr><td align="right">   \( \vdots \)    </td> <td align="right">   \( \vdots \)    </td> <td align="right">   \( \vdots \)    </td> </tr>
+</tbody>
+</table>
+
+</td>
+</tr>
+</table>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-assembling-macierzy-dla-kolejno-ponumerowanych-element&#243;w-p1">Przyk&#322;ad: assembling macierzy dla kolejno ponumerowanych element&#243;w P1 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../mov/fe_assembly_regular_2x2/fe_assembly_regular_2x2.png" width="400" align="bottom"></p>
+</center>
+
+<p>TODO</p>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-assembling-macierzy-dla-kolejno-ponumerowanych-element&#243;w-p3">Przyk&#322;ad: assembling macierzy dla kolejno ponumerowanych element&#243;w P3 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../mov/fe_assembly_regular_4x4/fe_assembly_regular_4x4.png" width="400" align="bottom"></p>
+</center>
+
+<p>TODO</p>
+</section>
+
+<section class="slide">
+<!-- ===== Illustration of the matrix assembly: irregularly numbered P1 elements ===== -->
+<h2 id="przyk&#322;ad-assembling-macierzy-dla-nieregularnej-siatki-element&#243;w-p1">Przyk&#322;ad: assembling macierzy dla nieregularnej siatki element&#243;w P1 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../mov/fe_assembly_irregular/fe_assembly_irregular.png" width="400" align="bottom"></p>
+</center>
+
+<p>TODO</p>
+</section>
+
+<section class="slide">
+<h2 id="assembling-prawej-strony-uk&#322;adu">Assembling prawej strony uk&#322;adu </h2>
+
+<p>&nbsp;<br>
+$$
+b_i = \int_\Omega f(x)\basphi_i(x)dx =
+\sum_{e} \int_{\Omega^{(e)}} f(x)\basphi_i(x)dx,\quad
+b^{(e)}_{i}=\int_{\Omega^{(e)}} f(x)\basphi_i(x)dx
+$$
+<p>&nbsp;<br>
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_phi_i_f.png" width="300" align="bottom"></p>
+</center>
+
+<p>Wa&#380;ne spostrze&#380;enia:</p>
+<ul>
+
+<p><li> \( b_i^{(e)}\neq 0 \) wtedy i tylko wtedy gdy w&#281;ze&#322; globalny \( i \) le&#380;y na danym elemencie \( e \) (w przeciwnym przypadku \( \basphi_i=0 \))</li>
+
+<p><li> \( d+1 \) niezerowych warto&#347;ci \( b_i^{(e)} \) mo&#380;e by&#263; zgromadzonych w <em>lokalnym wektorze</em> elementu e. \( \tilde b_r^{(e)}=\{ \tilde b_r^{(e)}\} \), \( r\in\Ifd \)</li>
+</ul>
+<p>
+<p>Assembling:</p>
+<p>&nbsp;<br>
+$$
+b_{q(e,r)} := b_{q(e,r)} + \tilde b^{(e)}_{r},\quad
+r\in\Ifd
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:fe:mapping">Transformacja wsp&#243;&#322;rz&#281;dnych globalnych do wsp&#243;&#322;rz&#281;dnych unormowanych</h1>
+
+<p>Normalizacja wsp&#243;&#322;rz&#281;dnych po&#322;o&#380;enia:</p>
+
+<p>Zamiast ca&#322;kowa&#263; w granicach \( [x_L, x_R] \)</p>
+<p>&nbsp;<br>
+$$
+\begin{equation*} \tilde A^{(e)}_{r,s} = \int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
+= \int_{x_L}^{x_R}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
+\end{equation*}
+$$
+<p>&nbsp;<br>
+
+<p>mo&#380;na transformowa&#263; przedzia&#322; \( [x_L, x_R] \)
+na przedzia&#322; unormowany \( [-1,1] \) o wsp&#243;&#322;rz&#281;dnej lokalnej \( X \)
+</p>
+</section>
+
+<section class="slide">
+<h2 id="transformacja-liniowa-x-in-1-1-w-x-in-x-l-x-r">Transformacja liniowa \( X\in [-1,1] \) w \( x\in [x_L,x_R] \) </h2>
+
+<p>(Transformacja afiniczna)</p>
+
+<p>&nbsp;<br>
+$$
+x = \half (x_L + x_R) + \half (x_R - x_L)X
+$$
+<p>&nbsp;<br>
+
+<p>inaczej</p>
+<p>&nbsp;<br>
+$$
+x = x_m + {\half}hX, \qquad x_m=(x_L+x_R)/2,\quad h=x_R-x_L
+$$
+<p>&nbsp;<br>
+
+<p>Transformacja odwrotna:</p>
+<p>&nbsp;<br>
+$$
+X = \frac{2 x + (x_L + x_R)}{(x_R - x_L)} 
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="transformacja-ca&#322;ki">Transformacja ca&#322;ki </h2>
+<p>Zmiana granic ca&#322;kowania ->
+ca&#322;kowanie na przedziale unormowanym:
+podstawienie \( x(X) \) w miejsce \( x \).
+</p>
+
+<p>Lokalne funkcje bazowe we wsp&#243;&#322;rz&#281;dnych unormowanych:</p>
+<p>&nbsp;<br>
+$$
+\refphi_r(X) = \basphi_{q(e,r)}(x(X))
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\begin{array}{c}
+x = \half (x_L + x_R) + \half (x_R - x_L)X \\ 
+\downarrow \\ 
+dx = \half (x_R - x_L) dX
+\end{array}
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\tilde A^{(e)}_{r,s}
+=
+\int_{\Omega^{(e)}}\basphi_{q(e,r)}(x)\basphi_{q(e,s)}(x)dx
+=
+\int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\underbrace{\frac{dx}{dX}}_{\det J= h/2}dX $$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\tilde A^{(e)}_{r,s}
+=
+\int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\det J\,dX
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\tilde b^{(e)}_{r} = \int_{\Omega^{(e)}}f(x)\basphi_{q(e,r)}(x)dx
+= \int\limits_{-1}^1 f(x(X))\refphi_r(X)\det J\,dX
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="zalety-ca&#322;kowania-na-przedziale-unormowanym">Zalety ca&#322;kowania na przedziale unormowanym </h2>
+
+<ul>
+
+<p><li> Ca&#322;kowanie zawsze w tych samych granicach ca&#322;kowania \( [-1,1] \)</li>
+
+<p><li> Potrzebne wzory tylko dla \( \refphi_r(X) \) na jednym elemencie  (brak funkcji definiowanych na przedzia&#322;ach (piecewise polynomial))</li>
+
+<p><li> Funkcja \( \refphi_r(X) \) jest taka sama dla wszystkich element&#243;w niezale&#380;nie od ich po&#322;o&#380;enia i rozmiar&#243;w (d&#322;ugo&#347;ci). D&#322;ugo&#347;&#263; odcinka jest uwzgl&#281;dniona poprzez jakobian \( \det J \)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="funkcje-bazowe-p1-na-elemencie-unormowanym">Funkcje bazowe P1 na elemencie unormowanym </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\refphi_0(X) &= \half (1 - X)
+\tag{10}\\ 
+\refphi_1(X) &= \half (1 + X)
+\tag{11}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>(proste funkcje wielomianowe zamiast definicji funkcji na podprzedzia&#322;ach</p>
+</section>
+
+<section class="slide">
+<h2 id="funkcje-bazowe-p2-na-elemencie-unormowanym">Funkcje bazowe P2 na elemencie unormowanym </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\refphi_0(X) &= \half (X-1)X
+\tag{12}\\ 
+\refphi_1(X) &= 1 - X^2
+\tag{13}\\ 
+\refphi_2(X) &= \half (X+1)X
+\tag{14}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>&#321;atwo&#347;&#263; wygenerowania element&#243;w dowolnego rz&#281;du... Jak?</p>
+</section>
+
+<section class="slide">
+<h2 id="sposoby-znalezienia-wzor&#243;w-na-funkcje-bazowe">Sposoby znalezienia wzor&#243;w na funkcje bazowe </h2>
+
+<ol>
+<p><li> Transformacja globalnych funkcji bazowych \( \basphi_i(x) \) na element unormowany ze wsp&#243;&#322;rz&#281;dn&#261; \( X \)</li>
+<p><li> Obliczenie \( \refphi_r(X) \)</li> 
+<ul>
+
+<p><li> dla zadanego stopnia \( d \) szukamy wielomian&#243;w opartych o w&#281;z&#322;y wewn&#261;trz przedzia&#322;u \( [-1,1] \) o w&#322;asno&#347;ci</li>
+<ul>
+
+<p><li> \( \refphi_r(X)=1 \) w w&#281;&#378;le \( r \)</li>
+
+<p><li> \( \refphi_r(X)=0 \) we wszystkich pozosta&#322;ych \( d \) w&#281;z&#322;ach</li>
+</ul>
+<p>
+</ul>
+<p>
+<p><li> Wykorzystanie wzoru interpolacyjnego Lagrange'a</li>
+</ol>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:intg:ref">Ca&#322;kowanie po elemencie unormowanym - lokalna macierz</h2>
+
+<p>Za&#322;o&#380;enie: elementy typu P1, oraz funkcja \( f(x)=x(1-x) \).</p>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\tilde A^{(e)}_{0,0}
+&= \int_{-1}^1 \refphi_0(X)\refphi_0(X)\frac{h}{2} dX\nonumber\\ 
+&=\int_{-1}^1 \half(1-X)\half(1-X) \frac{h}{2} dX =
+\frac{h}{8}\int_{-1}^1 (1-X)^2 dX = \frac{h}{3}
+\tag{15}\\ 
+\tilde A^{(e)}_{1,0}
+&= \int_{-1}^1 \refphi_1(X)\refphi_0(X)\frac{h}{2} dX\nonumber\\ 
+&=\int_{-1}^1 \half(1+X)\half(1-X) \frac{h}{2} dX =
+\frac{h}{8}\int_{-1}^1 (1-X^2) dX = \frac{h}{6}
+\tag{16}\\ 
+\tilde A^{(e)}_{0,1} &= \tilde A^{(e)}_{1,0}
+\tag{17}\\ 
+\tilde A^{(e)}_{1,1}
+&= \int_{-1}^1 \refphi_1(X)\refphi_1(X)\frac{h}{2} dX\nonumber\\ 
+&=\int_{-1}^1 \half(1+X)\half(1+X) \frac{h}{2} dX =
+\frac{h}{8}\int_{-1}^1 (1+X)^2 dX = \frac{h}{3}
+\tag{18}
+\end{align}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="ca&#322;kowanie-po-elemencie-unormowanym-wektor-prawej-strony">Ca&#322;kowanie po elemencie unormowanym - wektor prawej strony </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\tilde b^{(e)}_{0}
+&= \int_{-1}^1 f(x(X))\refphi_0(X)\frac{h}{2} dX\nonumber\\ 
+&= \int_{-1}^1 (x_m + \half hX)(1-(x_m + \half hX))
+\half(1-X)\frac{h}{2} dX \nonumber\\ 
+&= - \frac{1}{24} h^{3} + \frac{1}{6} h^{2} x_{m} - \frac{1}{12} h^{2} - \half h x_{m}^{2} + \half h x_{m}
+\tag{19}\\ 
+\tilde b^{(e)}_{1}
+&= \int_{-1}^1 f(x(X))\refphi_1(X)\frac{h}{2} dX\nonumber\\ 
+&= \int_{-1}^1 (x_m + \half hX)(1-(x_m + \half hX))
+\half(1+X)\frac{h}{2} dX \nonumber\\ 
+&= - \frac{1}{24} h^{3} - \frac{1}{6} h^{2} x_{m} + \frac{1}{12} h^{2} -
+\half h x_{m}^{2} + \half h x_{m}
+\tag{20}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>\( x_m \): &#347;rodek elementu</p>
+</section>
+
+<section class="slide">
+<h2 id="obliczenia-symboliczne-zamiast-&#380;mudnego-liczenia-na-kartce">Obliczenia symboliczne zamiast &#380;mudnego liczenia na kartce... </h2>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; <span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">sym</span>
+&gt;&gt;&gt; x, x_m, h, X = sym.symbols(<span style="color: #CD5555">&#39;x x_m h X&#39;</span>)
+&gt;&gt;&gt; sym.integrate(h/<span style="color: #B452CD">8</span>*(<span style="color: #B452CD">1</span>-X)**<span style="color: #B452CD">2</span>, (X, -<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+h/<span style="color: #B452CD">3</span>
+&gt;&gt;&gt; sym.integrate(h/<span style="color: #B452CD">8</span>*(<span style="color: #B452CD">1</span>+X)*(<span style="color: #B452CD">1</span>-X), (X, -<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+h/<span style="color: #B452CD">6</span>
+&gt;&gt;&gt; x = x_m + h/<span style="color: #B452CD">2</span>*X
+&gt;&gt;&gt; b_0 = sym.integrate(h/<span style="color: #B452CD">4</span>*x*(<span style="color: #B452CD">1</span>-x)*(<span style="color: #B452CD">1</span>-X), (X, -<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+&gt;&gt;&gt; <span style="color: #658b00">print</span> b_0
+-h**<span style="color: #B452CD">3</span>/<span style="color: #B452CD">24</span> + h**<span style="color: #B452CD">2</span>*x_m/<span style="color: #B452CD">6</span> - h**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">12</span> - h*x_m**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">2</span> + h*x_m/<span style="color: #B452CD">2</span>
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h1 id="implementacja">Implementacja </h1>
+
+<ul>
+ <p><li> Funkcje przedstawione na kolejnych slajdach znajduj&#261; sie w module <code>fe_approx1D.py</code></li>
+ <p><li> Przedstawione funkcje dzia&#322;aj&#261; w trybie symbolicznym, jak i numerycznym</li>
+ <p><li> Kod zawiera wszystkie kroku oblicze&#324; elementami sko&#324;czonymi.</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="generowanie-funkcji-bazowych-na-przedziale-unormowanymi">Generowanie funkcji bazowych na przedziale unormowanymi </h2>
+
+<p>Niech \( \refphi_r(X) \) b&#281;dzie wielomianem Lagrange'a stopnia <code>d</code>:</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">sym</span>
+<span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">numpy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">np</span>
+
+<span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">phi_r</span>(r, X, d):
+    <span style="color: #8B008B; font-weight: bold">if</span> <span style="color: #658b00">isinstance</span>(X, sym.Symbol):
+        h = sym.Rational(<span style="color: #B452CD">1</span>, d)  <span style="color: #228B22"># node spacing</span>
+        nodes = [<span style="color: #B452CD">2</span>*i*h - <span style="color: #B452CD">1</span> <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(d+<span style="color: #B452CD">1</span>)]
+    <span style="color: #8B008B; font-weight: bold">else</span>:
+        <span style="color: #228B22"># assume X is numeric: use floats for nodes</span>
+        nodes = np.linspace(-<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>, d+<span style="color: #B452CD">1</span>)
+    <span style="color: #8B008B; font-weight: bold">return</span> Lagrange_polynomial(X, r, nodes)
+
+<span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">Lagrange_polynomial</span>(x, i, points):
+    p = <span style="color: #B452CD">1</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> k <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(points)):
+        <span style="color: #8B008B; font-weight: bold">if</span> k != i:
+            p *= (x - points[k])/(points[i] - points[k])
+    <span style="color: #8B008B; font-weight: bold">return</span> p
+
+<span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">basis</span>(d=<span style="color: #B452CD">1</span>):
+    <span style="color: #CD5555">&quot;&quot;&quot;Return the complete basis.&quot;&quot;&quot;</span>
+    X = sym.Symbol(<span style="color: #CD5555">&#39;X&#39;</span>)
+    phi = [phi_r(r, X, d) <span style="color: #8B008B; font-weight: bold">for</span> r <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(d+<span style="color: #B452CD">1</span>)]
+    <span style="color: #8B008B; font-weight: bold">return</span> phi
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="obliczanie-wsp&#243;&#322;czynnik&#243;w-macierzy">Obliczanie wsp&#243;&#322;czynnik&#243;w macierzy </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">element_matrix</span>(phi, Omega_e, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>):
+    n = <span style="color: #658b00">len</span>(phi)
+    A_e = sym.zeros((n, n))
+    X = sym.Symbol(<span style="color: #CD5555">&#39;X&#39;</span>)
+    <span style="color: #8B008B; font-weight: bold">if</span> symbolic:
+        h = sym.Symbol(<span style="color: #CD5555">&#39;h&#39;</span>)
+    <span style="color: #8B008B; font-weight: bold">else</span>:
+        h = Omega_e[<span style="color: #B452CD">1</span>] - Omega_e[<span style="color: #B452CD">0</span>]
+    detJ = h/<span style="color: #B452CD">2</span>  <span style="color: #228B22"># dx/dX</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> r <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(n):
+        <span style="color: #8B008B; font-weight: bold">for</span> s <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(r, n):
+            A_e[r,s] = sym.integrate(phi[r]*phi[s]*detJ, (X, -<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+            A_e[s,r] = A_e[r,s]
+    <span style="color: #8B008B; font-weight: bold">return</span> A_e
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-obliczenia-macierzy-wsp&#243;&#322;czynnik&#243;w-symbolicznie-vs-numerycznie">Przyk&#322;ad: Obliczenia macierzy wsp&#243;&#322;czynnik&#243;w: symbolicznie vs numerycznie </h2>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; <span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">fe_approx1D</span> <span style="color: #8B008B; font-weight: bold">import</span> *
+&gt;&gt;&gt; phi = basis(d=<span style="color: #B452CD">1</span>)
+&gt;&gt;&gt; phi
+[<span style="color: #B452CD">1</span>/<span style="color: #B452CD">2</span> - X/<span style="color: #B452CD">2</span>, <span style="color: #B452CD">1</span>/<span style="color: #B452CD">2</span> + X/<span style="color: #B452CD">2</span>]
+&gt;&gt;&gt; element_matrix(phi, Omega_e=[<span style="color: #B452CD">0.1</span>, <span style="color: #B452CD">0.2</span>], symbolic=<span style="color: #8B008B; font-weight: bold">True</span>)
+[h/<span style="color: #B452CD">3</span>, h/<span style="color: #B452CD">6</span>]
+[h/<span style="color: #B452CD">6</span>, h/<span style="color: #B452CD">3</span>]
+&gt;&gt;&gt; element_matrix(phi, Omega_e=[<span style="color: #B452CD">0.1</span>, <span style="color: #B452CD">0.2</span>], symbolic=<span style="color: #8B008B; font-weight: bold">False</span>)
+[<span style="color: #B452CD">0.0333333333333333</span>, <span style="color: #B452CD">0.0166666666666667</span>]
+[<span style="color: #B452CD">0.0166666666666667</span>, <span style="color: #B452CD">0.0333333333333333</span>]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="obliczenia-wsp&#243;&#322;czynnik&#243;w-wektora-prawej-strony">Obliczenia wsp&#243;&#322;czynnik&#243;w wektora prawej strony </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">element_vector</span>(f, phi, Omega_e, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>):
+    n = <span style="color: #658b00">len</span>(phi)
+    b_e = sym.zeros((n, <span style="color: #B452CD">1</span>))
+    <span style="color: #228B22"># Make f a function of X</span>
+    X = sym.Symbol(<span style="color: #CD5555">&#39;X&#39;</span>)
+    <span style="color: #8B008B; font-weight: bold">if</span> symbolic:
+        h = sym.Symbol(<span style="color: #CD5555">&#39;h&#39;</span>)
+    <span style="color: #8B008B; font-weight: bold">else</span>:
+        h = Omega_e[<span style="color: #B452CD">1</span>] - Omega_e[<span style="color: #B452CD">0</span>]
+    x = (Omega_e[<span style="color: #B452CD">0</span>] + Omega_e[<span style="color: #B452CD">1</span>])/<span style="color: #B452CD">2</span> + h/<span style="color: #B452CD">2</span>*X  <span style="color: #228B22"># mapping</span>
+    f = f.subs(<span style="color: #CD5555">&#39;x&#39;</span>, x)  <span style="color: #228B22"># substitute mapping formula for x</span>
+    detJ = h/<span style="color: #B452CD">2</span>  <span style="color: #228B22"># dx/dX</span>
+    <span style="color: #8B008B; font-weight: bold">for</span> r <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(n):
+        b_e[r] = sym.integrate(f*phi[r]*detJ, (X, -<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))
+    <span style="color: #8B008B; font-weight: bold">return</span> b_e
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Zwr&#243;&#263; uwag&#281; na <code>f.subs('x', x)</code> -> podstawienie \( x(X) \) za <code>x</code> w formule na <code>f</code>
+(od teraz <code>f</code> jest funkcj&#261; \( f(X) \))
+</p>
+</section>
+
+<section class="slide">
+<h2 id="powr&#243;t-do-ca&#322;kowania-numerycznego-w-razie-niepowodzenia-ca&#322;kowania-symbolicznego-int-f-refphi-r-dx">Powr&#243;t do ca&#322;kowania numerycznego w razie niepowodzenia ca&#322;kowania symbolicznego \( \int f\refphi_r dx \) </h2>
+
+<ul>
+
+<p><li> Macierz lewej strony: tylko wielomiany -> <code>sympy</code> zawsze da rad&#281;</li>
+
+<p><li> Wektor prawej strony: ca&#322;kowanie \( \int f\refphi \dx \) mo&#380;e si&#281; nie powie&#347;&#263; (<code>sympy</code> zwr&#243;ci obiekt typu <code>Integral</code> zamiast liczby)</li>
+</ul>
+<p>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">element_vector</span>(f, phi, Omega_e, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>):
+        ...
+        I = sym.integrate(f*phi[r]*detJ, (X, -<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>))  <span style="color: #228B22"># try...</span>
+        <span style="color: #8B008B; font-weight: bold">if</span> <span style="color: #658b00">isinstance</span>(I, sym.Integral):
+            h = Omega_e[<span style="color: #B452CD">1</span>] - Omega_e[<span style="color: #B452CD">0</span>]  <span style="color: #228B22"># Ensure h is numerical</span>
+            detJ = h/<span style="color: #B452CD">2</span>
+            integrand = sym.lambdify([X], f*phi[r]*detJ)
+            I = sym.mpmath.quad(integrand, [-<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>])
+        b_e[r] = I
+        ...
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="assembling-url-i-rozwi&#261;zanie">Assembling URL i rozwi&#261;zanie </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">assemble</span>(nodes, elements, phi, f, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>):
+    N_n, N_e = <span style="color: #658b00">len</span>(nodes), <span style="color: #658b00">len</span>(elements)
+    zeros = sym.zeros <span style="color: #8B008B; font-weight: bold">if</span> symbolic <span style="color: #8B008B; font-weight: bold">else</span> np.zeros
+    A = zeros((N_n, N_n))
+    b = zeros((N_n, <span style="color: #B452CD">1</span>))
+    <span style="color: #8B008B; font-weight: bold">for</span> e <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N_e):
+        Omega_e = [nodes[elements[e][<span style="color: #B452CD">0</span>]], nodes[elements[e][-<span style="color: #B452CD">1</span>]]]
+
+        A_e = element_matrix(phi, Omega_e, symbolic)
+        b_e = element_vector(f, phi, Omega_e, symbolic)
+
+        <span style="color: #8B008B; font-weight: bold">for</span> r <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(elements[e])):
+            <span style="color: #8B008B; font-weight: bold">for</span> s <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(<span style="color: #658b00">len</span>(elements[e])):
+                A[elements[e][r],elements[e][s]] += A_e[r,s]
+            b[elements[e][r]] += b_e[r]
+    <span style="color: #8B008B; font-weight: bold">return</span> A, b
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="rozwi&#261;zanie-url">Rozwi&#261;zanie URL </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">if</span> symbolic:
+    c = A.LUsolve(b)           <span style="color: #228B22"># sympy arrays, symbolic Gaussian elim.</span>
+<span style="color: #8B008B; font-weight: bold">else</span>:
+    c = np.linalg.solve(A, b)  <span style="color: #228B22"># numpy arrays, numerical solve</span>
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Uwaga: obliczanie wsp&#243;&#322;czynnik&#243;w macierzy <code>A</code>, <code>b</code> oraz rozwi&#261;zanie URL
+<code>A.LUsolve(b)</code> mo&#380;e by&#263; baaardzo czasoch&#322;onne$\ldots$
+</p>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-generowanie-macierzy-symbolicznie">Przyk&#322;ad: generowanie macierzy symbolicznie </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; h, x = sym.symbols(<span style="color: #CD5555">&#39;h x&#39;</span>)
+&gt;&gt;&gt; nodes = [<span style="color: #B452CD">0</span>, h, <span style="color: #B452CD">2</span>*h]
+&gt;&gt;&gt; elements = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>], [<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>]]
+&gt;&gt;&gt; phi = basis(d=<span style="color: #B452CD">1</span>)
+&gt;&gt;&gt; f = x*(<span style="color: #B452CD">1</span>-x)
+&gt;&gt;&gt; A, b = assemble(nodes, elements, phi, f, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>)
+&gt;&gt;&gt; A
+[h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,   <span style="color: #B452CD">0</span>]
+[h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>, h/<span style="color: #B452CD">6</span>]
+[  <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, h/<span style="color: #B452CD">3</span>]
+&gt;&gt;&gt; b
+[     h**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">6</span> - h**<span style="color: #B452CD">3</span>/<span style="color: #B452CD">12</span>]
+[      h**<span style="color: #B452CD">2</span> - <span style="color: #B452CD">7</span>*h**<span style="color: #B452CD">3</span>/<span style="color: #B452CD">6</span>]
+[<span style="color: #B452CD">5</span>*h**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">6</span> - <span style="color: #B452CD">17</span>*h**<span style="color: #B452CD">3</span>/<span style="color: #B452CD">12</span>]
+&gt;&gt;&gt; c = A.LUsolve(b)
+&gt;&gt;&gt; c
+[                           h**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">6</span>]
+[<span style="color: #B452CD">12</span>*(<span style="color: #B452CD">7</span>*h**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">12</span> - <span style="color: #B452CD">35</span>*h**<span style="color: #B452CD">3</span>/<span style="color: #B452CD">72</span>)/(<span style="color: #B452CD">7</span>*h)]
+[  <span style="color: #B452CD">7</span>*(<span style="color: #B452CD">4</span>*h**<span style="color: #B452CD">2</span>/<span style="color: #B452CD">7</span> - <span style="color: #B452CD">23</span>*h**<span style="color: #B452CD">3</span>/<span style="color: #B452CD">21</span>)/(<span style="color: #B452CD">2</span>*h)]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-generowanie-macierzy-numerycznie">Przyk&#322;ad: generowanie macierzy numerycznie </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; nodes = [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">0.5</span>, <span style="color: #B452CD">1</span>]
+&gt;&gt;&gt; elements = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>], [<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>]]
+&gt;&gt;&gt; phi = basis(d=<span style="color: #B452CD">1</span>)
+&gt;&gt;&gt; x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+&gt;&gt;&gt; f = x*(<span style="color: #B452CD">1</span>-x)
+&gt;&gt;&gt; A, b = assemble(nodes, elements, phi, f, symbolic=<span style="color: #8B008B; font-weight: bold">False</span>)
+&gt;&gt;&gt; A
+[ <span style="color: #B452CD">0.166666666666667</span>, <span style="color: #B452CD">0.0833333333333333</span>,                  <span style="color: #B452CD">0</span>]
+[<span style="color: #B452CD">0.0833333333333333</span>,  <span style="color: #B452CD">0.333333333333333</span>, <span style="color: #B452CD">0.0833333333333333</span>]
+[                 <span style="color: #B452CD">0</span>, <span style="color: #B452CD">0.0833333333333333</span>,  <span style="color: #B452CD">0.166666666666667</span>]
+&gt;&gt;&gt; b
+[          <span style="color: #B452CD">0.03125</span>]
+[<span style="color: #B452CD">0.104166666666667</span>]
+[          <span style="color: #B452CD">0.03125</span>]
+&gt;&gt;&gt; c = A.LUsolve(b)
+&gt;&gt;&gt; c
+[<span style="color: #B452CD">0.0416666666666666</span>]
+[ <span style="color: #B452CD">0.291666666666667</span>]
+[<span style="color: #B452CD">0.0416666666666666</span>]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:A:structure">Struktura macierzy wsp&#243;&#322;czynnik&#243;w</h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; d=<span style="color: #B452CD">1</span>; N_e=<span style="color: #B452CD">8</span>; Omega=[<span style="color: #B452CD">0</span>,<span style="color: #B452CD">1</span>]  <span style="color: #228B22"># 8 linear elements on [0,1]</span>
+&gt;&gt;&gt; phi = basis(d)
+&gt;&gt;&gt; f = x*(<span style="color: #B452CD">1</span>-x)
+&gt;&gt;&gt; nodes, elements = mesh_symbolic(N_e, d, Omega)
+&gt;&gt;&gt; A, b = assemble(nodes, elements, phi, f, symbolic=<span style="color: #8B008B; font-weight: bold">True</span>)
+&gt;&gt;&gt; A
+[h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   <span style="color: #B452CD">0</span>]
+[h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   <span style="color: #B452CD">0</span>]
+[  <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   <span style="color: #B452CD">0</span>]
+[  <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   <span style="color: #B452CD">0</span>]
+[  <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   <span style="color: #B452CD">0</span>]
+[  <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,     <span style="color: #B452CD">0</span>,   <span style="color: #B452CD">0</span>]
+[  <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>,   h/<span style="color: #B452CD">6</span>,   <span style="color: #B452CD">0</span>]
+[  <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, <span style="color: #B452CD">2</span>*h/<span style="color: #B452CD">3</span>, h/<span style="color: #B452CD">6</span>]
+[  <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,     <span style="color: #B452CD">0</span>,   h/<span style="color: #B452CD">6</span>, h/<span style="color: #B452CD">3</span>]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Uwaga (zadanie domowe): Wykonaj obliczenia na kartce papieru
+w celu potwierdzenia warto&#347;ci poszczeg&#243;lnych element&#243;w powy&#380;szej macierzy
+(pomocne w zrozumieniu materia&#322;u).
+</p>
+</section>
+
+<section class="slide">
+<h2 id="wynik-w-przypadku-og&#243;lnym-n-jednakowych-element&#243;w">Wynik w przypadku og&#243;lnym (\( N \) jednakowych element&#243;w) </h2>
+
+<ul>
+ <p><li> Macierz rzadka -> wi&#281;kszo&#347;&#263; wsp&#243;&#322;czynnik&#243;w to zera</li>
+ <p><li> Przyk&#322;ad dla element&#243;w typu P1, siatka regularna</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$
+A = \frac{h}{6}
+\left(
+\begin{array}{cccccccccc}
+2 & 1 & 0
+&\cdots & \cdots & \cdots & \cdots & \cdots & 0 \\ 
+1 & 4 & 1 & \ddots &   & &  & &  \vdots \\ 
+0 & 1 & 4 & 1 &
+\ddots & &  &  & \vdots \\ 
+\vdots & \ddots &  & \ddots & \ddots & 0 &  & & \vdots \\ 
+\vdots &  & \ddots & \ddots & \ddots & \ddots & \ddots & & \vdots \\ 
+\vdots & &  & 0 & 1 & 4 & 1 & \ddots & \vdots \\ 
+\vdots & & &  & \ddots & \ddots & \ddots &\ddots  & 0 \\ 
+\vdots & & & &  &\ddots  & 1  & 4  & 1 \\ 
+0 &\cdots & \cdots &\cdots & \cdots & \cdots  & 0 & 1 & 2
+\end{array}
+\right)
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="macierz-rzadka-dla-element&#243;w-typu-p2-siatka-regularna">Macierz rzadka  dla element&#243;w typu P2 (siatka regularna) </h2>
+
+<p>&nbsp;<br>
+$$
+A = \frac{h}{30}
+\left(
+\begin{array}{ccccccccc}
+4 & 2 & - 1 & 0
+  & 0 & 0 & 0 & 0 & 0\\ 
+  2 & 16 & 2
+  & 0 & 0 & 0 & 0 & 0 & 0\\- 1 & 2 &
+  8 & 2 & - 1 & 0 & 0 & 0 & 0\\ 
+  0 & 0 & 2 & 16 & 2 & 0 & 0 & 0 & 0\\ 
+  0 & 0 & - 1 & 2 & 8 & 2 & - 1 & 0 & 0\\ 
+  0 & 0 & 0 & 0 & 2 & 16 & 2 & 0 & 0\\ 
+  0 & 0 & 0 & 0 & - 1 & 2 & 8 & 2 & - 1
+  \\0 & 0 & 0 & 0 & 0 & 0 &
+  2 & 16 & 2\\0 & 0 & 0 & 0 & 0
+  & 0 & - 1 & 2 & 4
+\end{array}
+\right)
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="macierz-rzadka-dla-siatek-regularnych-indeksowanych-losowo-dla-element&#243;w-p1">Macierz rzadka dla siatek regularnych/indeksowanych losowo dla element&#243;w P1 </h2>
+
+<ul>
+ <p><li> Po lewej: w&#281;z&#322;y i elementy ideksowane od lewej do prawej</li>
+ <p><li> Po prawej: w&#281;z&#322;y i elementy indeksowane ''losowo''</li>
+</ul>
+<p>
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/sparsity_pattern_1D_30.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="macierz-rzadka-dla-siatek-regularnych-indeksowanych-losowo-dla-element&#243;w-p3">Macierz rzadka dla siatek regularnych/indeksowanych losowo dla element&#243;w P3 </h2>
+
+<ul>
+ <p><li> Po lewej: w&#281;z&#322;y i elementy ideksowane od lewej do prawej</li>
+ <p><li> Po prawej: w&#281;z&#322;y i elementy indeksowane ''losowo''</li>
+</ul>
+<p>
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/sparsity_pattern_1DP3_30.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="macierze-rzadkie-ndash-podsumowanie">Macierze rzadkie &ndash; podsumowanie </h2>
+<div id="fem:approx:fe:impl:sparse"></div>
+
+<p>Posta&#263; specyficznych macierzy \( A_{i,j} \):</p>
+
+<ul>
+ <p><li> Elementy P1: 3 niezerowe elementy w wierszu</li>
+ <p><li> Elementy P2: 5 niezerowe elementy w wierszu</li>
+ <p><li> Elementy P3: 7 niezerowe elementy w wierszu</li>
+</ul>
+<p>
+<p>Wskaz&#243;wki:</p>
+
+<ul>
+ <p><li> Nale&#380;y u&#380;ywa&#263; specjalne techniki przechowywania takich macierzy w pami&#281;ci i specjalnych solver&#243;w dla macierzy rzadkich</li>
+ <p><li> W Pythonie: pakiet <code>scipy.sparse</code></li> 
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-przybli&#380;enie-funkcji-f-sim-x-9-elementami-r&#243;&#380;nego-typu-kod">Przyk&#322;ad: przybli&#380;enie funkcji \( f\sim x^9 \) elementami r&#243;&#380;nego typu; kod </h2>
+
+<p>Zadanie:
+Por&#243;wna&#263; rozwi&#261;zanie zadania przybli&#380;enia funkcji \( f(x) \) przy pomocy siatki
+\( N_e \) element&#243;w sko&#324;czonych o funkcjach bazowych rz&#281;du \( d \).
+</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">sym</span>
+<span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">fe_approx1D</span> <span style="color: #8B008B; font-weight: bold">import</span> approximate
+x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+
+approximate(f=x*(<span style="color: #B452CD">1</span>-x)**<span style="color: #B452CD">8</span>, symbolic=<span style="color: #8B008B; font-weight: bold">False</span>, d=<span style="color: #B452CD">1</span>, N_e=<span style="color: #B452CD">4</span>)
+approximate(f=x*(<span style="color: #B452CD">1</span>-x)**<span style="color: #B452CD">8</span>, symbolic=<span style="color: #8B008B; font-weight: bold">False</span>, d=<span style="color: #B452CD">2</span>, N_e=<span style="color: #B452CD">2</span>)
+approximate(f=x*(<span style="color: #B452CD">1</span>-x)**<span style="color: #B452CD">8</span>, symbolic=<span style="color: #8B008B; font-weight: bold">False</span>, d=<span style="color: #B452CD">1</span>, N_e=<span style="color: #B452CD">8</span>)
+approximate(f=x*(<span style="color: #B452CD">1</span>-x)**<span style="color: #B452CD">8</span>, symbolic=<span style="color: #8B008B; font-weight: bold">False</span>, d=<span style="color: #B452CD">2</span>, N_e=<span style="color: #B452CD">4</span>)
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-przybli&#380;enie-funkcji-f-sim-x-9-elementami-r&#243;&#380;nego-typu-rysunki">Przyk&#322;ad: przybli&#380;enie funkcji \( f\sim x^9 \) elementami r&#243;&#380;nego typu; rysunki </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_p1_p2_x9_248e.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:fe:limitations">Ograniczenia zaprezentowanego podej&#347;cia element&#243;w sko&#324;czonych</h1>
+
+<p>Najcz&#281;stsza interpretacja:</p>
+
+<ul>
+ <p><li> <em>W&#281;z&#322;y</em>: punkty potrzebne do zdefiniowania \( \basphi_i \) i obliczania</li>
+</ul>
+<p>
+<p>warto&#347;ci \( u \) (wymagane do geometrii i aproksymacji funkcji)</p>
+<ul>
+ <p><li> <em>Elementy</em>: podobszary (zawieraj&#261;ce kilka w&#281;z&#322;&#243;w)</li>
+</ul>
+<p>
+<p>Problem:</p>
+
+<ul>
+ <p><li> w&#281;z&#322;y na brzegu potrzebne przy warunkach brzegowych, a nie zawsze tak musi by&#263; dla szczeg&#243;lnych rodzaj&#243;w interpolacji (np. elementy sta&#322;e)</li>
+ <p><li> Trzeba wymy&#347;le&#263; co&#347; lepszego...</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:element">Uog&#243;lnienie koncepcji elementu sko&#324;czonego (kom&#243;rki, wierzcho&#322;ki, w&#281;z&#322;y, stopnie swobody)</h2>
+
+<ul>
+ <p><li> Rozdzielenie aproksymacji geometrii (obszaru) od aproksymacji funkcji ''nad'' obszarem</li>
+ <p><li> Nowe poj&#281;cia: <em>kom&#243;rka</em> (ang. cell) &ndash; podobszar, element, kawa&#322;ek obszaru</li>
+ <p><li> Kom&#243;rka zbudowana jest z <em>wierzcho&#322;k&#243;w</em> (ang. vertices <- vertex) &ndash; (kra&#324;c&#243;w przedzia&#322;u w 1D)</li>
+
+<p><li> <em>W&#281;z&#322;y</em> (ang. nodes) p- punkty, w kt&#243;rych nale&#380;y wyznaczy&#263; warto&#347;&#263; poszukiwanej funkcji (nie musz&#261; pokrywa&#263; si&#281; z wierzcho&#322;kami!, ale mog&#261;\ldots)</li>
+ <p><li> <em>Stopnie swobody</em> (ang. degrees of freedom)
+<p>    &ndash; wielko&#347;ci reprezentowane przez \( c_j \)
+    (niewiadome w URL) -> najcz&#281;&#347;ciej: warto&#347;ci funkcji w w&#281;&#378;le
+    \( \sum_{j\in\If} c_j \basphi_j(\xno{i}) = c_i \)
+</p></li>
+</ul>
+<p>
+<p>wierzcho&#322;ki -> kom&#243;rki -> interpolacja geometrii</p>
+
+<p>w&#281;z&#322;y, stopnie swobody -> interpolacja funkcji </p>
+</section>
+
+<section class="slide">
+<h2 id="poj&#281;cie-elementu-sko&#324;czonego">Poj&#281;cie elementu sko&#324;czonego </h2>
+
+<ol>
+ <p><li> <em>kom&#243;rka odniesienia</em> z unormowanym, lokalnym uk&#322;adem wsp&#243;&#322;rz&#281;dnych</li>
+ <p><li> zbi&#243;r  <em>funkcji bazowych</em> \( \refphi_r \) dla kom&#243;rki</li>
+ <p><li> zbi&#243;r <em>stopni swobody</em> (t.j. warto&#347;ci funkcji), jednoznacznie wyznaczaj&#261;cy funkcje bazowe, dobrane tak aby \( \refphi_r=1 \) dla \( r \)-tego stopnia swobody oraz \( \refphi_r=0 \) dla wszystkich pozosta&#322;ych stopni swobody</li>
+ <p><li> odwzorowanie (ang. mapping) pomi&#281;dzy lokaln&#261; a globaln&#261; indeksacj&#261; (transformacja numeracji) stopni swobody (<em>odwzorowanie dof</em> &ndash; <em>dof map</em>)</li>
+ <p><li> odwzorowanie kom&#243;rki unormowanej na kom&#243;rk&#281; rzeczywistego obszaru  (w 1D: \( [-1,1]\ \Rightarrow\ [x_L,x_R] \))</li>
+</ol>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:element:impl">Struktury danych: <code>vertices</code>, <code>cells</code>, <code>dof_map</code></h2>
+
+<ul>
+
+<p><li> Wsp&#243;&#322;rz&#281;dne wierzcho&#322;k&#243;w kom&#243;rek: <code>vertices</code> (r&#243;wnowa&#380;ne strukturze <code>nodes</code> dla element&#243;w P1)</li>
+
+<p><li> Wierzcho&#322;ki dla element&#243;w (kom&#243;rek): <code>cells[e][r]</code> numer globalny dla wiercho&#322;ka <code>r</code> elementu <code>e</code> (r&#243;wnowa&#380;ne strukturze <code>elements</code> dla element&#243;w typu P1)</li>
+
+<p><li> <code>dof_map[e,r]</code> odwzorowanie lokalnego indeksu stopnia swobody <code>r</code> elementu <code>e</code> na number globalny (r&#243;wnowa&#380;ne strukturze <code>elements</code> dla element&#243;w typu Pd)</li> 
+</ul>
+<p>
+<p>W trakcie assemblingu nale&#380;y skorzysta&#263; ze struktury <code>dof_map</code>:</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">A[dof_map[e][r], dof_map[e][s]] += A_e[r,s]
+b[dof_map[e][r]] += b_e[r]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_mesh1D_P2.png" width="500" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">vertices = [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">0.4</span>, <span style="color: #B452CD">1</span>]
+cells = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>], [<span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>]]
+dof_map = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">1</span>, <span style="color: #B452CD">2</span>], [<span style="color: #B452CD">2</span>, <span style="color: #B452CD">3</span>, <span style="color: #B452CD">4</span>]]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</td>
+</tr>
+</table>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ad-elementy-p0">Przyk&#322;ad: elementy P0 </h2>
+
+<p>Przyk&#322;ad: Ta sama siatka, ale \( u \) to funkcja sta&#322;a na ka&#380;dej kom&#243;rce (przedzia&#322;ami sta&#322;a) -> elementy typu P0.</p>
+
+<p>Te same struktury <code>vertices</code> i <code>cells</code>, ale dodatkowo</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">dof_map = [[<span style="color: #B452CD">0</span>], [<span style="color: #B452CD">1</span>]]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Mo&#380;na traktowa&#263; te elementy jak elementy z interpolacj&#261; opart&#261; na w&#281;&#378;le
+znajduj&#261;cym si&#281; po&#347;rodku elementu.
+</p>
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold">Uwaga:</b>
+<p>
+<p>Od tej pory b&#281;dziemy wykorzystywa&#263; struktury <code>cells</code>, <code>vertices</code>, i <code>dof_map</code>.</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="szkielet-programu">Szkielet programu </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #228B22"># Use modified fe_approx1D module</span>
+<span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">fe_approx1D_numint</span> <span style="color: #8B008B; font-weight: bold">import</span> *
+
+x = sym.Symbol(<span style="color: #CD5555">&#39;x&#39;</span>)
+f = x*(<span style="color: #B452CD">1</span> - x)
+
+N_e = <span style="color: #B452CD">10</span>
+<span style="color: #228B22"># Create mesh with P3 (cubic) elements</span>
+vertices, cells, dof_map = mesh_uniform(N_e, d=<span style="color: #B452CD">3</span>, Omega=[<span style="color: #B452CD">0</span>,<span style="color: #B452CD">1</span>])
+
+<span style="color: #228B22"># Create basis functions on the mesh</span>
+phi = [basis(<span style="color: #658b00">len</span>(dof_map[e])-<span style="color: #B452CD">1</span>) <span style="color: #8B008B; font-weight: bold">for</span> e <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(N_e)]
+
+<span style="color: #228B22"># Create linear system and solve it</span>
+A, b = assemble(vertices, cells, dof_map, phi, f)
+c = np.linalg.solve(A, b)
+
+<span style="color: #228B22"># Make very fine mesh and sample u(x) on this mesh for plotting</span>
+x_u, u = u_glob(c, vertices, cells, dof_map,
+                resolution_per_element=<span style="color: #B452CD">51</span>)
+plot(x_u, u)
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="przybli&#380;enie-paraboli-elementami-p0">Przybli&#380;enie paraboli elementami P0 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fe_p0_x2_4e_8e.png" width="800" align="bottom"></p>
+</center>
+
+<p>Funkcja <code>approximate</code> ''opakowuje'' polecenia z poprzedniego slajdu:</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">fe_approx1D_numint</span> <span style="color: #8B008B; font-weight: bold">import</span> *
+x=sym.Symbol(<span style="color: #CD5555">&quot;x&quot;</span>)
+<span style="color: #8B008B; font-weight: bold">for</span> N_e <span style="color: #8B008B">in</span> <span style="color: #B452CD">4</span>, <span style="color: #B452CD">8</span>:
+    approximate(x*(<span style="color: #B452CD">1</span>-x), d=<span style="color: #B452CD">0</span>, N_e=N_e, Omega=[<span style="color: #B452CD">0</span>,<span style="color: #B452CD">1</span>])
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:element:impl:error">Obliczanie b&#322;&#281;d&#243;w aproksymacji; uwagi og&#243;lne</h2>
+
+<p>B&#322;&#261;d jako funkcja:</p>
+
+<p>&nbsp;<br>
+$$ e(x) = f(x) - u(x) $$
+<p>&nbsp;<br>
+
+<p>B&#322;&#261;d &ndash; dyskretna warto&#347;&#263; -> normy:</p>
+<p>&nbsp;<br>
+$$ L^2 \hbox{ error: }\quad ||e||_{L^2} =
+\left(\int_{\Omega} e^2 dx\right)^{1/2}$$
+<p>&nbsp;<br>
+
+<p>Szacowanie ca&#322;ki:</p>
+
+<ul>
+ <p><li> dok&#322;adne, analityczne (symboliczne) - nieuniwersalne -> kwadratury</li>
+ <p><li> odpowiednio dok&#322;adne spr&#243;bkowanie \( u(x) \) w wielu punktach ka&#380;dego elementu (np. poprzez wywo&#322;anie <code>u_glob</code>, kt&#243;re zwr&#243;ci <code>x</code> i <code>u</code>), a nast&#281;pnie</li>
+ <p><li> sca&#322;kowanie metod&#261; trapez&#243;w</li>
+ <p><li> Uwaga! Wa&#380;ne! Ca&#322;ka powinna by&#263; policzona dok&#322;adnie ''po elementach'' (zmienno&#347;&#263; funkcji \( f \))</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="obliczanie-b&#322;&#281;d&#243;w-aproksymacji-szczeg&#243;&#322;y">Obliczanie b&#322;&#281;d&#243;w aproksymacji; szczeg&#243;&#322;y </h2>
+
+<div class="alert alert-block alert-warning alert-text-normal">
+<b style="font-weight: bold">Uwaga</b>
+<p>
+<p>Poniewa&#380; elementy mog&#261; by&#263; r&#243;&#380;nych rozmiar&#243;w (d&#322;ugo&#347;ci)
+siatka dyskretna mo&#380;e by&#263; niejednorodna, (ponadto powt&#243;rzone punkty
+na granicach element&#243;w, widziane z perspektywy dw&#243;ch s&#261;siaduj&#261;cych element&#243;w)
+</p>
+
+<p>-></p>
+
+<p>potrzebna prymitywna implementacja wzoru trapez&#243;w:</p>
+
+<p>&nbsp;<br>
+$$ \int_\Omega g(x) dx \approx \sum_{j=0}^{n-1} \half(g(x_j) +
+g(x_{j+1}))(x_{j+1}-x_j)$$
+<p>&nbsp;<br>
+</div>
+
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #228B22"># Given c, compute x and u values on a very fine mesh</span>
+x, u = u_glob(c, vertices, cells, dof_map,
+              resolution_per_element=<span style="color: #B452CD">101</span>)
+<span style="color: #228B22"># Compute the error on the very fine mesh</span>
+e = f(x) - u
+e2 = e**<span style="color: #B452CD">2</span>
+<span style="color: #228B22"># Vectorized Trapezoidal rule</span>
+E = np.sqrt(<span style="color: #B452CD">0.5</span>*np.sum((e2[:-<span style="color: #B452CD">1</span>] + e2[<span style="color: #B452CD">1</span>:])*(x[<span style="color: #B452CD">1</span>:] - x[:-<span style="color: #B452CD">1</span>]))
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="zale&#380;no&#347;&#263;-b&#322;&#281;du-od-h-i-d">Zale&#380;no&#347;&#263; b&#322;&#281;du od \( h \) i \( d \) </h2>
+
+<p>Teoria i eksperymenty pokazuj&#261;, &#380;e aplikacja \( \LSM \) czy metody Galerkina
+dla element&#243;w sko&#324;czonych typu Pd o tej samej d&#322;ugo&#347;ci \( h \) daje b&#322;&#261;d:
+</p>
+
+<p>&nbsp;<br>
+$$
+||e||_{L^2} = C | f^{d+1} | h^{d+1}
+$$
+<p>&nbsp;<br>
+
+<p>gdzie \( C \) zale&#380;y od \( d \) i \( \Omega = [0, L] \) ale nie zale&#380;y od \( h \),
+oraz
+</p>
+<p>&nbsp;<br>
+$$
+|f^{d+1}|^{2} = \int_0^L  \left( \frac{d^{d+1}f}{d x^{d+1}} \right)^2 dx
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="kubiczne-wielomiany-hermite-a-definicja">Kubiczne wielomiany Hermite'a - definicja </h2>
+
+<ul>
+ <p><li> Czy da si&#281; skonstruowa&#263; \( \basphi_i(x) \) z ci&#261;g&#322;&#261; pochodn&#261;? Tak!</li>
+</ul>
+<p>
+<p>Niech dana b&#281;dzie unormowana kom&#243;rka \( [-1,1] \) z dwoma w&#281;z&#322;ami \( X=-1 \) i \( X=1 \).
+Stopnie swobody:
+</p>
+
+<ul>
+
+<p><li> 0: warto&#347;&#263; funkcji w \( X=-1 \)</li>
+
+<p><li> 1: warto&#347;&#263; pierwszej pochodnej w \( X=-1 \)</li>
+
+<p><li> 2: warto&#347;&#263; funkcji w \( X=1 \)</li>
+
+<p><li> 3: warto&#347;&#263; pierwszej pochodnej w \( X=1 \)</li>
+</ul>
+<p>
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold"></b>
+<p>
+<p>Uwzgl&#281;dnienie warto&#347;ci pochodnych zadanej funkcji w w&#281;z&#322;ach
+jako stopni swobody zapewnia kontrol&#281; ci&#261;g&#322;o&#347;ci pochodnej.
+</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="kubiczne-wielomiany-hermite-a-wyprowadzenie">Kubiczne wielomiany Hermite'a - wyprowadzenie </h2>
+
+<p>4 ogranicznia na \( \refphi_r \) (1 dla stopnia swobody \( r \), 0 dla pozosta&#322;ych):</p>
+
+<ul>
+
+<p><li> \( \refphi_0(\Xno{0}) = 1 \), \( \refphi_0(\Xno{1}) = 0 \), \( \refphi_0'(\Xno{0}) = 0 \), \( \refphi_0'(\Xno{1}) = 0 \)</li>
+
+<p><li> \( \refphi_1'(\Xno{0}) = 1 \), \( \refphi_1'(\Xno{1}) = 0 \), \( \refphi_1(\Xno{0}) = 0 \), \( \refphi_1(\Xno{1}) = 0 \)</li>
+
+<p><li> \( \refphi_2(\Xno{1}) = 1 \), \( \refphi_2(\Xno{0}) = 0 \), \( \refphi_2'(\Xno{0}) = 0 \), \( \refphi_2'(\Xno{1}) = 0 \)</li>
+
+<p><li> \( \refphi_3'(\Xno{1}) = 1 \), \( \refphi_3'(\Xno{0}) = 0 \), \( \refphi_3(\Xno{0}) = 0 \), \( \refphi_3(\Xno{1}) = 0 \)</li>
+</ul>
+<p>
+<p>Cztery uk&#322;ady r&#243;wna&#324; liniowych z 4 niewiadomymi -
+wsp&#243;&#322;czynnikami wielomian&#243;w 3 stopnia.
+</p>
+</section>
+
+<section class="slide">
+<h2 id="kubiczne-wielomiany-hermite-a-wynik">Kubiczne wielomiany Hermite'a - wynik </h2>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\refphi_0(X) &= 1 - \frac{3}{4}(X+1)^2 + \frac{1}{4}(X+1)^3
+\tag{21}\\ 
+\refphi_1(X) &= -(X+1)(1 - \half(X+1))^2
+\tag{22}\\ 
+\refphi_2(X) &= \frac{3}{4}(X+1)^2 - \half(X+1)^3
+\tag{23}\\ 
+\refphi_3(X) &= -\half(X+1)(\half(X+1)^2 - (X+1))
+\tag{24}\\ 
+\tag{25}
+\end{align}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+</section>
+
+<section class="slide">
+<h2 id="kubiczne-wielomiany-hermite-a-sprawdzenie">Kubiczne wielomiany Hermite'a - sprawdzenie </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #228B22"># definition of the interval ends</span>
+x = np.array([-<span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>]) 
+
+C = []  <span style="color: #228B22"># list of polynomials stored as coefficients </span>
+B = []  <span style="color: #228B22"># list of basis functions</span>
+dB = [] <span style="color: #228B22"># list of the derivatives of basis functions</span>
+
+<span style="color: #8B008B; font-weight: bold">for</span> k <span style="color: #8B008B">in</span> np.arange(<span style="color: #B452CD">0</span>,<span style="color: #B452CD">4</span>):
+    A = np.array(  [[   x[<span style="color: #B452CD">0</span>]**<span style="color: #B452CD">3</span>,   x[<span style="color: #B452CD">0</span>]**<span style="color: #B452CD">2</span>, x[<span style="color: #B452CD">0</span>], <span style="color: #B452CD">1</span> ],
+                    [ <span style="color: #B452CD">3</span>*x[<span style="color: #B452CD">0</span>]**<span style="color: #B452CD">2</span>, <span style="color: #B452CD">2</span>*x[<span style="color: #B452CD">0</span>],       <span style="color: #B452CD">1</span>, <span style="color: #B452CD">0</span> ],
+                    [   x[<span style="color: #B452CD">1</span>]**<span style="color: #B452CD">3</span>,   x[<span style="color: #B452CD">1</span>]**<span style="color: #B452CD">2</span>, x[<span style="color: #B452CD">1</span>], <span style="color: #B452CD">1</span> ],
+                    [ <span style="color: #B452CD">3</span>*x[<span style="color: #B452CD">1</span>]**<span style="color: #B452CD">2</span>, <span style="color: #B452CD">2</span>*x[<span style="color: #B452CD">1</span>],       <span style="color: #B452CD">1</span>, <span style="color: #B452CD">0</span> ]])
+
+    b = np.zeros( (<span style="color: #B452CD">4</span>,<span style="color: #B452CD">1</span>) ); b[k] = <span style="color: #B452CD">1</span> 
+    
+    c = np.linalg.solve(A, b); C.append( c )
+
+    B.append( <span style="color: #8B008B; font-weight: bold">lambda</span> x:     C[k][<span style="color: #B452CD">0</span>,<span style="color: #B452CD">0</span>] * x**<span style="color: #B452CD">3</span> +   C[k][<span style="color: #B452CD">1</span>,<span style="color: #B452CD">0</span>] * x**<span style="color: #B452CD">2</span> + C[k][<span style="color: #B452CD">2</span>,<span style="color: #B452CD">0</span>] * x + C[k][<span style="color: #B452CD">3</span>,<span style="color: #B452CD">0</span>] )
+    dB.append( <span style="color: #8B008B; font-weight: bold">lambda</span> x: <span style="color: #B452CD">3</span>* C[k][<span style="color: #B452CD">0</span>,<span style="color: #B452CD">0</span>] * x**<span style="color: #B452CD">2</span> + <span style="color: #B452CD">2</span>*C[k][<span style="color: #B452CD">1</span>,<span style="color: #B452CD">0</span>] * x + C[k][<span style="color: #B452CD">2</span>,<span style="color: #B452CD">0</span>] )
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="kubiczne-wielomiany-hermite-a-sprawdzenie">Kubiczne wielomiany Hermite'a - sprawdzenie </h2>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #228B22"># Check numerically that resulting cubic polynomial</span>
+<span style="color: #228B22"># fulfills imposed requirements</span>
+A = [<span style="color: #B452CD">1</span>,       <span style="color: #B452CD">1</span>,       <span style="color: #B452CD">2</span>,      <span style="color: #B452CD">1</span>]      <span style="color: #228B22"># basis function coefficients </span>
+<span style="color: #228B22">#    U(x[0])  dU(x[0]) U(x[1]) dU(x[1])</span>
+
+xx = np.arange(-<span style="color: #B452CD">1</span>,<span style="color: #B452CD">1</span>, <span style="color: #B452CD">0.001</span>)  
+U = np.zeros(xx.shape)
+
+<span style="color: #8B008B; font-weight: bold">for</span> k <span style="color: #8B008B">in</span> np.arange(<span style="color: #B452CD">0</span>,<span style="color: #B452CD">4</span>):
+    U = U + A[k] * B[k](xx)
+
+<span style="color: #228B22"># numerical approximation of the derivatives at the ends of the interval</span>
+dl = (U[<span style="color: #B452CD">1</span>]-U[<span style="color: #B452CD">0</span>])/(xx[<span style="color: #B452CD">1</span>]-xx[<span style="color: #B452CD">0</span>])
+dr = (U[-<span style="color: #B452CD">1</span>]-U[-<span style="color: #B452CD">2</span>])/(xx[-<span style="color: #B452CD">1</span>]-xx[-<span style="color: #B452CD">2</span>])
+
+numericalApproximationOfA = [ U[<span style="color: #B452CD">0</span>], dl, U[-<span style="color: #B452CD">1</span>], dr]
+
+<span style="color: #658b00">print</span>(numericalApproximationOfA)
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Wynik dzia&#322;ania skryptu:</p>
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">[<span style="color: #B452CD">1.0</span>, <span style="color: #B452CD">0.9992502500000269</span>, <span style="color: #B452CD">1.999000749750002</span>, <span style="color: #B452CD">0.9977517500000526</span>]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="kubiczne-wielomiany-hermite-a-wyniki">Kubiczne wielomiany Hermite'a - wyniki </h2>
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../figMB/cubicHermiteBasis.png" width="500" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../figMB/cubicHermiteDerivs.png" width="500" align="bottom"></p>
+</center>
+
+</td>
+</tr>
+</table>
+
+
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../figMB/cubicHermiteResult.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h1 id="ca&#322;kowanie-numeryczne">Ca&#322;kowanie numeryczne </h1>
+
+<ul>
+ <p><li> \( \int_\Omega f\basphi_idx \) - konieczno&#347;&#263; ca&#322;kowania numerycznego</li>
+
+<p><li> Wsp&#243;&#322;czynniki macierzy lewej strony - zwykle r&#243;wnie&#380; numerycznie (bo wygodnie)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="og&#243;lna-posta&#263;-kwadratury">Og&#243;lna posta&#263; kwadratury </h2>
+
+<p>&nbsp;<br>
+$$
+\int_{-1}^{1} g(X)dX \approx \sum_{j=0}^M w_jg(\bar X_j),
+$$
+<p>&nbsp;<br>
+
+<p>gdzie</p>
+
+<ul>
+ <p><li> \( \bar X_j \) to <em>w&#281;z&#322;y kwadratury</em></li>
+ <p><li> \( w_j \) &ndash; <em>wagi kwadratury</em></li>
+</ul>
+<p>
+<p>R&#243;&#380;ne metody -> r&#243;&#380;ny wyb&#243;r w&#281;z&#322;&#243;w i wag</p>
+</section>
+
+<section class="slide">
+<h2 id="wz&#243;r-prostok&#261;t&#243;w">Wz&#243;r prostok&#261;t&#243;w </h2>
+
+<p>(ang. midpoint rule) &ndash; metoda punktu &#347;rodkowego</p>
+
+<p>Najprostsza metoda</p>
+
+<p>&nbsp;<br>
+$$
+\int_{-1}^{1} g(X)dX \approx 2g(0),\quad \bar X_0=0,\ w_0=2,
+$$
+<p>&nbsp;<br>
+
+<p>Dok&#322;adna dla funkcji podca&#322;kowych b&#281;d&#261;cych wielomianami 1. stopnia</p>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:fe:numint1">Metody Newtona-Cotesa</h2>
+
+<ul>
+ <p><li> Idea: w&#281;z&#322;y kwadratury r&#243;wnomiernie rozmieszczone na \( [-1,1] \)</li>
+ <p><li> W&#281;z&#322;y kwadratury cz&#281;sto pokrywaj&#261; si&#281; w&#281;z&#322;ami siatki
+<!-- * Very useful for making \( \basphi_i\basphi_j=0 \) and get diagonal -->
+<!-- (&quot;mass&quot;) matrices (&quot;lumping&quot;) --></li>
+</ul>
+<p>
+<p>Wz&#243;r trapez&#243;w:</p>
+
+<p>&nbsp;<br>
+$$
+\int_{-1}^{1} g(X)dX \approx g(-1) + g(1),\quad \bar X_0=-1,\ \bar X_1=1,\ w_0=w_1=1,
+$$
+<p>&nbsp;<br>
+
+<p>Wz&#243;r Simpsona (parabol):</p>
+<p>&nbsp;<br>
+$$
+\int_{-1}^{1} g(X)dX \approx \frac{1}{3}\left(g(-1) + 4g(0)
++ g(1)\right),
+$$
+<p>&nbsp;<br>
+
+<p>gdzie</p>
+
+<p>&nbsp;<br>
+$$
+\bar X_0=-1,\ \bar X_1=0,\ \bar X_2=1,\ w_0=w_2=\frac{1}{3},\ w_1=\frac{4}{3}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="metoda-gaussa-legendre-a">Metoda Gaussa-Legendre'a  </h2>
+
+<ul>
+ <p><li> optymalne po&#322;o&#380;enie w&#281;z&#322;&#243;w kwadratury -> wy&#380;sza dok&#322;adno&#347;&#263;</li>
+ <p><li> Kwadratury Gaussa-Legendre'a -> dobranie po&#322;o&#380;enia w&#281;z&#322;&#243;w oraz wag tak, aby ca&#322;kowa&#263; z jak najlepsz&#261; dok&#322;adno&#347;ci&#261;</li>
+</ul>
+<p>
+<p>&nbsp;<br>
+$$
+\begin{align}
+M=1&:\quad \bar X_0=-\frac{1}{\sqrt{3}},\ 
+\bar X_1=\frac{1}{\sqrt{3}},\ w_0=w_1=1
+\tag{26}\\ 
+M=2&:\quad \bar X_0=-\sqrt{\frac{3}{{5}}},\ \bar X_0=0,\ 
+\bar X_2= \sqrt{\frac{3}{{5}}},\ w_0=w_2=\frac{5}{9},\ w_1=\frac{8}{9}
+\tag{27}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+
+<ul>
+ <p><li> \( M=1 \): dok&#322;adna dla wielomian&#243;w 3. stopnia</li>
+ <p><li> \( M=2 \): dok&#322;adna dla wielomian&#243;w 5. stopnia</li>
+
+<p><li> W og&#243;lno&#347;ci, \( M \)-punktowy wz&#243;r Gaussa-Legendre'a jest dok&#322;adny dla wielomian&#243;w stopnia \( 2M+1 \).</li>
+</ul>
+<p>
+<p>Plik `numint.py zawiera zbi&#243;r w&#281;z&#322;&#243;w i wag dla metody Gaussa-Legendre'a.</p>
+</section>
+
+<section class="slide">
+<h1 id="fem:approx:2D">Aproksymacja funkcji w 2D</h1>
+
+<div class="alert alert-block alert-notice alert-text-normal">
+<b style="font-weight: bold">Rozwini&#281;cie podej&#347;cia z 1D</b>
+<p>
+<p>Rozwi&#261;zania i algorytmy przedstawione dla aproksymacji funkcji \( f(x) \) w 1D
+da si&#281; rozwin&#261;&#263; i ''przenie&#347;&#263;'' na przypadki funkcji \( f(x,y) \) w 2D i
+ \( f(x,y,z) \) w 3D. Og&#243;lne wzory pozostaj&#261; takie same.
+</p>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="kr&#243;tkie-om&#243;wienie-zagadnienia-w-2d">Kr&#243;tkie om&#243;wienie zagadnienia w 2D </h2>
+
+<p>Iloczyn skalarny w 2D:</p>
+
+<p>&nbsp;<br>
+$$
+(f,g) = \int_\Omega f(x,y)g(x,y) dx dy
+$$
+<p>&nbsp;<br>
+
+<p>Zastosowanie \( \LSM \) lub metody Galerkina da URL:</p>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+\sum_{j\in\If} A_{i,j}c_j &= b_i,\quad i\in\If\\ 
+A_{i,j} &= (\baspsi_i,\baspsi_j)\\ 
+b_i &= (f,\baspsi_i)
+\end{align*}
+$$
+<p>&nbsp;<br>
+
+<p>Problem: Jak skonstruowa&#263; dwuwymiarowe funkcje bazowe \( \baspsi_i(x,y) \)?</p>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:2D:global">Funkcje bazowe 2D jako iloczyn tensorowy funkcji 1D</h2>
+
+<p>Korzystaj&#261;c z funkcji bazowych 1D zmiennej \( x \)
+oraz funkcji bazowych 1D zmiennej \( y \):
+</p>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+V_x &= \mbox{span}\{ \hat\baspsi_0(x),\ldots,\hat\baspsi_{N_x}(x)\}
+\tag{28}\\ 
+V_y &= \mbox{span}\{ \hat\baspsi_0(y),\ldots,\hat\baspsi_{N_y}(y)\}
+\tag{29}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>Przestrze&#324; wektorowa 2D mo&#380;e by&#263; zdefinowana jako <em>iloczyn tensorowy</em> 
+ \( V = V_x\otimes V_y \) z funkcjami bazowymi:
+</p>
+
+<p>&nbsp;<br>
+$$
+\baspsi_{p,q}(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y)
+\quad p\in\Ix,q\in\Iy\tp
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="iloczyn-tensorowy">Iloczyn tensorowy </h2>
+
+<p>Niech dane b&#281;d&#261; dwa wektory
+\( a=(a_0,\ldots,a_M) \) i
+\( b=(b_0,\ldots,b_N) \). Ich <em>zewn&#281;trznym iloczynem tensorowym</em>
+(<a href="https://pl.wikipedia.org/wiki/Iloczyn_diadyczny" target="_self"> <em>iloczynem diadycznym</em> </a>
+je&#347;li \( N=M \)) jest \( p=a\otimes b \) zdefiniowane jako:
+</p>
+
+<p>&nbsp;<br>
+$$ p_{i,j}=a_ib_j,\quad i=0,\ldots,M,\ j=0,\ldots,N\tp$$
+<p>&nbsp;<br>
+
+<p>Uwaga: \( p \) to macierz/tablica dwuwymiarowa</p>
+
+<p>Przyk&#322;ad: baza 2D jako iloczyn tensorowy przestrzeni 1D:</p>
+
+<p>&nbsp;<br>
+$$ \baspsi_{p,q}(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y),
+\quad p\in\Ix,q\in\Iy$$
+<p>&nbsp;<br>
+
+
+<a href="https://pl.wikipedia.org/wiki/Iloczyn_Kroneckera" target="_self">iloczyn tensorowy macierzy</a>
+<p>(dowolnych wymiar&#243;w)
+->
+</p>
+
+<a href="https://pl.wikipedia.org/wiki/Iloczyn_Kroneckera#Iloczyn_tensorowy_wektor%C3%B3w" target="_self">iloczyn tensorowy wektor&#243;w</a>
+<p>(dowolnych wymiar&#243;w)
+->
+</p>
+
+<a href="https://pl.wikipedia.org/wiki/Iloczyn_diadyczny" target="_self">iloczyn diadyczny</a>
+<p>(tego samego wymiaru)</p>
+
+<a href="https://pl.wikipedia.org/wiki/Tensor" target="_self">tensor</a>
+</section>
+
+<section class="slide">
+<h2 id="r&#243;wnowa&#380;no&#347;&#263;-notacji-z-dwoma-lub-jednym-indeksem">R&#243;wnowa&#380;no&#347;&#263; notacji z dwoma lub jednym indeksem </h2>
+
+<p>Baza przestrzeni 2D wymaga dw&#243;ch indeks&#243;w (i podw&#243;jnego sumowania) :</p>
+<p>&nbsp;<br>
+$$ u = \sum_{p\in\Ix}\sum_{q\in\Iy} c_{p,q}\baspsi_{p,q}(x,y)
+$$
+<p>&nbsp;<br>
+
+<p>Lub tylko jednego indeksu</p>
+
+<p>&nbsp;<br>
+$$ u = \sum_{j\in\If} c_j\baspsi_j(x,y)$$
+<p>&nbsp;<br>
+
+<p>je&#347;li posiadamy odwzorowanie \( (p,q)\rightarrow i \):</p>
+
+<p>&nbsp;<br>
+$$
+\baspsi_i(x,y) = \hat\baspsi_p(x)\hat\baspsi_q(y),
+\quad i=p (N_y+1) + q\hbox{ or } i=q (N_x+1) + p
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;adowa-baza-przestrzeni-2d-wzory">Przyk&#322;adowa baza przestrzeni 2D; wzory </h2>
+
+<p>Dla dwuelementowej bazy 1D</p>
+
+<p>&nbsp;<br>
+$$ \{ 1, x \} $$
+<p>&nbsp;<br>
+
+<p>iloczyn tensorowy (wszystkie kombinacje) generuje baz&#281; przestrzeni 2D:</p>
+
+<p>&nbsp;<br>
+$$ \baspsi_{0,0}=1,\quad \baspsi_{1,0}=x, \quad \baspsi_{0,1}=y,
+\quad \baspsi_{1,1}=xy
+$$
+<p>&nbsp;<br>
+
+<p>W notacji jednoindeksowej:</p>
+
+<p>&nbsp;<br>
+$$ \baspsi_0=1,\quad \baspsi_1=x, \quad \baspsi_2=y,\quad\baspsi_3 =xy
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;adowa-baza-przestrzeni-2d-zastosowanie">Przyk&#322;adowa baza przestrzeni 2D; zastosowanie </h2>
+<p>&nbsp;<br>
+$$ \baspsi_0=1,\quad \baspsi_1=x, \quad \baspsi_2=y,\quad\baspsi_3 =xy
+$$
+<p>&nbsp;<br>
+
+<p>&nbsp;<br>
+$$
+\int_0^{L_y} \int_0^{L_x}
+\left\{
+\left[
+\begin{array}{cccc}
+1\cdot 1 & 1 \cdot x  & 1 \cdot y & 1 \cdot xy  \\ 
+x\cdot 1 & x \cdot x  & x \cdot y & x \cdot xy  \\ 
+y\cdot 1 & y \cdot x  & y \cdot y & y \cdot xy  \\ 
+xy\cdot 1 & xy \cdot x  & xy \cdot y & xy \cdot xy  
+\end{array}
+\right]
+\left[
+\begin{array}{c}
+c_0 \\ 
+c_1 \\ 
+c_2 \\ 
+c_3 
+\end{array}
+\right]
+=
+\left[
+\begin{array}{c}
+1\cdot f(x,y) \\ 
+x\cdot f(x,y) \\ 
+y\cdot f(x,y)  \\ 
+xy\cdot f(x,y)   
+\end{array}
+\right]
+\right\}
+dxdy
+$$
+<p>&nbsp;<br>
+
+<p>Funkcja aproksymowana (kwadratowa) \( f(x,y) = (1+x^2)(1+2y^2) \) (po lewej),
+funkcja aproksymuj&#261;ca (biliniowa) \( u \) (po prawej) (\( x^2y^2 \) vs \( xy \)):
+</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/approx2D_bilinear.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:2D:global:code">Implementacja; principal changes to the 1D code</h2>
+
+<p>Zmiany w kodzie w stosunku do wersji 1D (<code>approx1D.py</code>):</p>
+
+<ul>
+ <p><li> <code>Omega = [[0, L_x], [0, L_y]]</code></li>
+ <p><li> Ca&#322;kowanie symboliczne w 2D</li>
+ <p><li> Generowanie funkcji bazowych 2D (jako iloczyn&#243;w tensorowych)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="implementacja-2d-ca&#322;kowanie">Implementacja 2D: ca&#322;kowanie </h2>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">import</span> <span style="color: #008b45; text-decoration: underline">sympy</span> <span style="color: #8B008B; font-weight: bold">as</span> <span style="color: #008b45; text-decoration: underline">sym</span>
+
+integrand = psi[i]*psi[j]
+I = sym.integrate(integrand,
+                 (x, Omega[<span style="color: #B452CD">0</span>][<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">0</span>][<span style="color: #B452CD">1</span>]),
+                 (y, Omega[<span style="color: #B452CD">1</span>][<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>][<span style="color: #B452CD">1</span>]))
+
+<span style="color: #228B22"># Fall back on numerical integration if symbolic integration</span>
+<span style="color: #228B22"># was unsuccessful</span>
+<span style="color: #8B008B; font-weight: bold">if</span> <span style="color: #658b00">isinstance</span>(I, sym.Integral):
+    integrand = sym.lambdify([x,y], integrand)
+    I = sym.mpmath.quad(integrand,
+                       [Omega[<span style="color: #B452CD">0</span>][<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">0</span>][<span style="color: #B452CD">1</span>]],
+                       [Omega[<span style="color: #B452CD">1</span>][<span style="color: #B452CD">0</span>], Omega[<span style="color: #B452CD">1</span>][<span style="color: #B452CD">1</span>]])
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="implementacja-2d-funkcje-bazowe">Implementacja 2D: funkcje bazowe </h2>
+
+<p>Iloczyn tensorowy bazy pot&#281;gowej \( x^i \) (bazy Taylora):</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">taylor</span>(x, y, Nx, Ny):
+    <span style="color: #8B008B; font-weight: bold">return</span> [x**i*y**j <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(Nx+<span style="color: #B452CD">1</span>) <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(Ny+<span style="color: #B452CD">1</span>)]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Iloczyn tensorowy bazy sinusoidalnej \( \sin((i+1)\pi x) \):</p>
+
+
+<!-- code=python (!bc pycod) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;"><span style="color: #8B008B; font-weight: bold">def</span> <span style="color: #008b45">sines</span>(x, y, Nx, Ny):
+    <span style="color: #8B008B; font-weight: bold">return</span> [sym.sin(sym.pi*(i+<span style="color: #B452CD">1</span>)*x)*sym.sin(sym.pi*(j+<span style="color: #B452CD">1</span>)*y)
+            <span style="color: #8B008B; font-weight: bold">for</span> i <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(Nx+<span style="color: #B452CD">1</span>) <span style="color: #8B008B; font-weight: bold">for</span> j <span style="color: #8B008B">in</span> <span style="color: #658b00">range</span>(Ny+<span style="color: #B452CD">1</span>)]
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p>Ca&#322;y kod w <code>approx2D.py</code>.</p>
+</section>
+
+<section class="slide">
+<h2 id="implementacja-2d-zastosowanie">Implementacja 2D: zastosowanie </h2>
+
+\( f(x,y) = (1+x^2)(1+2y^2) \)
+
+
+<!-- code=ipy (!bc ipy) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; <span style="color: #8B008B; font-weight: bold">from</span> <span style="color: #008b45; text-decoration: underline">approx2D</span> <span style="color: #8B008B; font-weight: bold">import</span> *
+&gt;&gt;&gt; f = (<span style="color: #B452CD">1</span>+x**<span style="color: #B452CD">2</span>)*(<span style="color: #B452CD">1</span>+<span style="color: #B452CD">2</span>*y**<span style="color: #B452CD">2</span>)
+&gt;&gt;&gt; psi = taylor(x, y, <span style="color: #B452CD">1</span>, <span style="color: #B452CD">1</span>)
+&gt;&gt;&gt; Omega = [[<span style="color: #B452CD">0</span>, <span style="color: #B452CD">2</span>], [<span style="color: #B452CD">0</span>, <span style="color: #B452CD">2</span>]]
+&gt;&gt;&gt; u, c = least_squares(f, psi, Omega)
+&gt;&gt;&gt; <span style="color: #658b00">print</span> u
+<span style="color: #B452CD">8</span>*x*y - <span style="color: #B452CD">2</span>*x/<span style="color: #B452CD">3</span> + <span style="color: #B452CD">4</span>*y/<span style="color: #B452CD">3</span> - <span style="color: #B452CD">1</span>/<span style="color: #B452CD">9</span>
+&gt;&gt;&gt; <span style="color: #658b00">print</span> sym.expand(f)
+<span style="color: #B452CD">2</span>*x**<span style="color: #B452CD">2</span>*y**<span style="color: #B452CD">2</span> + x**<span style="color: #B452CD">2</span> + <span style="color: #B452CD">2</span>*y**<span style="color: #B452CD">2</span> + <span style="color: #B452CD">1</span>
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="implementacja-2d-przyk&#322;ad-zastosowanie-bazy-umo&#380;liwiaj&#261;cej-konstrukcj&#281;-rozwi&#261;zania-dok&#322;adnego">Implementacja 2D: przyk&#322;ad zastosowanie bazy umo&#380;liwiaj&#261;cej konstrukcj&#281; rozwi&#261;zania dok&#322;adnego </h2>
+
+<p>Dodajemy funkcje bazowe o wy&#380;szych pot&#281;gach tak, aby \( f\in V \).
+Spodziewany wynik: \( u=f \)
+</p>
+
+
+<!-- code=ipy (!bc ipy) typeset with pygments style "perldoc" -->
+<div class="cell border-box-sizing code_cell rendered">
+  <div class="input">
+    <div class="inner_cell">
+      <div class="input_area">
+        <div class="highlight" style="background: #eeeedd">
+  <pre style="line-height: 125%;">&gt;&gt;&gt; psi = taylor(x, y, <span style="color: #B452CD">2</span>, <span style="color: #B452CD">2</span>)
+&gt;&gt;&gt; u, c = least_squares(f, psi, Omega)
+&gt;&gt;&gt; <span style="color: #658b00">print</span> u
+<span style="color: #B452CD">2</span>*x**<span style="color: #B452CD">2</span>*y**<span style="color: #B452CD">2</span> + x**<span style="color: #B452CD">2</span> + <span style="color: #B452CD">2</span>*y**<span style="color: #B452CD">2</span> + <span style="color: #B452CD">1</span>
+&gt;&gt;&gt; <span style="color: #658b00">print</span> u-f
+<span style="color: #B452CD">0</span>
+</pre>
+</div>
+      </div>
+    </div>
+  </div>
+  <div class="output_wrapper">
+    <div class="output">
+      <div class="output_area">
+        <div class="output_subarea output_stream output_stdout output_text">          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide">
+<h2 id="fem:approx:3D:global">Uog&#243;lnienie do zagadnie&#324; 3D</h2>
+
+<p>Kluczowa idea:</p>
+
+<p>&nbsp;<br>
+$$ V = V_x\otimes V_y\otimes V_z$$
+<p>&nbsp;<br>
+
+<div class="alert alert-block alert-notice alert-text-normal">
+<b style="font-weight: bold">Zastosowanie iloczynu tensorowego do wygenerowania bazy przestrzeni \( m \) wymiarowerj</b>
+<p>
+<p>&nbsp;<br>
+$$
+\begin{align*}
+a^{(q)} &= (a^{(q)}_0,\ldots,a^{(q)}_{N_q}),\quad q=0,\ldots,m\\ 
+p &= a^{(0)}\otimes\cdots\otimes a^{(m)}\\ 
+p_{i_0,i_1,\ldots,i_m} &= a^{(0)}_{i_1}a^{(1)}_{i_1}\cdots a^{(m)}_{i_m}
+\end{align*}
+$$
+<p>&nbsp;<br>
+</div>
+
+<p>W szczeg&#243;lno&#347;ci dla 3D:</p>
+
+<p>&nbsp;<br>
+$$
+\begin{align*}
+\baspsi_{p,q,r}(x,y,z) &= \hat\baspsi_p(x)\hat\baspsi_q(y)\hat\baspsi_r(z)\\ 
+u(x,y,z) &= \sum_{p\in\Ix}\sum_{q\in\Iy}\sum_{r\in\Iz} c_{p,q,r}
+\baspsi_{p,q,r}(x,y,z)
+\end{align*}
+$$
+<p>&nbsp;<br>
+</section>
+
+<section class="slide">
+<h1 id="elementy-sko&#324;czone-w-2d-i-3d">Elementy sko&#324;czone w 2D i 3D </h1>
+
+<p>Zalety \( \FEM \) w zastosowaniach 2D i 3D:</p>
+
+<ul>
+
+<p><li> &#322;atwo&#347;&#263; aproksymowania skomplikowanych geometrii</li>
+
+<p><li> &#322;atwo&#347;&#263; generowania wielomian&#243;w (funkcji bazowych) wy&#380;szych rz&#281;d&#243;w w celu zwi&#281;kszenia dok&#322;adno&#347;ci aproksymacji funkcji</li>
+</ul>
+<p>
+<p>\( \FEM \) w 1D: g&#322;&#243;wnie dla cel&#243;w dydaktycznych, debugowania</p>
+</section>
+
+<section class="slide">
+<h2 id="przyk&#322;ady-kom&#243;rek-2d-i-3d">Przyk&#322;ady kom&#243;rek 2D i 3D </h2>
+
+<p>2D:</p>
+
+<ul>
+ <p><li> tr&#243;jk&#261;ty (triangles)</li>
+ <p><li> czworok&#261;ty (quadrilaterals)</li>
+</ul>
+<p>
+<p>3D:</p>
+
+<ul>
+ <p><li> czworo&#347;ciany (tetrahedra)</li>
+ <p><li> sze&#347;cio&#347;ciany (hexahedra)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="obszar-prostok&#261;tny-2d-zbudowany-z-element&#243;w-typu-p1">Obszar prostok&#261;tny (2D) zbudowany z element&#243;w typu P1 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/mesh2D_rect_P1.png" width="800" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="nieregularny-obszar-2d-zbudowany-z-element&#243;w-typu-p1">Nieregularny obszar 2D zbudowany z element&#243;w typu P1 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/mesh2D_quarter_circle.png" width="600" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="obszar-prostok&#261;tny-2d-zbudowany-z-element&#243;w-typu-q1">Obszar prostok&#261;tny (2D) zbudowany z element&#243;w typu Q1 </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/mesh2D_rect_Q1.png" width="500" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="aproksymacja-funkcji-2d-na-siatce-element&#243;w-tr&#243;jk&#261;tnych">Aproksymacja funkcji 2D na siatce element&#243;w tr&#243;jk&#261;tnych </h2>
+
+<p>Element tr&#243;jk&#261;tny typu P1: aproksymacja \( u \) na ka&#380;dym elemencie (kom&#243;rce)
+funkcj&#261; liniow&#261; \( ax + by + c \)
+</p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/demo2D_4x3r.png" width="400" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="w&#322;asno&#347;ci-element&#243;w-2d-typu-p1">W&#322;asno&#347;ci element&#243;w 2D typu P1 </h2>
+
+<ul>
+ <p><li> Kom&#243;rki = tr&#243;jk&#261;ty</li>
+ <p><li> Wierzcho&#322;ki = wierzcho&#322;ki kom&#243;rek</li>
+ <p><li> w&#281;z&#322;y = wierzcho&#322;ki tr&#243;jk&#261;ta</li>
+ <p><li> Stopnie swobody = warto&#347;ci funkcji w w&#281;z&#322;ach</li>
+ <p><li> \( \refphi_r(X,Y) \) jest funkcj&#261; liniow&#261; na kom&#243;rce unormowanej</li>
+ <p><li> \( \basphi_i(x,y) \) jest odzorowaniem \( \refphi_r(X,Y) \) na kom&#243;rce rzeczywistej</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="odwzorowanie-liniowe-elementu-unormowanego-na-kom&#243;rk&#281;-tr&#243;jk&#261;tn&#261;">Odwzorowanie liniowe elementu unormowanego na kom&#243;rk&#281; tr&#243;jk&#261;tn&#261; </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/ElmT3n2D_map.png" width="400" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="basphi-i-funkcja-piramida">\( \basphi_i \): funkcja-piramida </h2>
+
+<ul>
+ <p><li> \( \basphi_i(x,y) \) &ndash; zmienno&#347;&#263; liniowa na poszczeg&#243;lnych kom&#243;rkach</li>
+ <p><li> \( \basphi_i=1 \) w wierzcho&#322;ku (w&#281;&#378;le) \( i \), 0 w pozosta&#322;ych wierzcho&#322;kach (w&#281;z&#322;ach)</li>
+</ul>
+<p>
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/demo2D_basisfunc.png" width="400" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="elementy-macierzy-i-wektora-prawej-strony">Elementy macierzy i wektora prawej strony </h2>
+
+<ul>
+ <p><li> Jak w 1D, wk&#322;ad pojedynczej kom&#243;rki do macierzy globalnego URL ogranicza si&#281; do kilku warto&#347;ci w macierzy i wektorze wyraz&#243;w wolnych</li>
+ <p><li> \( \basphi_i\basphi_j\neq 0 \) wtedy i tylko wtedy gdy \( i \) oraz \( j \) s&#261; stopniami swobody (wierzcho&#322;kami/w&#281;z&#322;ami) na tym samym elemencie</li>
+ <p><li> Lokalna macierz tr&#243;jk&#261;tengo elementu P1 to macierz o rozmiarach \( 3\times 3 \)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="funkcje-bazowe-na-unormowanym-elemencie-tr&#243;jk&#261;tnym">Funkcje bazowe na unormowanym elemencie tr&#243;jk&#261;tnym </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fenics-book/elements/P1_2d.png" width="100" align="bottom"></p>
+</center>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\refphi_0(X,Y) &= 1 - X - Y
+\tag{30}\\ 
+\refphi_1(X,Y) &= X
+\tag{31}\\ 
+\refphi_2(X,Y) &= Y
+\tag{32}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>Funkcje bazowe \( \refphi_r \) wy&#380;szych stopni opieraj&#261; si&#281; na
+wi&#281;kszej liczbie w&#281;z&#322;&#243;w (stopni swobody)
+</p>
+</section>
+
+<section class="slide">
+<h2 id="elementy-tr&#243;jk&#261;tne-typu-p1-p2-p3-p4-p5-p6-przestrzeni-2d">Elementy tr&#243;jk&#261;tne typu P1, P2, P3, P4, P5, P6 przestrzeni 2D </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fenics-book/elements/P1-6_2d.png" width="320" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="elementy-p1-przestrzeni-1d-2d-i-3d">Elementy P1 przestrzeni 1D, 2D i 3D </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fenics-book/elements/P1-1d2d3d.png" width="320" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="elementy-p2-przestrzeni-1d-2d-i-3d">Elementy P2 przestrzeni 1D, 2D i 3D </h2>
+
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/fenics-book/elements/P2-1d2d3d.png" width="320" align="bottom"></p>
+</center>
+
+<ul>
+ <p><li> Interval, triangle, tetrahedron: <em>sympleksy</em> (ang. <em>simplex</em> -> *simplices*/*simplexes*)</li>
+ <p><li> <em>&#347;ciana</em> (ang. <em>face</em>) &ndash; bok kom&#243;rki (&#347;cianka/krawed&#378;/punkt)</li>
+ <p><li> W czworo&#347;cianie r&#243;wnie&#380; <em>kraw&#281;dzie</em> (<em>edges</em>)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="odwzorowanie-afiniczne-kom&#243;rki-unormowanej-ndash-wz&#243;r">Odwzorowanie afiniczne kom&#243;rki unormowanej &ndash; wz&#243;r </h2>
+
+<p>Transformacja (Odwzorowanie) kom&#243;rki we wsp&#243;&#322;rz&#281;dnych unormowanych</p>
+
+\( \X = (X,Y) \)
+
+<p>do kom&#243;rki we wsp&#243;&#322;rz&#281;dnych globalnych:</p>
+
+\( \x = (x,y) \):
+
+<p>&nbsp;<br>
+$$
+\begin{equation}
+\x = \sum_{r} \refphi_r^{(1)}(\X)\xdno{q(e,r)}
+\tag{33}
+\end{equation}
+$$
+<p>&nbsp;<br>
+
+<p>gdzie</p>
+
+<ul>
+
+<p><li> \( r \) przebiega przez wszystkie wierzcho&#322;ki kom&#243;rki</li>
+
+<p><li> \( \xdno{i} \) to globalne wsp&#243;&#322;rz&#281;dne \( (x,y) \) wierzcho&#322;ka \( i \)</li>
+
+<p><li> \( \refphi_r^{(1)} \) to funkcja bazowa typu P1</li>
+</ul>
+<p>
+<p>Odwzorowanie zachowuje liniowo&#347;&#263; &#347;cian i kraw&#281;dzi.</p>
+
+<ul>
+<p><li> TODO (Przyk&#322;ad rachunkowy)</li>
+</ul>
+</section>
+
+<section class="slide">
+<h2 id="odwzorowanie-afiniczne-kom&#243;rki-unormowanej">Odwzorowanie afiniczne kom&#243;rki unormowanej </h2>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/ElmT3n2D_map.png" width="400" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="kom&#243;rki-izoparametryczne">Kom&#243;rki izoparametryczne </h2>
+
+<p>Idea: Wykorzystanie funkcji bazowych elementu (nie tylko funkcji typu P1 ale
+i wy&#380;szych rz&#281;d&#243;w) do odwzorowania geometrii:
+</p>
+
+<p>&nbsp;<br>
+$$
+\x = \sum_{r} \refphi_r(\X)\xdno{q(e,r)}
+$$
+<p>&nbsp;<br>
+
+<p>Zaleta: pozwala generowa&#263; elementy o geomtrii <em>nielinowej</em></p>
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../fig/ElmT6n2D_map.png" width="400" align="bottom"></p>
+</center>
+</section>
+
+<section class="slide">
+<h2 id="obliczanie-ca&#322;ek">Obliczanie ca&#322;ek </h2>
+
+<p>Wymagana transformacja ca&#322;ek z \( \Omega^{(e)} \) (kom&#243;rka we wsp&#243;&#322;rz&#261;dnych globalnych)
+w \( \tilde\Omega^r \) (kom&#243;rka unormowana/odniesienia):
+</p>
+
+<p>&nbsp;<br>
+$$
+\begin{align}
+\int_{\Omega^{(e)}}\basphi_i (\x) \basphi_j (\x) \dx &=
+\int_{\tilde\Omega^r} \refphi_i (\X) \refphi_j (\X)
+\det J\, \dX
+\tag{34}\\ 
+\int_{\Omega^{(e)}}\basphi_i (\x) f(\x) \dx &=
+\int_{\tilde\Omega^r} \refphi_i (\X) f(\x(\X)) \det J\, \dX
+\tag{35}
+\end{align}
+$$
+<p>&nbsp;<br>
+
+<p>gdzie \( \dx = dx dy \) lub \( \dx = dxdydz \) oraz \( \det J \) to wyznacznik
+jakobianu odwzorowania \( \x(\X) \).
+</p>
+
+<p>&nbsp;<br>
+$$
+J = \left[\begin{array}{cc}
+\frac{\partial x}{\partial X} & \frac{\partial x}{\partial Y}\\ 
+\frac{\partial y}{\partial X} & \frac{\partial y}{\partial Y}
+\end{array}\right], \quad
+\det J = \frac{\partial x}{\partial X}\frac{\partial y}{\partial Y}
+- \frac{\partial x}{\partial Y}\frac{\partial y}{\partial X}
+$$
+<p>&nbsp;<br>
+
+<p>Odwzorowanie afiniczne
+<a href="#mjx-eqn-33">(33)</a>:
+\( \det J=2\Delta \), \( \Delta = \hbox{powierzchnia kom&#243;rki/elementu} \)
+</p>
+</section>
+
+<section class="slide">
+<h2 id="uwaga-dot-uog&#243;lnienia-fem-z-1d-do-2d-3d">Uwaga dot. uog&#243;lnienia FEM z 1D do 2D/3D </h2>
+
+<div class="alert alert-block alert-block alert-text-normal">
+<b style="font-weight: bold"></b>
+<p>
+<p>Og&#243;lna idea \( \FEM \) oraz kroki algorytmu &ndash; takie same niezale&#380;nie
+od wymiarowo&#347;ci geometrii.
+</p>
+
+<p>Im wy&#380;szy wymiar przestrzeni, tym wi&#281;kszy nak&#322;ad obliczeniowy.
+ze wzgl&#281;du na komplikacj&#281; wzor&#243;w.
+</p>
+
+<p>Obliczenia r&#281;czne - nu&#380;&#261;ce, podatne na pope&#322;nienie pomy&#322;ki.</p>
+
+<p>Automatyzacja i algorytmizacja problemu po&#380;&#261;dana.</p>
+</div>
+</section>
+
+
+<footer>
+<!-- Here goes a footer -->
+</footer>
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+    <!-- deck.navigation snippet -->
+    <div aria-role="navigation">
+      <a href="deck.js-latest/#" class="deck-prev-link" title="Previous">&#8592;</a>
+      <a href="deck.js-latest/#" class="deck-next-link" title="Next">&#8594;</a>
+    </div>
+
+    <!-- deck.status snippet -->
+    <p class="deck-status" aria-role="status">
+      <span class="deck-status-current"></span>
+      /
+      <span class="deck-status-total"></span>
+    </p>
+
+    <!-- deck.goto snippet -->
+    <form action="." method="get" class="goto-form">
+      <label for="goto-slide">Go to slide:</label>
+      <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+      <datalist id="goto-datalist"></datalist>
+      <input type="submit" value="Go">
+    </form>
+
+    <!-- End extension snippets. -->
+
+<!-- Required JS files. -->
+<script src="deck.js-latest/jquery.min.js"></script>
+<script src="deck.js-latest/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deck.js-latest/extensions/menu/deck.menu.js"></script>
+<script src="deck.js-latest/extensions/goto/deck.goto.js"></script>
+<script src="deck.js-latest/extensions/status/deck.status.js"></script>
+<script src="deck.js-latest/extensions/navigation/deck.navigation.js"></script>
+<script src="deck.js-latest/extensions/scale/deck.scale.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+  });
+</script>
+
+
+</body>
+</html>
