@@ -174,6 +174,10 @@ div.toc p,a {
                2,
                'fem:approx:vec:plane',
                'fem:approx:vec:plane'),
+              ('Wektory 2D - rzut ortogonalny',
+               2,
+               'fem:approx:vec:plane:ortho:proj',
+               'fem:approx:vec:plane:ortho:proj'),
               ('Aproksymacja wektorów: przestrzenie wektorowe -- terminologia',
                2,
                None,
@@ -186,7 +190,10 @@ div.toc p,a {
                2,
                None,
                'metoda-najmniejszych-kwadrat&#243;w-obliczenia'),
-              ('Metoda Galerkina', 2, None, 'metoda-galerkina'),
+              ('Metoda rzutu ortogonalnego (m. Galerkina)',
+               2,
+               None,
+               'metoda-rzutu-ortogonalnego-m-galerkina'),
               ('Aproksymacja wektora przestrzeni dowolniewymiarowej',
                2,
                'fem:approx:vec:Np1dim',
@@ -903,7 +910,7 @@ $$
  <p><li> pozwala rozwi&#261;zywa&#263; \( \PDE \) dla obszar&#243;w o z&#322;o&#380;onej geometrii</li>
  <p><li> pozwala ''regulowa&#263;'' dok&#322;adno&#347;&#263; siatki tam gdzie to potrzebne</li>
  <p><li> mo&#380;liwo&#347;&#263; u&#380;ycia aproksymacji wy&#380;szego rz&#281;du</li>
- <p><li> dobre, matematyczne podstawy - co pozwala na dok&#322;adn&#261; analiz&#281; metody</li>
+ <p><li> solidne, matematyczne podstawy -> mo&#380;liwo&#347;&#263; dok&#322;adnej analizy metody</li>
 </ul>
 <!-- !epop -->
 
@@ -970,7 +977,7 @@ $$
 <b>Jak?</b>
 <p>
 <ol>
-<p><li> Elementy teoria aproksymacji, a nie rozw. \( \PDE \)</li>
+<p><li> Elementy teorii aproksymacji (nie zaczynamy od rozw. \( \PDE \)!)</li>
 <p><li> Wst&#281;p do aproksymacji elementami sko&#324;czonymi</li>
 <p><li> W ko&#324;cu zastosowanie powy&#380;szego do rozw. \( \PDE \)</li>
 </ol>
@@ -1029,9 +1036,12 @@ $$
 <div class="alert alert-block alert-block alert-text-normal">
 <b></b>
 <p>
-<p>Spos&#243;b opisu i notacja zaproponowane w materia&#322;ach wybrane w spos&#243;b u&#322;atwiaj&#261;cy
-zrozumienie open-source'owego pakietu <a href="http://fenicsproject.org" target="_self">FEniCS</a>
-do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
+<p>Spos&#243;b opisu i notacja zaproponowane w materia&#322;ach
+pozwalaj&#261; na (nieco) &#322;atwiejsze rozpocz&#281;cie pracy i zrozumienie
+zasady dzia&#322;ania 
+wybrane w spos&#243;b u&#322;atwiaj&#261;cy zrozumienie
+open-source'owego pakietu <a href="http://fenicsproject.org" target="_self">FEniCS</a>
+&ndash; biblioteki do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
 </p>
 </div>
 
@@ -1055,6 +1065,41 @@ do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
 <p>analogie: element - punkt - wektor - funkcja</p>
 
 <!-- !split --><br><br><br><br><br><br><br><br>
+<h2 id="fem:approx:vec:plane:ortho:proj">Wektory 2D - rzut ortogonalny</h2>
+
+<!-- !bslidecell 00 0.2 -->
+
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+<p class="caption">Figure 6</p>
+</center>
+<p><img src="../figMB/orthopro_dotprod.png" width="300" align="bottom"></p>
+</center>
+
+<!-- !eslidecell -->
+
+<!-- !bslidecell 01 0.75 -->
+
+<ul>
+<p><li> \( \frac{d}{||\v||} = \cos \alpha \)</li>
+<p><li> \( d = ||\v|| \cos \alpha \)</li> 
+</ul>
+\( \quad \)
+
+<ul>
+<p><li> \( (\u,\v) = a_{1}b_{1} + a_{2}b_{2} + \ldots \)</li>
+<p><li> \( (\u,\v) = ||\u||\cdot||\v||\cos\alpha \)</li>
+<p><li> \( \frac{(\u,\v)}{||\u||} =||\v||\cos\alpha = d \)</li>
+</ul>
+\( \quad \)
+
+<ul>
+<p><li> \( (\u,\v) = 0  \) ->  \( \u \) i \( \v \) s&#261; prostopad&#322;e</li>
+</ul>
+<!-- !eslidecell -->
+
+<!-- !split --><br><br><br><br><br><br><br><br>
 <h2 id="aproksymacja-wektor&#243;w-przestrzenie-wektorowe-ndash-terminologia">Aproksymacja wektor&#243;w: przestrzenie wektorowe &ndash; terminologia </h2>
 
 $$ V = \mbox{span}\,\{ \psib_0\} $$
@@ -1071,7 +1116,7 @@ $$ V = \mbox{span}\,\{ \psib_0\} $$
 
 <ul>
  <p><li> \( \e = \f - \u \) to b&#322;&#261;d</li>
- <p><li> \( (\u,\v) \) &ndash; iloczyn skalarny wektor&#243;w</li>
+ <p><li> \( (\u,\v) \) &ndash; iloczyn skalarny wektor&#243;w (-> sens geometryczny il.s. -> przyk&#322;ad?)</li>
  <p><li> \( ||\e|| = \sqrt{(\e, \e)} \) &ndash; norma b&#322;&#281;du (jaka? (normy \( p \)-te))</li>
 </ul>
 <div class="alert alert-block alert-notice alert-text-normal">
@@ -1162,14 +1207,14 @@ $$
 
 
 <!-- !split --><br><br><br><br><br><br><br><br>
-<h2 id="metoda-galerkina">Metoda Galerkina </h2>
+<h2 id="metoda-rzutu-ortogonalnego-m-galerkina">Metoda rzutu ortogonalnego (m. Galerkina) </h2>
 
 <!-- !bslidecell 00 0.2 -->
 
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 6</p>
+<p class="caption">Figure 7</p>
 </center>
 <p><img src="../figMB/orthopro.png" width="300" align="bottom"></p>
 </center>
@@ -1181,8 +1226,8 @@ $$
 <ul>
  <p><li> \( \min E \) $\rightarrow$ to samo co:  \( (\e, \psib_0)=0 \) (rysunek)</li>
  <p><li> \( (\e, \psib_0)=0 \) $\Rightarrow$ \( (\e, \v)=0 \) dla <em>dowolnego</em> \( \v\in V \) (rysunek)</li>
- <p><li> Czyli: zamiast korzysta&#263; z aproksymacji &#347;redniokwadratowej, mo&#380;na wymusi&#263;, aby \( \e \) by&#322;o ortogonalne (prostopad&#322;e) dla dowolnego \( \v\in V \) &ndash; oczywiste na rysunku a...</li>
- <p><li> W j&#281;zyku matematyki: znajd&#378; takie \( c_0 \) aby \( (\e, \v) = 0,\quad\forall\v\in V \)</li>
+ <p><li> Czyli: zamiast korzysta&#263; z aproksymacji &#347;redniokwadratowej, mo&#380;na wymusi&#263;, aby \( \e \) by&#322;o ortogonalne (prostopad&#322;e) dla dowolnego \( \v\in V \) &ndash; oczywiste na rysunku ...</li>
+ <p><li> ... a w j&#281;zyku matematyki: znajd&#378; takie \( c_0 \) aby \( (\e, \v) = 0,\quad\forall\v\in V \)</li>
  <p><li> R&#243;wnowa&#380;nie: znajd&#378; takie \( c_0 \) aby \( (\e, \psib_0)=0 \)</li>
  <p><li> Podstawmy: \( \e = \f - c_0\psib_0 \) i rozwi&#261;&#380;my ze wzgl&#281;du na \( c_0 \)</li>
  <p><li> Ostatecznie: to samo r&#243;wnanie (a wi&#281;c i to samo rozwi&#261;zanie) co w metodzie najmniejszych kwadrat&#243;w</li>
@@ -1213,9 +1258,11 @@ $$ \u = \sum_{j=0}^Nc_j\psib_j$$
 
 
 <div class="alert alert-block alert-notice alert-text-normal">
-<b>Przyk&#322;ad</b>
+<b>Przyk&#322;ad - zadanie</b>
 <p>
-<p>TODO</p>
+<p>Wykaza&#263;, &#380;e przy pomocy kombinacji liniowej
+pewnych 3 wektor&#243;w przestrzeni 3D mo&#380;na skonstruowa&#263; dowolny wektor tej przestrzeni.
+</p>
 </div>
 
 
@@ -1453,7 +1500,7 @@ $$ u(x) = 10x - 12 \frac{2}{3} $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 7</p>
+<p class="caption">Figure 8</p>
 </center>
 <p><img src="../fig/parabola_ls_linear.png" width="550" align="bottom"></p>
 </center>
@@ -1646,7 +1693,7 @@ rozwi&#261;zanie postaci n \( u(x)=\sum_jc_j\baspsi_j(x) \).
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 8</p>
+<p class="caption">Figure 9</p>
 </center>
 <p><img src="../fig/parabola_ls_linear.png" width="600" align="bottom"></p>
 </center>
@@ -1655,7 +1702,7 @@ rozwi&#261;zanie postaci n \( u(x)=\sum_jc_j\baspsi_j(x) \).
 <h2 id="fem:approx:global:exact">Przypadek aproksymacji funkcji \( f\in V \)</h2>
 
 <ul>
- <p><li> Rozszerzmy zbi&#243;r funkcji bazowych przestrezni \( V \) o funkcj&#281; \( \baspsi_2=x^2 \), wci&#261;&#380; poszukuj&#261;c przybli&#380;enia dla funkcji \( f=10(x-1)^2-1 \) w przestrzeni \( V \)</li>
+ <p><li> Rozszerzmy zbi&#243;r funkcji bazowych przestrzeni \( V \) o funkcj&#281; \( \baspsi_2=x^2 \), wci&#261;&#380; poszukuj&#261;c przybli&#380;enia dla funkcji \( f=10(x-1)^2-1 \) w przestrzeni \( V \)</li>
  <p><li> -> przybli&#380;enie paraboli pewn&#261; parabol&#261; \ldots</li>
  <p><li> Rozwi&#261;zanie odwzoruje \( f \) &#347;ci&#347;le!</li> 
 </ul>
@@ -1791,7 +1838,7 @@ liniowo zale&#380;ne
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 9</p>
+<p class="caption">Figure 10</p>
 </center>
 <p><img src="../figMB/comparison_parabola_err.png" width="500" align="bottom"></p>
 </center>
@@ -1804,7 +1851,7 @@ liniowo zale&#380;ne
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 10</p>
+<p class="caption">Figure 11</p>
 </center>
 <p><img src="../fig/ill_conditioning.png" width="500" align="bottom"></p>
 </center>
@@ -1876,7 +1923,7 @@ comparison_plot(f, u, Omega)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 11</p>
+<p class="caption">Figure 12</p>
 </center>
 <p><img src="../fig/parabola_ls_sines4_12.png" width="900" align="bottom"></p>
 </center>
@@ -1912,7 +1959,7 @@ ale tak&#380;e zaskakuj&#261;co dobrze poprawia jako&#347;&#263; aproksymacji!
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 12</p>
+<p class="caption">Figure 13</p>
 </center>
 <p><img src="../fig/parabola_ls_sines4_12_wfterm.png" width="900" align="bottom"></p>
 </center>
@@ -2111,7 +2158,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 13</p>
+<p class="caption">Figure 14</p>
 </center>
 <p><img src="../fig/parabola_inter.png" width="700" align="bottom"></p>
 </center>
@@ -2127,7 +2174,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 14</p>
+<p class="caption">Figure 15</p>
 </center>
 <p><img src="../fig/parabola_by_regression.png" width="800" align="bottom"></p>
 </center>
@@ -2274,7 +2321,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 15</p>
+<p class="caption">Figure 16</p>
 </center>
 <p><img src="../fig/parabola_by_regression.png" width="800" align="bottom"></p>
 </center>
@@ -2355,7 +2402,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 16</p>
+<p class="caption">Figure 17</p>
 </center>
 <p><img src="../fig/Lagrange_ls_interp_sin_4.png" width="800" align="bottom"></p>
 </center>
@@ -2366,7 +2413,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 17</p>
+<p class="caption">Figure 18</p>
 </center>
 <p><img src="../fig/Lagrange_interp_abs_8_15.png" width="800" align="bottom"></p>
 </center>
@@ -2381,7 +2428,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 18</p>
+<p class="caption">Figure 19</p>
 </center>
 <p><img src="../fig/Lagrange_basis_12.png" width="500" align="bottom"></p>
 </center>
@@ -2405,7 +2452,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 19</p>
+<p class="caption">Figure 20</p>
 </center>
 <p><img src="../fig/Lagrange_interp_abs_Cheb_8_15.png" width="800" align="bottom"></p>
 </center>
@@ -2424,7 +2471,7 @@ r&#243;wnomiernie rozmieszczonych.
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 20</p>
+<p class="caption">Figure 21</p>
 </center>
 <p><img src="../fig/Lagrange_basis_Cheb_12.png" width="500" align="bottom"></p>
 </center>
@@ -2435,7 +2482,7 @@ r&#243;wnomiernie rozmieszczonych.
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 21</p>
+<p class="caption">Figure 22</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_2_3.png" width="500" align="bottom"></p>
 </center>
@@ -2448,7 +2495,7 @@ r&#243;wnomiernie rozmieszczonych.
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 22</p>
+<p class="caption">Figure 23</p>
 </center>
 <p><img src="../fig/u_example_sin.png" width="800" align="bottom"></p>
 </center>
@@ -2465,7 +2512,7 @@ r&#243;wnomiernie rozmieszczonych.
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 23</p>
+<p class="caption">Figure 24</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_2_3.png" width="500" align="bottom"></p>
 </center>
@@ -2476,7 +2523,7 @@ r&#243;wnomiernie rozmieszczonych.
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 24</p>
+<p class="caption">Figure 25</p>
 </center>
 <p><img src="../fig/u_example_fe2.png" width="500" align="bottom"></p>
 </center>
@@ -2506,7 +2553,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 25</p>
+<p class="caption">Figure 26</p>
 </center>
 <p><img src="../fig/fe_mesh1D_P1.png" width="500" align="bottom"></p>
 </center>
@@ -2548,7 +2595,7 @@ elements <span style="color: #666666">=</span> [[<span style="color: #666666">0<
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 26</p>
+<p class="caption">Figure 27</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_2_3.png" width="600" align="bottom"></p>
 </center>
@@ -2559,7 +2606,7 @@ elements <span style="color: #666666">=</span> [[<span style="color: #666666">0<
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 27</p>
+<p class="caption">Figure 28</p>
 </center>
 <p><img src="../fig/fe_mesh1D_P2.png" width="500" align="bottom"></p>
 </center>
@@ -2595,7 +2642,7 @@ elements <span style="color: #666666">=</span> [[<span style="color: #666666">0<
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 28</p>
+<p class="caption">Figure 29</p>
 </center>
 <p><img src="../fig/phi/mpl_fe_basis_p2_4e.png" width="800" align="bottom"></p>
 </center>
@@ -2606,7 +2653,7 @@ elements <span style="color: #666666">=</span> [[<span style="color: #666666">0<
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 29</p>
+<p class="caption">Figure 30</p>
 </center>
 <p><img src="../fig/fe_mesh1D_d4_stretched.png" width="500" align="bottom"></p>
 </center>
@@ -2645,7 +2692,7 @@ elements <span style="color: #666666">=</span> [[i<span style="color: #666666">*
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 30</p>
+<p class="caption">Figure 31</p>
 </center>
 <p><img src="../fig/phi/mpl_fe_basis_p3_4e.png" width="800" align="bottom"></p>
 </center>
@@ -2656,7 +2703,7 @@ elements <span style="color: #666666">=</span> [[i<span style="color: #666666">*
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 31</p>
+<p class="caption">Figure 32</p>
 </center>
 <p><img src="../fig/fe_mesh1D_random_numbering.png" width="500" align="bottom"></p>
 </center>
@@ -2718,7 +2765,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 32</p>
+<p class="caption">Figure 33</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_i_im1.png" width="500" align="bottom"></p>
 </center>
@@ -2729,7 +2776,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 33</p>
+<p class="caption">Figure 34</p>
 </center>
 <p><img src="../fig/phi/mpl_fe_basis_p2_4e.png" width="500" align="bottom"></p>
 </center>
@@ -2744,7 +2791,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 34</p>
+<p class="caption">Figure 35</p>
 </center>
 <p><img src="../fig/phi/mpl_fe_basis_p1_4e.png" width="500" align="bottom"></p>
 </center>
@@ -2769,7 +2816,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 35</p>
+<p class="caption">Figure 36</p>
 </center>
 <p><img src="../fig/phi/mpl_fe_basis_p3_4e.png" width="500" align="bottom"></p>
 </center>
@@ -2780,7 +2827,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 36</p>
+<p class="caption">Figure 37</p>
 </center>
 <p><img src="../fig/sparsity_pattern_1D_30unif.png" width="600" align="bottom"></p>
 </center>
@@ -2791,7 +2838,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 37</p>
+<p class="caption">Figure 38</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_2_3.png" width="300" align="bottom"></p>
 </center>
@@ -2819,7 +2866,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 38</p>
+<p class="caption">Figure 39</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_2_3.png" width="500" align="bottom"></p>
 </center>
@@ -2839,7 +2886,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 39</p>
+<p class="caption">Figure 40</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_i_im1.png" width="500" align="bottom"></p>
 </center>
@@ -2876,7 +2923,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 40</p>
+<p class="caption">Figure 41</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_i_f.png" width="500" align="bottom"></p>
 </center>
@@ -2930,7 +2977,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 41</p>
+<p class="caption">Figure 42</p>
 </center>
 <p><img src="../fig/fe_p1_x2_2e.png" width="600" align="bottom"></p>
 </center>
@@ -2941,7 +2988,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 42</p>
+<p class="caption">Figure 43</p>
 </center>
 <p><img src="../fig/fe_p1_x2_2e_4e.png" width="800" align="bottom"></p>
 </center>
@@ -2972,7 +3019,7 @@ potrafi&#261; odtworzy&#263; wielomian 2. stopnia bezb&#322;&#281;dnie.
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 43</p>
+<p class="caption">Figure 44</p>
 </center>
 <p><img src="../mov/fe_assembly_irregular/fe_assembly_irregular.png" width="300" align="bottom"></p>
 </center>
@@ -2997,7 +3044,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 44</p>
+<p class="caption">Figure 45</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_i_im1.png" width="300" align="bottom"></p>
 </center>
@@ -3058,7 +3105,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 45</p>
+<p class="caption">Figure 46</p>
 </center>
 <p><img src="../mov/fe_assembly_regular_2x2/fe_assembly_regular_2x2.png" width="400" align="bottom"></p>
 </center>
@@ -3071,7 +3118,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 46</p>
+<p class="caption">Figure 47</p>
 </center>
 <p><img src="../mov/fe_assembly_regular_4x4/fe_assembly_regular_4x4.png" width="400" align="bottom"></p>
 </center>
@@ -3085,7 +3132,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 47</p>
+<p class="caption">Figure 48</p>
 </center>
 <p><img src="../mov/fe_assembly_irregular/fe_assembly_irregular.png" width="400" align="bottom"></p>
 </center>
@@ -3105,7 +3152,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 48</p>
+<p class="caption">Figure 49</p>
 </center>
 <p><img src="../fig/fe_mesh1D_phi_i_f.png" width="300" align="bottom"></p>
 </center>
@@ -3827,7 +3874,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 49</p>
+<p class="caption">Figure 50</p>
 </center>
 <p><img src="../fig/sparsity_pattern_1D_30.png" width="800" align="bottom"></p>
 </center>
@@ -3842,7 +3889,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 50</p>
+<p class="caption">Figure 51</p>
 </center>
 <p><img src="../fig/sparsity_pattern_1DP3_30.png" width="800" align="bottom"></p>
 </center>
@@ -3909,7 +3956,7 @@ approximate(f<span style="color: #666666">=</span>x<span style="color: #666666">
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 51</p>
+<p class="caption">Figure 52</p>
 </center>
 <p><img src="../fig/fe_p1_p2_x9_248e.png" width="800" align="bottom"></p>
 </center>
@@ -4002,7 +4049,7 @@ b[dof_map[e][r]] <span style="color: #666666">+=</span> b_e[r]
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 52</p>
+<p class="caption">Figure 53</p>
 </center>
 <p><img src="../fig/fe_mesh1D_P2.png" width="500" align="bottom"></p>
 </center>
@@ -4131,7 +4178,7 @@ plot(x_u, u)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 53</p>
+<p class="caption">Figure 54</p>
 </center>
 <p><img src="../fig/fe_p0_x2_4e_8e.png" width="800" align="bottom"></p>
 </center>
@@ -4434,7 +4481,7 @@ numericalApproximationOfA <span style="color: #666666">=</span> [ U[<span style=
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 54</p>
+<p class="caption">Figure 55</p>
 </center>
 <p><img src="../figMB/cubicHermiteBasis.png" width="500" align="bottom"></p>
 </center>
@@ -4446,7 +4493,7 @@ numericalApproximationOfA <span style="color: #666666">=</span> [ U[<span style=
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 55</p>
+<p class="caption">Figure 56</p>
 </center>
 <p><img src="../figMB/cubicHermiteDerivs.png" width="500" align="bottom"></p>
 </center>
@@ -4456,7 +4503,7 @@ numericalApproximationOfA <span style="color: #666666">=</span> [ U[<span style=
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 56</p>
+<p class="caption">Figure 57</p>
 </center>
 <p><img src="../figMB/cubicHermiteResult.png" width="500" align="bottom"></p>
 </center>
@@ -4728,7 +4775,7 @@ funkcja aproksymuj&#261;ca (biliniowa) \( u \) (po prawej) (\( x^2y^2 \) vs \( x
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 57</p>
+<p class="caption">Figure 58</p>
 </center>
 <p><img src="../fig/approx2D_bilinear.png" width="800" align="bottom"></p>
 </center>
@@ -4976,7 +5023,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 58</p>
+<p class="caption">Figure 59</p>
 </center>
 <p><img src="../fig/mesh2D_rect_P1.png" width="800" align="bottom"></p>
 </center>
@@ -4987,7 +5034,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 59</p>
+<p class="caption">Figure 60</p>
 </center>
 <p><img src="../fig/mesh2D_quarter_circle.png" width="600" align="bottom"></p>
 </center>
@@ -4998,7 +5045,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 60</p>
+<p class="caption">Figure 61</p>
 </center>
 <p><img src="../fig/mesh2D_rect_Q1.png" width="500" align="bottom"></p>
 </center>
@@ -5013,7 +5060,7 @@ funkcj&#261; liniow&#261; \( ax + by + c \)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 61</p>
+<p class="caption">Figure 62</p>
 </center>
 <p><img src="../fig/demo2D_4x3r.png" width="400" align="bottom"></p>
 </center>
@@ -5035,7 +5082,7 @@ funkcj&#261; liniow&#261; \( ax + by + c \)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 62</p>
+<p class="caption">Figure 63</p>
 </center>
 <p><img src="../fig/ElmT3n2D_map.png" width="400" align="bottom"></p>
 </center>
@@ -5050,7 +5097,7 @@ funkcj&#261; liniow&#261; \( ax + by + c \)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 63</p>
+<p class="caption">Figure 64</p>
 </center>
 <p><img src="../fig/demo2D_basisfunc.png" width="400" align="bottom"></p>
 </center>
@@ -5069,7 +5116,7 @@ funkcj&#261; liniow&#261; \( ax + by + c \)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 64</p>
+<p class="caption">Figure 65</p>
 </center>
 <p><img src="../fig/fenics-book/elements/P1_2d.png" width="100" align="bottom"></p>
 </center>
@@ -5095,7 +5142,7 @@ wi&#281;kszej liczbie w&#281;z&#322;&#243;w (stopni swobody)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 65</p>
+<p class="caption">Figure 66</p>
 </center>
 <p><img src="../fig/fenics-book/elements/P1-6_2d.png" width="320" align="bottom"></p>
 </center>
@@ -5106,7 +5153,7 @@ wi&#281;kszej liczbie w&#281;z&#322;&#243;w (stopni swobody)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 66</p>
+<p class="caption">Figure 67</p>
 </center>
 <p><img src="../fig/fenics-book/elements/P1-1d2d3d.png" width="320" align="bottom"></p>
 </center>
@@ -5118,7 +5165,7 @@ wi&#281;kszej liczbie w&#281;z&#322;&#243;w (stopni swobody)
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 67</p>
+<p class="caption">Figure 68</p>
 </center>
 <p><img src="../fig/fenics-book/elements/P2-1d2d3d.png" width="320" align="bottom"></p>
 </center>
@@ -5164,7 +5211,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 68</p>
+<p class="caption">Figure 69</p>
 </center>
 <p><img src="../fig/ElmT3n2D_map.png" width="400" align="bottom"></p>
 </center>
@@ -5185,7 +5232,7 @@ $$
 <center>  <!-- FIGURE -->
 <hr class="figure">
 <center>
-<p class="caption">Figure 69</p>
+<p class="caption">Figure 70</p>
 </center>
 <p><img src="../fig/ElmT6n2D_map.png" width="400" align="bottom"></p>
 </center>

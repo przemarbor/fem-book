@@ -249,7 +249,7 @@ $$
  <p><li class="fragment"> pozwala rozwi&#261;zywa&#263; \( \PDE \) dla obszar&#243;w o z&#322;o&#380;onej geometrii</li>
  <p><li class="fragment"> pozwala ''regulowa&#263;'' dok&#322;adno&#347;&#263; siatki tam gdzie to potrzebne</li>
  <p><li class="fragment"> mo&#380;liwo&#347;&#263; u&#380;ycia aproksymacji wy&#380;szego rz&#281;du</li>
- <p><li class="fragment"> dobre, matematyczne podstawy - co pozwala na dok&#322;adn&#261; analiz&#281; metody</li>
+ <p><li class="fragment"> solidne, matematyczne podstawy -> mo&#380;liwo&#347;&#263; dok&#322;adnej analizy metody</li>
 </ul>
 <p>
 </td>
@@ -321,7 +321,7 @@ $$
 <b>Jak?</b>
 <p>
 <ol>
-<p><li> Elementy teoria aproksymacji, a nie rozw. \( \PDE \)</li>
+<p><li> Elementy teorii aproksymacji (nie zaczynamy od rozw. \( \PDE \)!)</li>
 <p><li> Wst&#281;p do aproksymacji elementami sko&#324;czonymi</li>
 <p><li> W ko&#324;cu zastosowanie powy&#380;szego do rozw. \( \PDE \)</li>
 </ol>
@@ -385,9 +385,12 @@ $$
 <div class="alert alert-block alert-block alert-text-normal">
 <b></b>
 <p>
-<p>Spos&#243;b opisu i notacja zaproponowane w materia&#322;ach wybrane w spos&#243;b u&#322;atwiaj&#261;cy
-zrozumienie open-source'owego pakietu <a href="http://fenicsproject.org" target="_self">FEniCS</a>
-do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
+<p>Spos&#243;b opisu i notacja zaproponowane w materia&#322;ach
+pozwalaj&#261; na (nieco) &#322;atwiejsze rozpocz&#281;cie pracy i zrozumienie
+zasady dzia&#322;ania 
+wybrane w spos&#243;b u&#322;atwiaj&#261;cy zrozumienie
+open-source'owego pakietu <a href="http://fenicsproject.org" target="_self">FEniCS</a>
+&ndash; biblioteki do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
 </p>
 </div>
 </section>
@@ -411,6 +414,46 @@ do oblicze&#324; metod&#261; element&#243;w sko&#324;czonych.
 </section>
 
 <section>
+<h2 id="fem:approx:vec:plane:ortho:proj">Wektory 2D - rzut ortogonalny</h2>
+
+
+<table border="0">
+<tr>
+<td class="padding">
+<center>  <!-- FIGURE -->
+<hr class="figure">
+<center>
+</center>
+<p><img src="../figMB/orthopro_dotprod.png" width="300" align="bottom"></p>
+</center>
+
+</td>
+<td class="padding">
+<ul>
+<p><li> \( \frac{d}{||\v||} = \cos \alpha \)</li>
+<p><li> \( d = ||\v|| \cos \alpha \)</li> 
+</ul>
+<p>
+\( \quad \)
+
+<ul>
+<p><li> \( (\u,\v) = a_{1}b_{1} + a_{2}b_{2} + \ldots \)</li>
+<p><li> \( (\u,\v) = ||\u||\cdot||\v||\cos\alpha \)</li>
+<p><li> \( \frac{(\u,\v)}{||\u||} =||\v||\cos\alpha = d \)</li>
+</ul>
+<p>
+\( \quad \)
+
+<ul>
+<p><li> \( (\u,\v) = 0  \) ->  \( \u \) i \( \v \) s&#261; prostopad&#322;e</li>
+</ul>
+<p>
+</td>
+</tr>
+</table>
+</section>
+
+<section>
 <h2 id="aproksymacja-wektor&#243;w-przestrzenie-wektorowe-ndash-terminologia">Aproksymacja wektor&#243;w: przestrzenie wektorowe &ndash; terminologia </h2>
 
 <p>&nbsp;<br>
@@ -430,7 +473,7 @@ $$ V = \mbox{span}\,\{ \psib_0\} $$
 
 <ul>
  <p><li> \( \e = \f - \u \) to b&#322;&#261;d</li>
- <p><li> \( (\u,\v) \) &ndash; iloczyn skalarny wektor&#243;w</li>
+ <p><li> \( (\u,\v) \) &ndash; iloczyn skalarny wektor&#243;w (-> sens geometryczny il.s. -> przyk&#322;ad?)</li>
  <p><li> \( ||\e|| = \sqrt{(\e, \e)} \) &ndash; norma b&#322;&#281;du (jaka? (normy \( p \)-te))</li>
 </ul>
 <p>
@@ -534,7 +577,7 @@ $$
 </section>
 
 <section>
-<h2 id="metoda-galerkina">Metoda Galerkina </h2>
+<h2 id="metoda-rzutu-ortogonalnego-m-galerkina">Metoda rzutu ortogonalnego (m. Galerkina) </h2>
 
 
 <table border="0">
@@ -552,8 +595,8 @@ $$
 <ul>
  <p><li class="fragment"> \( \min E \) $\rightarrow$ to samo co:  \( (\e, \psib_0)=0 \) (rysunek)</li>
  <p><li class="fragment"> \( (\e, \psib_0)=0 \) $\Rightarrow$ \( (\e, \v)=0 \) dla <em>dowolnego</em> \( \v\in V \) (rysunek)</li>
- <p><li class="fragment"> Czyli: zamiast korzysta&#263; z aproksymacji &#347;redniokwadratowej, mo&#380;na wymusi&#263;, aby \( \e \) by&#322;o ortogonalne (prostopad&#322;e) dla dowolnego \( \v\in V \) &ndash; oczywiste na rysunku a...</li>
- <p><li class="fragment"> W j&#281;zyku matematyki: znajd&#378; takie \( c_0 \) aby \( (\e, \v) = 0,\quad\forall\v\in V \)</li>
+ <p><li class="fragment"> Czyli: zamiast korzysta&#263; z aproksymacji &#347;redniokwadratowej, mo&#380;na wymusi&#263;, aby \( \e \) by&#322;o ortogonalne (prostopad&#322;e) dla dowolnego \( \v\in V \) &ndash; oczywiste na rysunku ...</li>
+ <p><li class="fragment"> ... a w j&#281;zyku matematyki: znajd&#378; takie \( c_0 \) aby \( (\e, \v) = 0,\quad\forall\v\in V \)</li>
  <p><li class="fragment"> R&#243;wnowa&#380;nie: znajd&#378; takie \( c_0 \) aby \( (\e, \psib_0)=0 \)</li>
  <p><li class="fragment"> Podstawmy: \( \e = \f - c_0\psib_0 \) i rozwi&#261;&#380;my ze wzgl&#281;du na \( c_0 \)</li>
  <p><li class="fragment"> Ostatecznie: to samo r&#243;wnanie (a wi&#281;c i to samo rozwi&#261;zanie) co w metodzie najmniejszych kwadrat&#243;w</li>
@@ -590,9 +633,11 @@ $$ \u = \sum_{j=0}^Nc_j\psib_j$$
 
 
 <div class="alert alert-block alert-notice alert-text-normal">
-<b>Przyk&#322;ad</b>
+<b>Przyk&#322;ad - zadanie</b>
 <p>
-<p>TODO</p>
+<p>Wykaza&#263;, &#380;e przy pomocy kombinacji liniowej
+pewnych 3 wektor&#243;w przestrzeni 3D mo&#380;na skonstruowa&#263; dowolny wektor tej przestrzeni.
+</p>
 </div>
 </section>
 
@@ -1077,7 +1122,7 @@ rozwi&#261;zanie postaci n \( u(x)=\sum_jc_j\baspsi_j(x) \).
 <h2 id="fem:approx:global:exact">Przypadek aproksymacji funkcji \( f\in V \)</h2>
 
 <ul>
- <p><li> Rozszerzmy zbi&#243;r funkcji bazowych przestrezni \( V \) o funkcj&#281; \( \baspsi_2=x^2 \), wci&#261;&#380; poszukuj&#261;c przybli&#380;enia dla funkcji \( f=10(x-1)^2-1 \) w przestrzeni \( V \)</li>
+ <p><li> Rozszerzmy zbi&#243;r funkcji bazowych przestrzeni \( V \) o funkcj&#281; \( \baspsi_2=x^2 \), wci&#261;&#380; poszukuj&#261;c przybli&#380;enia dla funkcji \( f=10(x-1)^2-1 \) w przestrzeni \( V \)</li>
  <p><li> -> przybli&#380;enie paraboli pewn&#261; parabol&#261; \ldots</li>
  <p><li> Rozwi&#261;zanie odwzoruje \( f \) &#347;ci&#347;le!</li> 
 </ul>

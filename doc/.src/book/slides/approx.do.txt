@@ -50,7 +50,7 @@ FIGURE: [../fig/dolfin_mesh, width=200 frac=1]
  * pozwala rozwiązywać $\PDE$ dla obszarów o złożonej geometrii
  * pozwala ''regulować'' dokładność siatki tam gdzie to potrzebne
  * możliwość użycia aproksymacji wyższego rzędu
- * dobre, matematyczne podstawy - co pozwala na dokładną analizę metody
+ * solidne, matematyczne podstawy -> możliwość dokładnej analizy metody
 !epop
 
 !eslidecell
@@ -94,7 +94,7 @@ FIGURE: [../fig/dolfin_flow.gif, width=400 frac=1]
 ===== Etapy nauki FEM =====
 
 !bblock Jak? 
- o Elementy teoria aproksymacji, a nie rozw. $\PDE$
+ o Elementy teorii aproksymacji (nie zaczynamy od rozw. $\PDE$!)
  o Wstęp do aproksymacji elementami skończonymi
  o W końcu zastosowanie powyższego do rozw. $\PDE$
 !eblock
@@ -146,9 +146,12 @@ gdzie
 
 
 !bblock
-Sposób opisu i notacja zaproponowane w materiałach wybrane w sposób ułatwiający
-zrozumienie open-source'owego pakietu "FEniCS": "http://fenicsproject.org"
-do obliczeń metodą elementów skończonych.
+Sposób opisu i notacja zaproponowane w materiałach
+pozwalają na (nieco) łatwiejsze rozpoczęcie pracy i zrozumienie
+zasady działania 
+wybrane w sposób ułatwiający zrozumienie
+open-source'owego pakietu "FEniCS": "http://fenicsproject.org"
+-- biblioteki do obliczeń metodą elementów skończonych.
 !eblock
 
 !split
@@ -172,6 +175,38 @@ FIGURE: [../fig/vecapprox_plane, width=300 frac=0.55]
 analogie: element - punkt - wektor - funkcja
 
 !split
+===== Wektory 2D - rzut ortogonalny =====
+label{fem:approx:vec:plane:ortho:proj}
+
+
+
+
+!bslidecell 00 0.2
+
+FIGURE: [../figMB/orthopro_dotprod, width=300 frac=1.3]
+
+!eslidecell
+
+!bslidecell 01 0.75
+
+* $\frac{d}{||\v||} = \cos \alpha$
+* $d = ||\v|| \cos \alpha$ 
+
+$\quad$
+  
+* $(\u,\v) = a_{1}b_{1} + a_{2}b_{2} + \ldots$
+* $(\u,\v) = ||\u||\cdot||\v||\cos\alpha$
+* $\frac{(\u,\v)}{||\u||} =||\v||\cos\alpha = d$
+
+$\quad$
+
+* $(\u,\v) = 0 $ ->  $\u$ i $\v$ są prostopadłe
+
+
+!eslidecell
+
+
+!split
 ===== Aproksymacja wektorów: przestrzenie wektorowe -- terminologia =====
 
 !bt
@@ -191,7 +226,7 @@ analogie: element - punkt - wektor - funkcja
 Niech
 
  * $\e = \f - \u$ to błąd
- * $(\u,\v)$ -- iloczyn skalarny wektorów
+ * $(\u,\v)$ -- iloczyn skalarny wektorów (-> sens geometryczny il.s. -> przykład?)
  * $||\e|| = \sqrt{(\e, \e)}$ -- norma błędu (jaka? (normy $p$-te))
 
 # #if FORMAT in ('latex', 'pdflatex')
@@ -291,22 +326,22 @@ można równoważnie zapisać jako:
 
 !split
 ## ## ===== The projection (or Galerkin) method =====
-===== Metoda Galerkina =====
+===== Metoda rzutu ortogonalnego (m. Galerkina) =====
 
 
 !bslidecell 00 0.2
 
-## #if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 
-## FIGURE: [../figMB/orthopro.pdf, width=300 frac=1.7]
+FIGURE: [../figMB/orthopro.pdf, width=300 frac=1.7]
 
-## #endif
+# #endif
 
-## #if FORMAT in ('html')
+# #if FORMAT in ('html')
 
 FIGURE: [../figMB/orthopro.png, width=300 frac=1.7]
 
-## #endif
+# #endif
 
 !eslidecell
 
@@ -316,8 +351,8 @@ FIGURE: [../figMB/orthopro.png, width=300 frac=1.7]
  * $(\e, \psib_0)=0$ $\Rightarrow$ $(\e, \v)=0$ dla *dowolnego* $\v\in V$ (rysunek)
  * Czyli: zamiast korzystać z aproksymacji średniokwadratowej, można
    wymusić, aby $\e$ było ortogonalne (prostopadłe) dla dowolnego
-   $\v\in V$ -- oczywiste na rysunku a...
- * W języku matematyki: znajdź takie $c_0$ aby $(\e, \v) = 0,\quad\forall\v\in V$
+   $\v\in V$ -- oczywiste na rysunku ...
+ * ... a w języku matematyki: znajdź takie $c_0$ aby $(\e, \v) = 0,\quad\forall\v\in V$
  * Równoważnie: znajdź takie $c_0$ aby $(\e, \psib_0)=0$
  * Podstawmy: $\e = \f - c_0\psib_0$ i rozwiążmy ze względu na $c_0$
  * Ostatecznie: to samo równanie (a więc i to samo rozwiązanie) co w metodzie
@@ -352,8 +387,9 @@ dowolny wektor $\u\in V$ można zapisać jako:
 \[ \u = \sum_{j=0}^Nc_j\psib_j\]
 !et
 
-!bnotice Przykład 
-TODO
+!bnotice Przykład - zadanie
+Wykazać, że przy pomocy kombinacji liniowej
+pewnych 3 wektorów przestrzeni 3D można skonstruować dowolny wektor tej przestrzeni.
 !enotice
 
 !split
@@ -732,7 +768,7 @@ FIGURE: [../fig/parabola_ls_linear, width=600 frac=0.8]
 ===== Przypadek aproksymacji funkcji $f\in V$ =====
 label{fem:approx:global:exact}
 
- * Rozszerzmy zbiór funkcji bazowych przestrezni $V$ o funkcję $\baspsi_2=x^2$,
+ * Rozszerzmy zbiór funkcji bazowych przestrzeni $V$ o funkcję $\baspsi_2=x^2$,
    wciąż poszukując przybliżenia dla funkcji $f=10(x-1)^2-1$ w przestrzeni $V$
  * -> przybliżenie paraboli pewną parabolą \ldots
  * Rozwiązanie odwzoruje $f$ ściśle! 
