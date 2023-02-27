@@ -1,0 +1,9 @@
+# MB .gitignore
+make_upload2ftp.sh
+../../pub/slides/html/pages/reveal.js
+../../pub/slides/html/pages/deck.js-latest
+reveal.js/
+deck.js-latest/
+
+slides/.dlog
+slides/beamerthemered_shadow.sty

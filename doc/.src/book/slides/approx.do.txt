@@ -4,25 +4,16 @@
 ## # #include "mako_code.txt"  # <- DOES NOT WORK ??
 
 !split
-======= Hans Petter Langtangen =======
-(1962-2016)
+======= Wstęp =======
 
- * "Strona domowa":"https://hplgit.github.io/homepage/index.html"
-
- * "Github":"https://github.com/hplgit"
-
- * "DocOnce i publikacje":"https://doconce.github.io"
-
- * "Książka (EN)":"http://hplgit.github.io/fem-book/doc/web/index.html"
-
- * Wykład:
+=== Ta prezentacja ===
    * "PDF":"http://marbor.strony.prz.edu.pl/download/FEM/pdf/approx-beamer.pdf"
-   * "HTML":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-1.html"
-   * "HTML-solarized":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-solarized.html"
-   * "reveal-js":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal.html"
-   * "reveal-js-beige":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal-beige.html"
-   * "deck.js":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-deck.html"
-
+   * "HTML (jasny)":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-1.html"
+   * "reveal (jasny)":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal.html"
+   * "reveal (ciemny)":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-reveal-dark.html"
+   * "deck.js (jasny)":"http://marbor.strony.prz.edu.pl/download/FEM/html/pages/approx-deck.html"
+=== Kody Pythona ===   
+"Repozytorium":"https://github.com/przemarbor/fem-book/tree/master/doc/.src/book/src"
 
 ##   * "PDF":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/pdf/approx-beamer.pdf"
 ##   * "HTML":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-1.pdf"
@@ -30,6 +21,17 @@
 ##   * "reveal-js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal.html"
 ##   * "reveal-js-beige":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-reveal-beige.html"
 ##   * "deck.js":"https://github.com/przemarbor/fem-book/blob/master/doc/pub/slides/html/pages/approx-deck.html"
+
+=== Hans Petter Langtangen (1962-2016) ===
+
+ * "Strona domowa":"https://hplgit.github.io/homepage/index.html"
+
+ * "Github":"https://github.com/hplgit"
+
+ * "DocOnce i książki HPL":"https://doconce.github.io"
+
+ * "Książka o FEM (EN)":"http://hplgit.github.io/fem-book/doc/web/index.html"
+
 
 !split
 ======= Metoda elementów skończonych - wstęp =======
@@ -156,14 +158,17 @@ label{fem:approx:vec:plane}
 Zadanie:
 
 Znajdź przybliżenie wektora $\f = (3,5)$ wzdłuż zadanego kierunku.
-#if FORMAT in ('latex', 'pdflatex')
+
+# #if FORMAT in ('pdflatex','latex')
 \vspace{-0.5cm}
-#endif
+# #endif
+
 FIGURE: [../fig/vecapprox_plane, width=300 frac=0.55]
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-1cm}
-#endif
+# #endif
+
 analogie: element - punkt - wektor - funkcja
 
 !split
@@ -173,9 +178,9 @@ analogie: element - punkt - wektor - funkcja
 \[ V = \mbox{span}\,\{ \psib_0\} \]
 !et
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.4cm}
-#endif
+# #endif
 
  * $\psib_0$ wektor bazowy przestrzeni $V$
  * Znajdź $\u = c_0\psib_0\in V$
@@ -189,9 +194,9 @@ Niech
  * $(\u,\v)$ -- iloczyn skalarny wektorów
  * $||\e|| = \sqrt{(\e, \e)}$ -- norma błędu (jaka? (normy $p$-te))
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.4cm}
-#endif
+# #endif
 
 !bnotice Uwaga:
 $(a,b)$ -- punkt/wektor przestrzeni (dwuwymiarowej)
@@ -241,10 +246,10 @@ można równoważnie zapisać jako:
 \[ (\e, \psib_0) = 0 \]
 !et
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.8cm}
 \tiny
-#endif
+# #endif
 
 !bt
 \[
@@ -291,7 +296,17 @@ można równoważnie zapisać jako:
 
 !bslidecell 00 0.2
 
-FIGURE: [../figMB/orthopro.pdf, width=300 frac=1.7]
+## #if FORMAT in ('latex', 'pdflatex')
+
+## FIGURE: [../figMB/orthopro.pdf, width=300 frac=1.7]
+
+## #endif
+
+## #if FORMAT in ('html')
+
+FIGURE: [../figMB/orthopro.png, width=300 frac=1.7]
+
+## #endif
 
 !eslidecell
 
@@ -577,9 +592,9 @@ c_1 \\
 !bt
 \[ u(x) = 10x - 12 \frac{2}{3} \]
 !et
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-1.0cm}
-#endif
+# #endif
 
 FIGURE: [../fig/parabola_ls_linear, width=550 frac=0.8]
 
@@ -626,9 +641,9 @@ def least_squares(f, psi, Omega):
     return u, c
 !ec
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \tiny
-#endif
+# #endif
 
 Spostrzeżenie: macierz układu jest symetryczna, dzięki czemu można zoptymalizować proces wyznaczania jej elementów
 
@@ -707,9 +722,9 @@ def comparison_plot(f, u, Omega, filename='tmp.pdf'):
 >>> comparison_plot(f, u, Omega=[1, 2])
 !ec
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.7cm}
-#endif
+# #endif
 
 FIGURE: [../fig/parabola_ls_linear, width=600 frac=0.8]
 
@@ -733,7 +748,6 @@ label{fem:approx:global:exact}
 10*x**2 - 20*x + 9
 !ec
 
-
 Rozwiązanie przybliżone $\equiv$ rozwiązanie dokładne, jeśli $f \in V$!
 
 !split
@@ -745,6 +759,9 @@ Rozwiązanie przybliżone $\equiv$ rozwiązanie dokładne, jeśli $f \in V$!
 !bblock Wniosek ogólny:
 Jeśli $f\in V$, $\LSM$ oraz metoda Galerkina zwrócą $u=f$.
 !eblock
+
+
+
 
 !split
 ===== Dlaczego dla $f\in V$ aproksymacja jest bezbłędna? Dowód: =====
@@ -769,7 +786,7 @@ a URL $\sum_j A_{i,j}c_j = b_i$, $i\in\If$, przedstawia sie:
 co oznacza, że $c_i=d_i$ dla $i\in\If$, czyli $u$ jest tożsame z $f$.
 
 !split
-===== Skończona prezycja obliczeń numerycznych =====
+===== Skończona precyzja obliczeń numerycznych =====
 label{fem:approx:global:illconditioning}
 
 Poprzednie wnioski -> teoria i obliczenia symboliczne \ldots
@@ -821,9 +838,9 @@ A naprawdę?
 Źródło kłopotów: funkcje $x^i$ dla bardzo dużych $i$ stają się praktycznie
 liniowo zależne 
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \tiny
-#endif
+# #endif
 
 !bslidecell 00
 4 rozwiązania zadania przybliżenia paraboli
@@ -905,7 +922,7 @@ Wartości $u$ na brzegach będą zawsze niepoprawne!
 !et
 Dodatkowy wyraz nie tylko zapewnia $u(0)=f(0)$ oraz $u(1)=f(1)$,
 ale także zaskakująco dobrze poprawia jakość aproksymacji!
-approximation!
+
 
 !split
 ## ===== Fourier series approximation; final results =====
@@ -962,9 +979,9 @@ def least_squares_orth(f, psi, Omega):
 !split
 ===== Implementacja $\LSM$ dla ortogonalnych funkcji bazowych: całkowanie symboliczne i numeryczne =====
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \footnotesize
-#endif
+# #endif
 
  * Uwzględnienie parametru sterującego wyborem rodzaju całkowania
    (argument `symbolic`).
@@ -1001,6 +1018,10 @@ def least_squares_orth(f, psi, Omega, symbolic=True):
 !split
 ===== Metoda kolokacji (interpolacji); idea i teoria =====
 label{fem:approx:global:interp}
+
+# #if FORMAT in ('latex', 'pdflatex')
+\small
+# #endif
 
 idx{collocation method (approximation)}
 idx{approximation!collocation}
@@ -1078,7 +1099,7 @@ label{fem:approx:global:regression}
 FIGURE: [../fig/parabola_by_regression, width=800]
 
 !split
-===== Regresji -- nadokreślone URL =====
+===== Regresja -- nadokreślone URL =====
 
 ## Overdetermined linear system:
 
@@ -1181,17 +1202,17 @@ u(x) &= 10x - 12.7,\quad 64\hbox{ punkty}
 
 FIGURE: [../fig/parabola_by_regression, width=800]
 
-!split
-===== What is the regression method used for? =====
+## !split
+## ===== What is the regression method used for? =====
 
- * It is one of the most dominating methods for approximating data
-   in statistics
- * Not so common for approximating functions
- * Not much used for solving differential equations
- * Recently very popular for statistical uncertainty quantification:
-   approximating the mapping from input parameters to the solution
-   via polynomials and the regression method (called polynomial chaos
-   expansions)
+##  * It is one of the most dominating methods for approximating data
+##    in statistics
+##  * Not so common for approximating functions
+##  * Not much used for solving differential equations
+##  * Recently very popular for statistical uncertainty quantification:
+##    approximating the mapping from input parameters to the solution
+##    via polynomials and the regression method (called polynomial chaos
+##    expansions)
 
 !split
 ===== Wielomiany Lagrange'a =====
@@ -1266,7 +1287,7 @@ FIGURE: [../fig/Lagrange_interp_abs_8_15, width=800 frac=1.2]
 
 FIGURE: [../fig/Lagrange_basis_12, width=500]
 
-Problem: strong oscillations near the boundaries for larger $N$ values.
+Problem: oscylacje w okolicach krańców przedziałów dla większych $N$.
 
 !split
 ===== Wielomiany Lagrange'a: jak zapobiec oscylacjom? =====
@@ -1657,9 +1678,9 @@ Ważne spostrzeżenia:
 ##   (*local numbering*)
    węzłów leżących na danym elemencie: $0,1,\ldots,d$
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.7cm}
-#endif
+# #endif
 
 FIGURE: [../fig/fe_mesh1D_phi_i_im1, width=300 frac=0.4]
 
@@ -1710,13 +1731,13 @@ r,s\in\Ifd
 ## |4      | 4      | 1       |
 ## |5      | 4      | 2       |
 ## |5      | 5      | 1       |
-|\vdots | \vdots | \vdots  |
+|$\vdots$ | $\vdots$ | $\vdots$  |
 |8      | 7      | 2       |
 |8      | 8      | 1       |
 |9      | 8      | 2       |
 |10     | 8      | 3       |
 |10     | 9      | 1       |
-|\vdots | \vdots | \vdots  |
+|$\vdots$ | $\vdots$ | $\vdots$  |
 |--------------------------|
 
 !eslidecell
@@ -1828,9 +1849,9 @@ x = x_m + {\half}hX, \qquad x_m=(x_L+x_R)/2,\quad h=x_R-x_L
 !et
 
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \scriptsize
-#endif
+# #endif
 
 Transformacja odwrotna:
 !bt
@@ -1842,17 +1863,17 @@ X = \frac{2 x + (x_L + x_R)}{(x_R - x_L)}
 
 !split
 ===== Transformacja całki =====
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \small
-#endif
+# #endif
 Zmiana granic całkowania ->
 całkowanie na przedziale unormowanym:
 podstawienie $x(X)$ w miejsce $x$.
 
 Lokalne funkcje bazowe we współrzędnych unormowanych:
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.2cm}
-#endif
+# #endif
 !bt
 \[
 \refphi_r(X) = \basphi_{q(e,r)}(x(X))
@@ -1867,9 +1888,9 @@ dx = \half (x_R - x_L) dX
 \end{array}
 \]
 !et
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.5cm}
-#endif
+# #endif
 
 ## !bt
 ## \[
@@ -1890,9 +1911,9 @@ dx = \half (x_R - x_L) dX
 =
 \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\underbrace{\frac{dx}{dX}}_{\det J= h/2}dX \]
 !et
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-1.0cm}
-#endif
+# #endif
 !bt
 \[
 \tilde A^{(e)}_{r,s}
@@ -1900,9 +1921,9 @@ dx = \half (x_R - x_L) dX
 \int\limits_{-1}^1 \refphi_r(X)\refphi_s(X)\det J\,dX
 \]
 !et
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.2cm}
-#endif
+# #endif
 !bt
 \[
 \tilde b^{(e)}_{r} = \int_{\Omega^{(e)}}f(x)\basphi_{q(e,r)}(x)dx
@@ -1966,9 +1987,9 @@ label{fem:approx:fe:mapping:P1:phi1}
 ===== Całkowanie po elemencie unormowanym - lokalna macierz =====
 label{fem:approx:fe:intg:ref}
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \small
-#endif
+# #endif
 
 Założenie: elementy typu P1, oraz funkcja $f(x)=x(1-x)$.
 
@@ -2013,7 +2034,8 @@ label{fem:approx:fe:intg:ref:be0}\\
 \end{align}
 !et
 
-$x_m$: element midpoint.
+$x_m$: środek elementu
+## # $x_m$: element midpoint.
 
 !split
 ===== Obliczenia symboliczne zamiast żmudnego liczenia na kartce... =====
@@ -2135,7 +2157,7 @@ def element_vector(f, phi, Omega_e, symbolic=True):
     return b_e
 !ec
 
-Zwróć uwagę na `f.subs('x', x)` -> podstawienie $x(X)$ za `x` we formule na `f`
+Zwróć uwagę na `f.subs('x', x)` -> podstawienie $x(X)$ za `x` w formule na `f`
 (od teraz `f` jest funkcją $f(X)$)
 
 !split
@@ -2191,7 +2213,7 @@ else:
 !ec
 
 Uwaga: obliczanie współczynników macierzy `A`, `b` oraz rozwiązanie URL
-`A.LUsolve(b)` może być baaardzo czasochłonne\ldots
+`A.LUsolve(b)` może być baaardzo czasochłonne$\ldots$
 
 
 !split
@@ -2266,8 +2288,9 @@ label{fem:approx:fe:A:structure}
 [  0,     0,     0,     0,     0,     0,     0,   h/6, h/3]
 !ec
 
-Uwaga (zadanie domowe): Odtworzenie tego powyższego wyniku przy pomocy
-''obliczeń ołówkowych'' naprawdę pomoże w zrozumieniu materiału.
+Uwaga (zadanie domowe): Wykonaj obliczenia na kartce papieru
+w celu potwierdzenia wartości poszczególnych elementów powyższej macierzy
+(pomocne w zrozumieniu materiału).
 
 !split
 ===== Wynik w przypadku ogólnym ($N$ jednakowych elementów) =====
@@ -2940,9 +2963,9 @@ FIGURE: [../figMB/cubicHermiteBasis, width=500 frac=1.2]
 FIGURE: [../figMB/cubicHermiteDerivs, width=500 frac=1.2]
 !eslidecell
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-1.5cm}
-#endif
+# #endif
 
 
 ## !bslidecell 10
@@ -3029,7 +3052,7 @@ gdzie
 idx{Gauss-Legendre quadrature}
 
  * optymalne położenie węzłów kwadratury -> wyższa dokładność
- * Kwadratury Gaussa-Legendre'a dobranie położenia węzłów oraz wag tak,
+ * Kwadratury Gaussa-Legendre'a -> dobranie położenia węzłów oraz wag tak,
    aby całkować z jak najlepszą dokładnością
 
 !bt
@@ -3044,7 +3067,7 @@ M=2&:\quad \bar X_0=-\sqrt{\frac{3}{{5}}},\ \bar X_0=0,\
  * $M=1$: dokładna dla wielomianów 3. stopnia
  * $M=2$: dokładna dla wielomianów 5. stopnia 
  * W ogólności, $M$-punktowy wzór Gaussa-Legendre'a jest dokładny dla wielomianów
-   stopnia $2M+1$y.
+   stopnia $2M+1$.
 
 Plik `numint.py zawiera zbiór węzłów i wag dla metody Gaussa-Legendre'a.
 
@@ -3130,9 +3153,9 @@ Przykład: baza 2D jako iloczyn tensorowy przestrzeni 1D:
 \quad p\in\Ix,q\in\Iy\]
 !et
 
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \tiny
-#endif
+# #endif
 
 "iloczyn tensorowy macierzy":"https://pl.wikipedia.org/wiki/Iloczyn_Kroneckera"
 (dowolnych wymiarów)
@@ -3162,7 +3185,7 @@ Lub tylko jednego indeksu
 \[ u = \sum_{j\in\If} c_j\baspsi_j(x,y)\]
 !et
 
-o ile posiadamy odwzorowanie $(p,q)\rightarrow i$:
+jeśli posiadamy odwzorowanie $(p,q)\rightarrow i$:
 
 !bt
 \[
@@ -3334,9 +3357,9 @@ Spodziewany wynik: $u=f$
 label{fem:approx:3D:global}
 
 Kluczowa idea:
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.5cm}
-#endif
+# #endif
 
 !bt
 \[ V = V_x\otimes V_y\otimes V_z\]
@@ -3351,9 +3374,9 @@ p_{i_0,i_1,\ldots,i_m} &= a^{(0)}_{i_1}a^{(1)}_{i_1}\cdots a^{(m)}_{i_m}
 !et
 !enotice
 W szczególności dla 3D:
-#if FORMAT in ('latex', 'pdflatex')
+# #if FORMAT in ('latex', 'pdflatex')
 \vspace{-0.6cm}
-#endif
+# #endif
 
 !bt
 \begin{align*}
